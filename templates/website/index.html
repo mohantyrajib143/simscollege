@@ -7,16 +7,10 @@
         <div class="tp-banner" >
             <div id="welcome_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="reveal-add-on36" data-source="gallery" style="background:#ffffff;padding:0px;">
                 <div id="welcome" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.4.7.2">
-                    <ul>	
-                        <li>
-                            <img src="images/slider/1.jpg" data-lazyload="images/slider/1.jpg">
-                        </li>
-                        <li>
-                            <img src="images/slider/2.jpg" data-lazyload="images/slider/2.jpg">
-                        </li>
-                        <li>
-                            <img src="images/slider/3.jpg" data-lazyload="images/slider/3.jpg">
-                        </li>
+                    <ul>
+                        {% for slider in allSlider %}	
+                            <li><img src="/media/{{slider.image}}" data-lazyload="/media/{{slider.image}}"></li>
+                        {% endfor %}
                     </ul>
                     <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	
                 </div>
