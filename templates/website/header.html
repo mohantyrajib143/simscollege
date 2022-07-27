@@ -35,8 +35,10 @@
                     <div class="row d-flex justify-content-between align-items-center">
                         <div class="dlab-topbar-left">
                             <ul>
-                                <li><i class="la la-phone-volume"></i> 0671-2309223</li>
-                                <li><i class="las la-envelope-open"></i> sims.ctc@gmail.com</li>
+                                {% for sims in sims %}
+                                    <li><i class="la la-phone-volume"></i> {{sims.contact1}}</li>
+                                    <li><i class="las la-envelope-open"></i> {{sims.email1}}</li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="dlab-topbar-right">
@@ -145,17 +147,19 @@
             <div class="footer-top" style="background-image:url('images/pattern/pt15.png')">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-5 col-sm-6 footer-col-4 col-12">
-                            <div class="widget widget_about border-0">
-                                <h5 class="footer-title">About Us</h5>
-                                <p class="mm-t5">Shanti Institute of Management and Studies (SIMS) is successfully functioning with a propitious mission 2008 - 2022</p>
-                                <ul class="contact-info-bx">
-                                    <li><i class="las la-map-marker"></i><strong>CDA Sec - 10, Cuttack, Odisha 753014</strong></li>
-                                    <li><i class="las la-phone-volume"></i><strong>+91 9876543210</strong></li>
-                                    <li><i class="las la-envelope-open"></i><strong>sims.ctc@gmail.com</strong></li>
-                                </ul>
+                        {% for sims in sims %}
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-5 col-sm-6 footer-col-4 col-12">
+                                <div class="widget widget_about border-0">
+                                    <h5 class="footer-title">About Us</h5>
+                                    <p class="mm-t5">{{sims.about}}</p>
+                                    <ul class="contact-info-bx">
+                                        <li><i class="las la-map-marker"></i><strong>{{sims.address}}</strong></li>
+                                        <li><i class="las la-phone-volume"></i><strong>{{sims.contact1}}</strong></li>
+                                        <li><i class="las la-envelope-open"></i><strong>{{sims.email1}}</strong></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
                         
                         <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6 footer-col-4 col-12">
                             <div class="widget widget_services border-0">
