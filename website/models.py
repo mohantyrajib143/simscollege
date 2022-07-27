@@ -14,3 +14,23 @@ class slider(models.Model):
     
     def __str__(self):
         return self.title + ' added new slider '
+    
+class sims(models.Model):
+    about = models.CharField(max_length=500)
+    description = models.TextField()
+    email1 = models.CharField(max_length=200)
+    email2 = models.CharField(max_length=200)
+    contact1 = models.CharField(max_length=200)
+    contact2 = models.CharField(max_length=200)
+    address = models.CharField(max_length=500)
+    whatsapp1 = models.CharField(max_length=200)
+    whatsapp2 = models.CharField(max_length=200)
+    science_std = models.CharField(max_length=200)
+    commerce_std = models.CharField(max_length=200)
+    total_teacher = models.CharField(max_length=200)
+    graduate_std = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' SIMS college information details '
