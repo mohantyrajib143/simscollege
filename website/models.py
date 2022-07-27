@@ -34,3 +34,15 @@ class sims(models.Model):
     
     def __str__(self):
         return ' SIMS college information details '
+
+class summer_course_enquiry(models.Model):
+    name = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
+    mobile = models.CharField(max_length=500)
+    stream = models.CharField(max_length=500)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' Summer Course Enquiry Added By ' + self.name
