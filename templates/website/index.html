@@ -119,27 +119,26 @@
                     </div>
                     <div class="col-lg-5 m-b30">
                         <div class="register-form style1">
-                            <form method="post" class="dzForm" action="script/contact.php">
-                                <input type="hidden" value="Appointment" name="dzToDo" >
+                            <form autocomplete="off" id="summerform" method="post" action="/">{% csrf_token %}
                                 <div class="row sp15">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input name="dzName" class="form-control" placeholder="Name" type="text">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter Full Name.." onKeyPress="return ValidateName(event);" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input name="dzEmail" class="form-control" placeholder="Email" type="text">
+                                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email Address.." required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input name="dzEmail" class="form-control" placeholder="Mobile" type="text">
+                                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile Number.." minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57'required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select class="bs-select-hidden" name="dzOther[service]" >
+                                            <select class="bs-select-hidden" name="stream" id="stream" required>
                                                 <option value="">Addmission Stream</option>
                                                 <option value="Science Stream">Science Stream</option>
                                                 <option value="Commerce Stream">Commerce Stream</option>
@@ -149,17 +148,18 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <textarea name="dzMessage" rows="4" class="form-control" placeholder="Something about you!" required=""></textarea>
+                                                <textarea name="message" id="message" rows="4" class="form-control" placeholder="Something about you!" required=""></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
-                                        <button name="submit" type="submit" value="Submit" class="site-button btn-block"><span>Submit</span></button>
+                                        <button name="submit" id="submitBtn" type="submit" value="Submit" class="site-button btn-block"><span>SUBMIT NOW</span></button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <center><span id="success" style='font-size:20px;color:white;font-weight: bold;'></span></center>
                 </div>
             </div>
         </div>
@@ -236,5 +236,45 @@
         setInterval(function() {
             blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
         }, 200);
+    </script>
+    <script>
+        function ValidateName(evt){
+            var keyCode = (evt.which) ? evt.which : evt.keyCode
+            if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32)
+            
+            return false;
+                return true;
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).on('submit','#summerform',function(e){
+            $('#submitBtn').prop("disabled", true);
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/',
+                data:{
+                    name:$('#name').val(),
+                    email:$('#email').val(),
+                    mobile:$('#mobile').val(),
+                    stream:$('#stream').val(),
+                    message:$('#message').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){  
+                    $('#submitBtn').prop("disabled", false);
+                    $('#summerform').trigger("reset");
+                    if(data.status == 1){
+                        $('#success').html("Successfully Submited, We Will Connect With You Soon!!")
+                        $('#success').fadeIn(1000).delay(2000).fadeOut(1000);
+                    }
+                    
+                    setTimeout(function(){  
+                        $('#success').fadeOut("Slow");
+                        $('#submitBtn').css("cursor", "allowed");
+                    }, 1000);  
+                }
+            });
+        });
     </script>
 {% endblock %}
