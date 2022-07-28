@@ -1,3 +1,4 @@
+from turtle import position
 from django.db import models
 
 # Create your models here.
@@ -46,3 +47,19 @@ class summer_course_enquiry(models.Model):
     
     def __str__(self):
         return ' Summer Course Enquiry Added By ' + self.name
+
+STD_TESTMONIAL_STATUS_CHOICES = (
+       ('Active','Active'),
+       ('Inactive', 'Inactive'),
+    )
+class student_testmonials(models.Model):
+    name = models.CharField(max_length=500)
+    position = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="home/student_testmonials")
+    message = models.TextField()
+    status = models.CharField(max_length=500, choices=STD_TESTMONIAL_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' New Testmonial Added By ' + self.name
