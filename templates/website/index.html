@@ -174,33 +174,17 @@
                 </div>
                 <div class="section-content">
                     <div class="testimonial-one owl-loaded owl-theme owl-carousel owl-btn-center-lr owl-btn-3">
-                        <div class="item">
-                            <div class="testimonial-1">
-                                <div class="testimonial-pic quote-left radius shadow"><img src="images/testimonials/pic1.jpg" width="100" height="100" alt=""></div>
-                                <div class="testimonial-text">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets conta</p>
+                        {% for stdTestmonial in stdTestmonial %}
+                            <div class="item">
+                                <div class="testimonial-1">
+                                    <div class="testimonial-pic quote-left radius shadow"><img src="/media/{{stdTestmonial.image}}" width="100" height="100" alt=""></div>
+                                    <div class="testimonial-text">
+                                        <p>{{stdTestmonial.message}}</p>
+                                    </div>
+                                    <div class="testimonial-detail"> <strong class="testimonial-name">{{stdTestmonial.name}}</strong> <span class="testimonial-position">{{stdTestmonial.position}}</span> </div>
                                 </div>
-                                <div class="testimonial-detail"> <strong class="testimonial-name">David Matin</strong> <span class="testimonial-position">Student</span> </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-1">
-                                <div class="testimonial-pic quote-left radius shadow"><img src="images/testimonials/pic2.jpg" width="100" height="100" alt=""></div>
-                                <div class="testimonial-text">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets conta</p>
-                                </div>
-                                <div class="testimonial-detail"> <strong class="testimonial-name">David Matin</strong> <span class="testimonial-position">Student</span> </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimonial-1">
-                                <div class="testimonial-pic quote-left radius shadow"><img src="images/testimonials/pic3.jpg" width="100" height="100" alt=""></div>
-                                <div class="testimonial-text">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets conta</p>
-                                </div>
-                                <div class="testimonial-detail"> <strong class="testimonial-name">David Matin</strong> <span class="testimonial-position">Student</span> </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
