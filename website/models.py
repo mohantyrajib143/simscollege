@@ -63,3 +63,20 @@ class student_testmonials(models.Model):
     
     def __str__(self):
         return ' New Testmonial Added By ' + self.name
+
+class about(models.Model):
+    about = models.TextField()
+    mission = models.TextField()
+    vision = models.TextField()
+    features = models.TextField()
+    facebook = models.CharField(max_length=500)
+    instagram = models.CharField(max_length=500)
+    linkedin = models.CharField(max_length=500)
+    whatsapp = models.CharField(max_length=500)
+    twitter = models.CharField(max_length=500)
+    telegram = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' SIMS college about information details '
