@@ -24,3 +24,6 @@ def index(request):
         simsInfo = sims.objects.filter(id=1)
         data = {'allSlider':allSlider, 'simsInfo':simsInfo[0], 'stdTestmonial':stdTestmonial}
         return render(request,'website/index.html', data)
+
+def about(request):
+    return render(request, 'website/about.html')
