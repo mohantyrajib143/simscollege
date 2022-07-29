@@ -1,3 +1,4 @@
+from email.policy import default
 from turtle import position
 from django.db import models
 
@@ -87,6 +88,7 @@ class leader(models.Model):
     address = models.CharField(max_length=500)
     email = models.CharField(max_length=500)
     mobile = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="about/leader", default="")
     quotes = models.CharField(max_length=500)
     about = models.TextField()
     facebook = models.CharField(max_length=500)
