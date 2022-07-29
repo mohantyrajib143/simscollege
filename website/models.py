@@ -80,3 +80,21 @@ class about(models.Model):
     
     def __str__(self):
         return ' SIMS college about information details '
+
+class leader(models.Model):
+    name = models.CharField(max_length=500)
+    position = models.CharField(max_length=500)
+    address = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
+    mobile = models.CharField(max_length=500)
+    quotes = models.CharField(max_length=500)
+    about = models.TextField()
+    facebook = models.CharField(max_length=500)
+    instagram = models.CharField(max_length=500)
+    linkedin = models.CharField(max_length=500)
+    whatsapp = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' New Ledaer Added Name ' + self.name

@@ -1,8 +1,9 @@
 from django.contrib import admin
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about, leader
 # Register your models here.
 admin.site.register(slider)
 admin.site.register(sims)
 admin.site.register(summer_course_enquiry)
 admin.site.register(student_testmonials)
 admin.site.register(about)
+admin.site.register(leader)
