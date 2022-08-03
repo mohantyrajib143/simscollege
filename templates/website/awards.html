@@ -1,0 +1,54 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>AWARDS & RANKING</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-block">
+        <div class="section-full content-inner portfolio bg-gray" id="portfolio">
+            <div class="container">
+                <div class="clearfix" id="lightgallery">
+                    <ul id="masonry" class="portfolio-ic dlab-gallery-listing row gallery-grid-4 lightgallery">
+                        {% for awards in awards %}
+                            <li class="web design card-container col-lg-6 col-md-6 col-sm-6">
+                                <div class="dlab-box dlab-gallery-box">
+                                    <div class="dlab-media dlab-img-overlay1 dlab-img-effect">
+                                        <img src="/media/{{awards.image}}" alt="">
+                                        <div class="overlay-bx">
+                                            <div class="overlay-icon"> 
+                                                <div class="text-white">
+                                                    <span data-exthumbimage="/media/{{awards.image}}" data-src="/media/{{awards.image}}" class="check-km" title="{{awards.title}}">		
+                                                        <i class="far fa-image icon-bx-xs"></i> 
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dez-info bg-white">
+                                        <h4 class="dez-title m-t0"><a href="javascript:void(0);">{{awards.title}}</a></h4>
+                                        <p class="category"><small>{{awards.award}}</small></p>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}

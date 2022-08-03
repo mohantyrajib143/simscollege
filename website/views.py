@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards
 
 # Create your views here.
 def index(request):
@@ -35,3 +35,11 @@ def about(request):
 
 def whyus(request):
     return render(request, 'website/whyus.html')
+
+def awards(request):
+    return render(request, 'website/awards.html')
+
+def awards(request):
+    awards = Awards.objects.all().order_by('-id')
+    data = {'awards':awards}
+    return render(request, 'website/awards.html', data)

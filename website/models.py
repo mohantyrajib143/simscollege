@@ -97,3 +97,13 @@ class leader(models.Model):
     
     def __str__(self):
         return self.position + ' INFORMATION' 
+
+class awards(models.Model):
+    title = models.CharField(max_length=500)
+    award = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="about/awards")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' New awards added by ' + self.title
