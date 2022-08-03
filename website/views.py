@@ -32,3 +32,6 @@ def about(request):
     principal = leader.objects.filter(position='PRINCIPAL')
     data = {'aboutInfo':aboutInfo[0], 'chairperson':chairperson[0], 'vicechairperson':vicechairperson[0], 'principal':principal[0]}
     return render(request, 'website/about.html', data)
+
+def whyus(request):
+    return render(request, 'website/whyus.html')
