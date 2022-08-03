@@ -43,3 +43,6 @@ def awards(request):
     awards = Awards.objects.all().order_by('-id')
     data = {'awards':awards}
     return render(request, 'website/awards.html', data)
+
+def science(request):
+    return render(request, 'website/science.html')
