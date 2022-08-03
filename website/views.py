@@ -46,3 +46,6 @@ def awards(request):
 
 def science(request):
     return render(request, 'website/science.html')
+
+def commerce(request):
+    return render(request, 'website/commerce.html')
