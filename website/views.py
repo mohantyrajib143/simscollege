@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader
 
 # Create your views here.
 def index(request):
@@ -27,5 +27,6 @@ def index(request):
 
 def about(request):
     aboutInfo = AboutUs.objects.filter(id=1)
-    data = {'aboutInfo':aboutInfo[0]}
+    chairperson = leader.objects.filter(id=1)
+    data = {'aboutInfo':aboutInfo[0], 'chairperson':chairperson[0]}
     return render(request, 'website/about.html', data)

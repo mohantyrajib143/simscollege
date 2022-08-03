@@ -89,20 +89,33 @@
                                                     <div class="col-lg-4 col-md-5 m-b30">
                                                         <div class="teachers-profile">
                                                             <div class="img">
-                                                                <img src="{% static 'website/images/about/leader/chairman.jpg' %}">
+                                                                <img src="/media/{{chairperson.image}}">
                                                             </div>
                                                             <div class="teachers-info">
-                                                                <h4 class="name">Deepak Kumar Pradhan</h4>
-                                                                <span class="position">Chairperson Of SIMS Group</span>
+                                                                <center><h4 class="name">{{chairperson.name}}</h4></center>
+                                                                <center><span class="position">{{chairperson.position}} SIMS GROUP</span></center>
+                                                            </div>
+                                                            <div class="teachers-contact">
+                                                                <div class="share-list">
+                                                                    <h5>Follow :</h5>
+                                                                    <ul class="dlab-social-icon">
+                                                                        <li><a href="{{chairperson.facebook}}" target="_blank" class="site-button circle fab fa-facebook-f facebook"></a></li>
+                                                                        <li><a href="{{chairperson.twitter}}" target="_blank" class="site-button circle fab fa-twitter twitter"></a></li>
+                                                                        <li><a href="{{chairperson.linkedin}}" target="_blank" class="site-button circle fab fa-linkedin-in linkedin"></a></li>
+                                                                        <li><a href="{{chairperson.whatsapp}}" target="_blank" class="site-button circle fab fa-whatsapp whatsapp"></a></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-8 col-md-7">
                                                         <div class="teachers-details">
-                                                            <h2>Building Responsible Citizens for a Better Tomorrow.</h2>
-                                                            <p class="m-b30">I believe that success follows those who follow their heart, however the environment around us isn’t always suited for nurturing our passions, keeping individuals from realizing their true potential. The focus at SIMS is to offer 360º developments to students, giving them a nurturing environment with sufficient exposure. With the power of 7 constantly being imbibed in academics, sports, extra-curricular and within the dorms, we ensure that the students imbibe these essential 7 qualities, which not only help students realize their passion but equip them to achieving it in an efficient and ethical manner.</p>
-                                                            
-                                                            <p class="m-b30">Being a chairperson, I have realized the true value of lessons learnt outside the bounds of a classroom. At SIMS we go beyond and ensure that our students get the best of indoor and outdoor training, moulding them to think critically, synthesize knowledge and reflect on their own thought processes.Through this we ensure that our students excel not only within the education system but in the real world as well, allowing our students to “Arise, Awake, and Ascend”</p>
+                                                            <h2>{{chairperson.quotes}}</h2>
+                                                            <p class="m-b30">{{chairperson.about}}</p>
+                                                            <h2>Mission</h2>
+                                                            <p class="m-b30">{{aboutInfo.mission}}</p>
+                                                            <h2>Vision</h2>
+                                                            <p class="m-b30">{{aboutInfo.vision}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
