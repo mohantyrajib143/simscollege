@@ -29,5 +29,6 @@ def about(request):
     aboutInfo = AboutUs.objects.filter(id=1)
     chairperson = leader.objects.filter(position='CHAIRPERSON')
     vicechairperson = leader.objects.filter(position='VICE CHAIRPERSON')
-    data = {'aboutInfo':aboutInfo[0], 'chairperson':chairperson[0], 'vicechairperson':vicechairperson[0]}
+    principal = leader.objects.filter(position='PRINCIPAL')
+    data = {'aboutInfo':aboutInfo[0], 'chairperson':chairperson[0], 'vicechairperson':vicechairperson[0], 'principal':principal[0]}
     return render(request, 'website/about.html', data)
