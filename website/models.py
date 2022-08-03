@@ -85,9 +85,6 @@ class about(models.Model):
 class leader(models.Model):
     name = models.CharField(max_length=500)
     position = models.CharField(max_length=500)
-    address = models.CharField(max_length=500)
-    email = models.CharField(max_length=500)
-    mobile = models.CharField(max_length=500)
     image = models.ImageField(upload_to="about/leader", default="")
     quotes = models.CharField(max_length=500)
     about = models.TextField()
@@ -99,4 +96,4 @@ class leader(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return ' New Ledaer Added Name ' + self.name
+        return self.position + ' INFORMATION' 
