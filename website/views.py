@@ -49,3 +49,6 @@ def science(request):
 
 def commerce(request):
     return render(request, 'website/commerce.html')
+
+def chse(request):
+    return render(request, 'website/chse.html')

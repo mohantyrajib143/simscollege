@@ -1,0 +1,38 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>CHSE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-full bg-white content-inner">
+        <div class="container">
+            <div class="row service-area-one">
+                <div class="col-lg-4 m-b30 hidden-sm">
+                    <div class="rdx-thu"><img src="{% static 'website/images/chse/chse.png' %}" alt=""></div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="section-head">
+                        <h2 class="title"> COUNCIL OF HIGHER SECONDARY EDUCATION (CHSE), ODISHA</h2>
+                        <p>The Government of Odisha has acknowledged <b>SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</b>, and it is connected with the Council of Higher Secondary Education (CHSE), Odisha, with Affiliation No. Govt/DHE/RDE No. 11589 dated 25-02-2009. The +2 Science and +2 Commerce programs are available at <b>SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</b>.
+                        The Council of Higher Secondary Education is Government of Odisha’s authorized body for providing school education in Odisha. Every year, it holds state-level tests for students in grades 12 and 13. The Council of Higher Secondary Education (CHSE) of Odisha prepares the curriculum for both private and public schools connected with this body.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}
