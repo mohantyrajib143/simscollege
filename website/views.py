@@ -51,9 +51,14 @@ def commerce(request):
     return render(request, 'website/commerce.html')
 
 def faculties(request):
-    faculties = AllFaculty.objects.filter(status='Active')
+    faculties = AllFaculty.objects.filter(type='CHSE',status='Active')
     data = {'faculties':faculties}
     return render(request, 'website/faculties.html', data)
+
+def entrance(request):
+    faculties = AllFaculty.objects.filter(type='ENTRANCE',status='Active')
+    data = {'faculties':faculties}
+    return render(request, 'website/entrance.html', data)
 
 def chse(request):
     return render(request, 'website/chse.html')
