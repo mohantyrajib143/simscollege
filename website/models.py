@@ -107,3 +107,25 @@ class awards(models.Model):
     
     def __str__(self):
         return ' New awards added by ' + self.title
+
+FAC_STATUS_CHOICES = (
+    ('Active','Active'),
+    ('Inactive', 'Inactive'),
+)
+class faculties(models.Model):
+    type = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    position = models.CharField(max_length=500)
+    experience = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="academics/faculties")
+    facebook = models.CharField(max_length=500)
+    instagram = models.CharField(max_length=500)
+    linkedin = models.CharField(max_length=500)
+    whatsapp = models.CharField(max_length=500)
+    gmail = models.CharField(max_length=500)
+    status = models.CharField(max_length=500, choices=FAC_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.type + ' faculties added named ' + self.name

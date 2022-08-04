@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty
 
 # Create your views here.
 def index(request):
@@ -49,6 +49,11 @@ def science(request):
 
 def commerce(request):
     return render(request, 'website/commerce.html')
+
+def faculties(request):
+    faculties = AllFaculty.objects.filter(status='Active')
+    data = {'faculties':faculties}
+    return render(request, 'website/faculties.html', data)
 
 def chse(request):
     return render(request, 'website/chse.html')
