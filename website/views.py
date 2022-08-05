@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results
 
 # Create your views here.
 def index(request):
@@ -92,3 +92,8 @@ def yoga(request):
     yoga = infrastructure.objects.filter(type='YOGA',status='Active')
     data = {'yoga':yoga}
     return render(request, 'website/yoga.html', data)
+
+def neet(request):
+    neet = results.objects.filter(type='NEET',status='Active')
+    data = {'neet':neet}
+    return render(request, 'website/neet.html', data)
