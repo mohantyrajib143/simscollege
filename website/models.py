@@ -145,3 +145,19 @@ class infrastructure(models.Model):
     
     def __str__(self):
         return self.type + ' infrastructure added with title ' + self.title
+
+RESULT_STATUS_CHOICES = (
+    ('Active','Active'),
+    ('Inactive', 'Inactive'),
+)
+class results(models.Model):
+    type = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    position = models.TextField()
+    image = models.ImageField(upload_to="results")
+    status = models.CharField(max_length=500, choices=RESULT_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name + ' achived ' + self.type
