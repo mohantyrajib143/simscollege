@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about, leader, awards, faculties, infrastructure, results, news
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about, leader, awards, faculties, infrastructure, results, news, notice
 # Register your models here.
 admin.site.register(slider)
 admin.site.register(sims)
@@ -12,3 +12,4 @@ admin.site.register(faculties)
 admin.site.register(infrastructure)
 admin.site.register(results)
 admin.site.register(news)
+admin.site.register(notice)
