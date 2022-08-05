@@ -161,3 +161,18 @@ class results(models.Model):
     
     def __str__(self):
         return self.name + ' achived ' + self.type
+
+NEWS_STATUS_CHOICES = (
+    ('Active','Active'),
+    ('Inactive', 'Inactive'),
+)
+class news(models.Model):
+    title = models.CharField(max_length=500)
+    description = models.TextField()
+    image = models.ImageField(upload_to="news")
+    status = models.CharField(max_length=500, choices=RESULT_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
