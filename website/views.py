@@ -97,3 +97,13 @@ def neet(request):
     neet = results.objects.filter(type='NEET',status='Active')
     data = {'neet':neet}
     return render(request, 'website/neet.html', data)
+
+def iit(request):
+    iit = results.objects.filter(type='IIT',status='Active')
+    data = {'iit':iit}
+    return render(request, 'website/iit.html', data)
+
+def chse_result(request):
+    chse = results.objects.filter(type='CHSE',status='Active')
+    data = {'chse':chse}
+    return render(request, 'website/chse_result.html', data)

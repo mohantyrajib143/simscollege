@@ -19,4 +19,6 @@ urlpatterns = [
     path('sports/', views.sports, name='sports'),
     path('yoga/', views.yoga, name='yoga'),
     path('neet/', views.neet, name='neet'),
+    path('iit/', views.iit, name='iit'),
+    path('chse_result/', views.chse_result, name='chse_result'),
 ]
