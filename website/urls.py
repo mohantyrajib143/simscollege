@@ -21,4 +21,5 @@ urlpatterns = [
     path('neet/', views.neet, name='neet'),
     path('iit/', views.iit, name='iit'),
     path('chse_result/', views.chse_result, name='chse_result'),
+    path('news/', views.news, name='news'),
 ]
