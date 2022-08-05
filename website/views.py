@@ -67,3 +67,8 @@ def college(request):
     college = infrastructure.objects.filter(type='COLLEGE',status='Active')
     data = {'college':college}
     return render(request, 'website/college.html', data)
+
+def hostel(request):
+    hostel = infrastructure.objects.filter(type='HOSTEL',status='Active')
+    data = {'hostel':hostel}
+    return render(request, 'website/hostel.html', data)

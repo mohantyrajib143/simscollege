@@ -10,7 +10,7 @@
                 <div class="breadcrumb-row">
                     <ul class="list-inline">
                         <li><a href="/">SIMS</a></li>
-                        <li>COLLEGE FACILITIES</li>
+                        <li>HOSTEL FACILITIES</li>
                     </ul>
                 </div>
             </div>
@@ -22,27 +22,27 @@
             <div class="row">
                 <div id="masonry1" class="dlab-blog-grid-2 row">
                     <div class="sort-title clearfix text-center mb-3">
-                        <h4>OUR COLLEGE FACILITIES</h4>
+                        <h4>OUR HOSTEL FACILITIES</h4>
                     </div>
-                    <center><p>Science is a one-of-a-kind subject because of its investigations and experiments. The appeal of practical work should not be overlooked, it is frequently the motivating reason behind the decision to advance one’s education. First and foremost, science laboratories are facilities where experiments are conducted. Our labs are specifically constructed and equipped to encourage experimentation and invention.</p></center>
-                    {% for college in college %}
+                    <center><p>SIMS HOSTEL IS A HOME AWAY FROM HOME. It’s really a great boon to spend every single day at SIMS Residential Campus. Green Hostel & Sunny Guesthouse offers an American or Asian breakfast.</p></center>
+                    {% for hostel in hostel %}
                         <div class="post card-container col-lg-6 col-md-6 col-sm-12">
                             <div class="blog-post blog-grid blog-rounded bg-white shadow">
                                 <div class="dlab-post-media dlab-img-effect"> 
-                                    <img src="/media/{{college.image}}" style="height:350px;" alt=""/>
+                                    <img src="/media/{{hostel.image}}" style="height:350px;" alt=""/>
                                 </div>
                                 <div class="dlab-info p-a25">
                                     <div class="dlab-post-meta">
                                         <ul>
-                                            <li class="post-author"> <i class="la la-calendar"></i> {{college.created_at | date:"M d, Y" }}</li>
+                                            <li class="post-author"> <i class="la la-calendar"></i> {{hostel.created_at | date:"M d, Y" }}</li>
                                             <li class="post-tag"> <a href="javascript:void(0);">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</a> </li>
                                         </ul>
                                     </div>
                                     <div class="dlab-post-title ">
-                                        <h4 class="post-title"><a href="javascript:void(0);">{{college.title}}</a></h4>
+                                        <h4 class="post-title"><a href="javascript:void(0);">{{hostel.title}}</a></h4>
                                     </div>
                                     <div class="dlab-post-text">
-                                        <p>{{college.description}}</p>
+                                        <p>{{hostel.description}}</p>
                                     </div>
                                 </div>
                             </div>
