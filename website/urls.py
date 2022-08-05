@@ -14,4 +14,5 @@ urlpatterns = [
     path('chse/', views.chse, name='chse'),
     path('college/', views.college, name='college'),
     path('hostel/', views.hostel, name='hostel'),
+    path('gallery/', views.gallery, name='gallery'),
 ]

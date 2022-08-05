@@ -72,3 +72,8 @@ def hostel(request):
     hostel = infrastructure.objects.filter(type='HOSTEL',status='Active')
     data = {'hostel':hostel}
     return render(request, 'website/hostel.html', data)
+
+def gallery(request):
+    gallery = infrastructure.objects.filter(type='GALLERY',status='Active')
+    data = {'gallery':gallery}
+    return render(request, 'website/gallery.html', data)
