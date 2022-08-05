@@ -1,0 +1,57 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>SPORTS CLUB</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-area">
+        <div class="container">
+            <div class="row">
+                <div id="masonry1" class="dlab-blog-grid-2 row">
+                    <div class="sort-title clearfix text-center mb-3">
+                        <h4>YOGA & MEDITATION</h4>
+                    </div>
+                    <center><p>At SIMS, we think that every student should participate in a sport in order to compete and excel. We are dedicated to provide these students with the infrastructure, mentoring and exposure they need to fulfill their greatest potential. We see athletics not just as a tool for physical well-being, but also as a tool for character development.</p></center>
+                    {% for yoga in yoga %}
+                        <div class="post card-container col-lg-6 col-md-6 col-sm-12">
+                            <div class="blog-post blog-grid blog-rounded bg-white shadow">
+                                <div class="dlab-post-media dlab-img-effect"> 
+                                    <img src="/media/{{yoga.image}}" style="height:350px;" alt=""/>
+                                </div>
+                                <div class="dlab-info p-a25">
+                                    <div class="dlab-post-meta">
+                                        <ul>
+                                            <li class="post-author"> <i class="la la-calendar"></i> {{yoga.created_at | date:"M d, Y" }}</li>
+                                            <li class="post-tag"> <a href="javascript:void(0);">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</a> </li>
+                                        </ul>
+                                    </div>
+                                    <div class="dlab-post-title ">
+                                        <h4 class="post-title"><a href="javascript:void(0);">{{yoga.title}}</a></h4>
+                                    </div>
+                                    <div class="dlab-post-text">
+                                        <p>{{yoga.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}

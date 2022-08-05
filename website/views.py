@@ -87,3 +87,8 @@ def sports(request):
     sports = infrastructure.objects.filter(type='SPORTS',status='Active')
     data = {'sports':sports}
     return render(request, 'website/sports.html', data)
+
+def yoga(request):
+    yoga = infrastructure.objects.filter(type='YOGA',status='Active')
+    data = {'yoga':yoga}
+    return render(request, 'website/yoga.html', data)
