@@ -136,7 +136,6 @@ INFRASTRUCTURE_STATUS_CHOICES = (
 )
 class infrastructure(models.Model):
     type = models.CharField(max_length=500)
-    information = models.TextField()
     title = models.CharField(max_length=500)
     description = models.TextField()
     image = models.ImageField(upload_to="infrastructure")
