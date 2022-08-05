@@ -77,3 +77,8 @@ def gallery(request):
     gallery = infrastructure.objects.filter(type='GALLERY',status='Active')
     data = {'gallery':gallery}
     return render(request, 'website/gallery.html', data)
+
+def lab(request):
+    lab = infrastructure.objects.filter(type='LAB',status='Active')
+    data = {'lab':lab}
+    return render(request, 'website/lab.html', data)

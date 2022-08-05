@@ -1,0 +1,57 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>MULTIFARIOUS ACTIVITIES LABS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-area">
+        <div class="container">
+            <div class="row">
+                <div id="masonry1" class="dlab-blog-grid-2 row">
+                    <div class="sort-title clearfix text-center mb-3">
+                        <h4>MULTIFARIOUS ACTIVITIES LABS</h4>
+                    </div>
+                    <center><p>Science is a one-of-a-kind subject because of its investigations and experiments. The appeal of practical work should not be overlooked, it is frequently the motivating reason behind the decision to advance one’s education. First and foremost, science laboratories are facilities where experiments are conducted. Our labs are specifically constructed and equipped to encourage experimentation and invention.</p></center>
+                    {% for lab in lab %}
+                        <div class="post card-container col-lg-6 col-md-6 col-sm-12">
+                            <div class="blog-post blog-grid blog-rounded bg-white shadow">
+                                <div class="dlab-post-media dlab-img-effect"> 
+                                    <img src="/media/{{lab.image}}" style="height:350px;" alt=""/>
+                                </div>
+                                <div class="dlab-info p-a25">
+                                    <div class="dlab-post-meta">
+                                        <ul>
+                                            <li class="post-author"> <i class="la la-calendar"></i> {{lab.created_at | date:"M d, Y" }}</li>
+                                            <li class="post-tag"> <a href="javascript:void(0);">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</a> </li>
+                                        </ul>
+                                    </div>
+                                    <div class="dlab-post-title ">
+                                        <h4 class="post-title"><a href="javascript:void(0);">{{lab.title}}</a></h4>
+                                    </div>
+                                    <div class="dlab-post-text">
+                                        <p>{{lab.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}
