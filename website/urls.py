@@ -16,4 +16,5 @@ urlpatterns = [
     path('hostel/', views.hostel, name='hostel'),
     path('gallery/', views.gallery, name='gallery'),
     path('lab/', views.lab, name='lab'),
+    path('sports/', views.sports, name='sports'),
 ]

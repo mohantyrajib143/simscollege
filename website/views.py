@@ -82,3 +82,8 @@ def lab(request):
     lab = infrastructure.objects.filter(type='LAB',status='Active')
     data = {'lab':lab}
     return render(request, 'website/lab.html', data)
+
+def sports(request):
+    sports = infrastructure.objects.filter(type='SPORTS',status='Active')
+    data = {'sports':sports}
+    return render(request, 'website/sports.html', data)
