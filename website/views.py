@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure
 
 # Create your views here.
 def index(request):
@@ -62,3 +62,8 @@ def entrance(request):
 
 def chse(request):
     return render(request, 'website/chse.html')
+
+def college(request):
+    college = infrastructure.objects.filter(type='COLLEGE',status='Active')
+    data = {'college':college}
+    return render(request, 'website/college.html', data)
