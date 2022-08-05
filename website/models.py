@@ -129,3 +129,20 @@ class faculties(models.Model):
     
     def __str__(self):
         return self.type + ' faculties added named ' + self.name
+
+INFRASTRUCTURE_STATUS_CHOICES = (
+    ('Active','Active'),
+    ('Inactive', 'Inactive'),
+)
+class infrastructure(models.Model):
+    type = models.CharField(max_length=500)
+    information = models.TextField()
+    title = models.CharField(max_length=500)
+    description = models.TextField()
+    image = models.ImageField(upload_to="infrastructure")
+    status = models.CharField(max_length=500, choices=INFRASTRUCTURE_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.type + ' infrastructure added with title ' + self.title
