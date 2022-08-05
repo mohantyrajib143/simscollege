@@ -22,4 +22,5 @@ urlpatterns = [
     path('iit/', views.iit, name='iit'),
     path('chse_result/', views.chse_result, name='chse_result'),
     path('news/', views.news, name='news'),
+    path('notices/', views.notices, name='notices'),
 ]

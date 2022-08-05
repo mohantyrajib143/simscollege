@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice
 
 # Create your views here.
 def index(request):
@@ -109,7 +109,12 @@ def chse_result(request):
     return render(request, 'website/chse_result.html', data)
 
 def news(request):
-    news = AllNews.objects.filter(status='Active')
+    news = AllNews.objects.filter(status='Active').order_by('-id')
     aboutInfo = AboutUs.objects.filter(id=1)
     data = {'news':news, 'aboutInfo':aboutInfo[0]}
     return render(request, 'website/news.html', data)
+
+def notices(request):
+    notices = notice.objects.filter(status='Active').order_by('-id')
+    data = {'notices':notices}
+    return render(request, 'website/notices.html', data)
