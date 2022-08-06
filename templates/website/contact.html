@@ -1,0 +1,158 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>CONTACT US</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-full content-inner contact-style-1">
+        <div class="container">
+            <div class="row dzseth">
+                <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper bx-style-1 bg-white p-lr20 p-tb30 center seth radius-sm">
+                        <div class="icon-lg text-primary m-b20"> <a href="javascript:void(0);" class="icon-cell"><i class="ti-location-pin"></i></a> </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Address</h5>
+                            <p>{{simsInfo.address}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper bx-style-1 bg-white p-lr20 p-tb30 center seth radius-sm">
+                        <div class="icon-lg text-primary m-b20"> <a href="javascript:void(0);" class="icon-cell"><i class="ti-email"></i></a> </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Email</h5>
+                            <p><a href="javascript:void(0);">{{simsInfo.email1}}</a> <br/> <a href="javascript:void(0);">{{simsInfo.email2}}</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper bx-style-1 bg-white p-lr20 p-tb30 center seth radius-sm">
+                        <div class="icon-lg text-primary m-b20"> <a href="javascript:void(0);" class="icon-cell"><i class="ti-mobile"></i></a> </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Phone</h5>
+                            <p>{{simsInfo.contact1}} <br/> {{simsInfo.contact2}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 m-b30">
+                    <div class="icon-bx-wraper bx-style-1 bg-white p-lr20 p-tb30 center seth radius-sm">
+                        <div class="icon-lg text-primary m-b20"> <a href="javascript:void(0);" class="icon-cell"><i class="fa fa-whatsapp"></i></a> </div>
+                        <div class="icon-content">
+                            <h5 class="dlab-tilte text-uppercase">Whatsapp</h5>
+                            <p>{{simsInfo.whatsapp1}} <br/> {{simsInfo.whatsapp2}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 m-b30">
+                    <div class="p-a30 bg-white clearfix border-1 radius-sm">
+                        <span id="success" style='font-size:20px;color:green;font-weight: bold;'></span><br>
+                        <h3>Send Message Us</h3>
+                        <form method="post" id="ContactForm" autocomplete="off">{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="name" id="name" type="text" required class="form-control" placeholder="Your Name" onKeyPress="return ValidateName(event);">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group"> 
+                                            <input name="email" id="email" type="email" class="form-control" required  placeholder="Your Email Id" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="contact" id="contact" type="text" minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required class="form-control" placeholder="Phone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input name="subject" id="subject" type="text" required class="form-control" placeholder="Subject">
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <textarea name="message" id="message" rows="4" class="form-control" required placeholder="Your Message..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button name="submitBtn" id="submitBtn" type="submit" value="Submit" class="site-button"> <span>Submit</span> </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 m-b30 d-flex">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.56897308439!2d85.81878745035488!3d20.482889186229375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1911db2e51be49%3A0x9ddb7068af358595!2sSIMS%20College!5e0!3m2!1sen!2sin!4v1658590230987!5m2!1sen!2sin" class="align-self-stretch radius-sm" style="border:0; width:100%;  min-height:100%;" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <script>
+        function ValidateName(evt){
+            var keyCode = (evt.which) ? evt.which : evt.keyCode
+            if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32)
+            
+            return false;
+                return true;
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).on('submit','#ContactForm',function(e){
+            $('#submitBtn').prop("disabled", true);
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/contact/',
+                data:{
+                    name:$('#name').val(),
+                    email:$('#email').val(),
+                    contact:$('#contact').val(),
+                    subject:$('#subject').val(),
+                    message:$('#message').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){  
+                    $('#submitBtn').prop("disabled", false);
+                    $('#ContactForm').trigger("reset");
+                    if(data.status == 1){
+                        $('#success').html("Successfully Submited, We Will Connect With You Soon!!")
+                        $('#success').fadeIn(1000).delay(2000).fadeOut(1000);
+                    }
+                    
+                    setTimeout(function(){  
+                        $('#success').fadeOut("Slow");
+                        $('#submitBtn').css("cursor", "allowed");
+                    }, 1000);  
+                }
+            });
+        });
+    </script>
+{% endblock %}
