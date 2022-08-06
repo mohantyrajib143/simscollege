@@ -1,0 +1,93 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>SPORTS CLUB</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-full content-inner wow fadeIn" data-wow-delay="0.4s">
+        <div class="container">
+            <div class="section-head text-center">
+                <h2 class="title">Alumni Testimonials</h2>
+                <p> At SIMS, we encourage experimentation & exploration. Trust : Our Ultimate Strength!!</p>
+            </div>
+            <div class="section-content m-b30 row">
+                <div class="testimonial-six owl-loaded owl-theme owl-carousel owl-none dots-style-2">
+                    <div class="item">
+                        <div class="testimonial-8">
+                            <div class="testimonial-text">
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make [...]</p>
+                            </div>
+                            <div class="testimonial-detail clearfix">
+                                <div class="testimonial-pic radius shadow"><img src="images/testimonials/pic1.jpg" width="100" height="100" alt=""></div>
+                                <h5 class="testimonial-name m-t0 m-b5">David Matin</h5> <span class="testimonial-position">Student</span> </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimonial-8">
+                            <div class="testimonial-text">
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make [...]</p>
+                            </div>
+                            <div class="testimonial-detail clearfix">
+                                <div class="testimonial-pic radius shadow"><img src="images/testimonials/pic1.jpg" width="100" height="100" alt=""></div>
+                                <h5 class="testimonial-name m-t0 m-b5">David Matin</h5> <span class="testimonial-position">Student</span> </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimonial-8">
+                            <div class="testimonial-text">
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the when an printer took a galley of type and scrambled it to make [...]</p>
+                            </div>
+                            <div class="testimonial-detail clearfix">
+                                <div class="testimonial-pic radius shadow"><img src="images/testimonials/pic1.jpg" width="100" height="100" alt=""></div>
+                                <h5 class="testimonial-name m-t0 m-b5">David Matin</h5> <span class="testimonial-position">Student</span> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-full bg-white content-inner-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sort-title clearfix text-center">
+                        <h4>Student’s Testimonials</h4>
+                    </div>
+                    <div class="section-content">
+                        <div class="testimonial-two-dots owl-theme owl-dots-primary-full owl-loaded owl-carousel owl-none">
+                            {% for stdTestmonial in stdTestmonial %}
+                                <div class="item">
+                                    <div class="testimonial-2">
+                                        <div class="testimonial-text">
+                                            <p>{{stdTestmonial.message}}</p>
+                                        </div>
+                                        <div class="testimonial-detail clearfix">
+                                            <div class="testimonial-pic quote-left radius shadow"><img src="/media/{{stdTestmonial.image}}" width="100" height="100" alt=""></div>
+                                            <strong class="testimonial-name">{{stdTestmonial.name}}</strong> <span class="testimonial-position">{{stdTestmonial.position}}</span></div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}

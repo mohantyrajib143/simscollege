@@ -165,3 +165,8 @@ def careers_info(request, id):
         simsInfo = sims.objects.filter(id=1)
         data = {'careerInfo':careerInfo[0], 'simsInfo':simsInfo[0]}
         return render(request, 'website/careers_info.html', data)
+
+def testimonial(request):
+    stdTestmonial = student_testmonials.objects.all().order_by('-id')
+    data = {'stdTestmonial':stdTestmonial}
+    return render(request, 'website/testimonial.html', data)
