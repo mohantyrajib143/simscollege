@@ -73,11 +73,6 @@
                                     <span class="title">Address:</span>
                                     <span class="info">{{simsInfo.address}}</span>
                                 </li>
-                                <li>
-                                    <i class="la la-users"></i>
-                                    <span class="title">Graduate Student:</span>
-                                    <span class="info">{{simsInfo.graduate_std}}+</span>
-                                </li>
                             </ul>
                         </div>
                         <div class="widget widget_archive">
@@ -93,7 +88,7 @@
                                     <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Enter mobile.." minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
                                 </div>
                                 <div class="mt-2">
-                                    <select class="bs-select-hidden form-control">
+                                    <select name="stream" id="stream" class="bs-select-hidden form-control">
                                         <option value="">Select Stream</option>
                                         <option value="SCIENCE">SCIENCE</option>
                                         <option value="COMMERCE">COMMERCE</option>
@@ -105,6 +100,7 @@
                                 <div class="mt-2">
                                     <input type="submit" name="submit" id="submitBtn" value="SUBMIT NOW" class="btn btn-primary form-control">
                                 </div>
+                                <span class="mt-4" id="success" style='font-size:16px;color:green;font-weight: bold;'></span>
                             </form>
                         </div>
                     </aside>
@@ -120,5 +116,45 @@
         setInterval(function() {
             blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
         }, 200);
+    </script>
+    <script>
+        function ValidateName(evt){
+            var keyCode = (evt.which) ? evt.which : evt.keyCode
+            if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32)
+            
+            return false;
+                return true;
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).on('submit','#admission_form',function(e){
+            $('#submitBtn').prop("disabled", true);
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/',
+                data:{
+                    name:$('#name').val(),
+                    email:$('#email').val(),
+                    mobile:$('#mobile').val(),
+                    stream:$('#stream').val(),
+                    message:$('#message').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){  
+                    $('#submitBtn').prop("disabled", false);
+                    $('#admission_form').trigger("reset");
+                    if(data.status == 1){
+                        $('#success').html("Successfully Submited!")
+                        $('#success').fadeIn(1000).delay(2000).fadeOut(1000);
+                    }
+                    
+                    setTimeout(function(){  
+                        $('#success').fadeOut("Slow");
+                        $('#submitBtn').css("cursor", "allowed");
+                    }, 1000);  
+                }
+            });
+        });
     </script>
 {% endblock %}
