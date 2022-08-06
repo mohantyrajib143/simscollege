@@ -1,0 +1,124 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>ADMISSION</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-7">
+                    <div class="event-single">
+                        <div class="dlab-media m-b30">
+                            <a href="javascript:;"><img src="{% static 'website/images/banner/banner3.jpg' %}" alt=""></a>
+                        </div>
+                        <h2 id="blink" class="dlab-title"><b style="color: #DD3333;">ADMISSIONS OPEN!! FOR BATCH : 2022 - 2023</b></h2>
+                        <div class="dlab-post-text">
+                            <h4>Eligibility</h4>
+                            <p>➦ Students who have passed 10th Board Examination conducted by Board of Secondary Education, Odisha / CBSE / ICSE are eligible for admission. Admission will be strictly on merit basis under Student Academic Management System (SAMS) as per Resolution No.: 1-A-HE-4A-2010-3702/HE dated 20.02.2010 of Government of Odisha, Higher Education Department. Candidates selected under e-admission procedure (SAMS) for admission are intimated individually by post/e-mail in prescribed intimation letter formulated by Govt of Odisha regarding the date of admission and fees to be paid. The names of the selected candidates are also displayed in the notice board. Incomplete application and/or applications containing inaccurate information are liable to be rejected. The decision of the Admission Committee in all matters of admission will be final and binding.</p>
+
+                            <h4>How to Apply</h4>
+                            <p>➦ Application forms will be available in the web site of Govt. of Odisha, Department of Higher Education (https://dhe.odisha.gov.in/) . Candidates are required to fill the form online for admission. For further information call on the Help line number {{simsInfo.contact1}}, {{simsInfo.contact2}}.</p>
+
+                            <h4>Summer Course</h4>
+                            <p>➦ Our goal is to encourage and enrich each and every student to realize his/her dreams to be a Doctor, Engineer, Scientist & Civil Services. Effective teaching trains our students during these two months to excel in CHSE as well as competitive examinations, by clearing their fundamentals so that a student can start a successful beginning to higher secondary syllabus.Application form along with prospectus is available at.</p>
+                            
+                            <h4>Documents to be Submitted at the Time of Admission</h4>
+                            <ul class="list-checked primary">
+                                <li>School Leaving Certificate in Original.</li>
+                                <li>Attested photocopy of Mark-sheet of 10th Board Exam.</li>
+                                <li>Original conduct certificate.</li>
+                                <li>Four recent passport size colour photographs.</li>
+                                <li>Attested photocopy of caste certificate (for reserve categories only).</li>
+                                <li>Migration certificate in original if coming from other Board.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-5 m-b30">
+                    <aside class="side-bar sticky-top">
+                        <div class="widget widget_event_info">
+                            <h5 class="widget-title style-1">CONTACT INFORMATION</h5>
+                            <ul>									
+                                <li>
+                                    <i class="la la-envelope"></i>
+                                    <span class="title">Email:</span>
+                                    <span class="info">{{simsInfo.email1}}</span>
+                                </li>
+                                <li>
+                                    <i class="la la-phone"></i>
+                                    <span class="title">Phone:</span>
+                                    <span class="info">{{simsInfo.contact1}}</span>
+                                </li>
+                                <li>
+                                    <i class="la la-whatsapp"></i>
+                                    <span class="title">Whatsapp:</span>
+                                    <span class="info">{{simsInfo.whatsapp1}}</span>
+                                </li>
+                                <li>
+                                    <i class="la la-map-marker"></i>
+                                    <span class="title">Address:</span>
+                                    <span class="info">{{simsInfo.address}}</span>
+                                </li>
+                                <li>
+                                    <i class="la la-users"></i>
+                                    <span class="title">Graduate Student:</span>
+                                    <span class="info">{{simsInfo.graduate_std}}+</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget widget_archive">
+                            <h5 class="widget-title style-1">ADMISSION ENQUIRY</h5>
+                            <form autocomplete="off" id="admission_form" method="post" action="{% url 'admission' %}">{% csrf_token %}
+                                <div>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter full name.." onKeyPress="return ValidateName(event);" required>
+                                </div>
+                                <div class="mt-2">
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter email address.." required>
+                                </div>
+                                <div class="mt-2">
+                                    <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Enter mobile.." minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                </div>
+                                <div class="mt-2">
+                                    <select class="bs-select-hidden form-control">
+                                        <option value="">Select Stream</option>
+                                        <option value="SCIENCE">SCIENCE</option>
+                                        <option value="COMMERCE">COMMERCE</option>
+                                    </select>
+                                </div>
+                                <div class="mt-2">
+                                    <textarea class="form-control" name="message" id="message" placeholder="Something about you!" required></textarea>
+                                </div>
+                                <div class="mt-2">
+                                    <input type="submit" name="submit" id="submitBtn" value="SUBMIT NOW" class="btn btn-primary form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} 
+    <script type="text/javascript">
+        var blink = document.getElementById('blink');
+        setInterval(function() {
+            blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+        }, 200);
+    </script>
+{% endblock %}

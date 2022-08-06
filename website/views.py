@@ -118,3 +118,23 @@ def notices(request):
     notices = notice.objects.filter(status='Active').order_by('-id')
     data = {'notices':notices}
     return render(request, 'website/notices.html', data)
+
+def admission(request):
+    msg={}
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        mobile = request.POST['mobile']
+        stream = request.POST['stream']
+        message = request.POST['message']
+
+        data = summer_course_enquiry(name=name, email=email, mobile=mobile, stream=stream, message=message)
+        data.save()
+
+        if data.id != 0:
+            msg = { "status": 1 } 
+        return JsonResponse(msg)
+    else:
+        simsInfo = sims.objects.filter(id=1)
+        data = {'simsInfo':simsInfo[0]}
+        return render(request, 'website/admission.html', data)

@@ -23,4 +23,5 @@ urlpatterns = [
     path('chse_result/', views.chse_result, name='chse_result'),
     path('news/', views.news, name='news'),
     path('notices/', views.notices, name='notices'),
+    path('admission/', views.admission, name='admission'),
 ]
