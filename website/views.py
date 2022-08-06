@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice, careers as AllCareers
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice, careers as AllCareers, JobApply
 
 # Create your views here.
 def index(request):
@@ -145,7 +145,23 @@ def careers(request):
     return render(request, 'website/careers.html', data)
 
 def careers_info(request, id):
-    careerInfo = AllCareers.objects.filter(id=id)
-    simsInfo = sims.objects.filter(id=1)
-    data = {'careerInfo':careerInfo[0], 'simsInfo':simsInfo[0]}
-    return render(request, 'website/careers_info.html', data)
+    msg={}
+    if request.method=='POST':
+        title = request.POST['title']
+        name = request.POST['name']
+        email = request.POST['email']
+        mobile = request.POST['mobile']
+        resume = request.FILES['resume']
+        message = request.POST['message']
+
+        job = JobApply(title=title, name=name, email=email, mobile=mobile, resume=resume, message=message)
+        job.save()
+
+        if job.id != 0:
+            msg = { "status": 1 } 
+        return JsonResponse(msg)
+    else:
+        careerInfo = AllCareers.objects.filter(id=id)
+        simsInfo = sims.objects.filter(id=1)
+        data = {'careerInfo':careerInfo[0], 'simsInfo':simsInfo[0]}
+        return render(request, 'website/careers_info.html', data)

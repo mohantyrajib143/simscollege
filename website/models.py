@@ -206,3 +206,16 @@ class careers(models.Model):
     
     def __str__(self):
         return self.title
+
+class JobApply(models.Model):
+    title = models.CharField(max_length=500)
+    name = models.CharField(max_length=500)
+    email = models.CharField(max_length=500)
+    mobile = models.CharField(max_length=500)
+    resume = models.ImageField(upload_to="resume")
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return 'New job applied by named ' + self.name
