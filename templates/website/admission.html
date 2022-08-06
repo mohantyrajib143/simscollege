@@ -132,7 +132,7 @@
             e.preventDefault();
             $.ajax({
                 type:'POST',
-                url:'/',
+                url:'/admission/',
                 data:{
                     name:$('#name').val(),
                     email:$('#email').val(),
@@ -145,7 +145,7 @@
                     $('#submitBtn').prop("disabled", false);
                     $('#admission_form').trigger("reset");
                     if(data.status == 1){
-                        $('#success').html("Successfully Submited!")
+                        $('#success').html("Successfully Submited! Thanks.")
                         $('#success').fadeIn(1000).delay(2000).fadeOut(1000);
                     }
                     
