@@ -143,3 +143,9 @@ def careers(request):
     careers = AllCareers.objects.filter(status='Active').order_by('-id')
     data = {'careers':careers}
     return render(request, 'website/careers.html', data)
+
+def careers_info(request, id):
+    careerInfo = AllCareers.objects.filter(id=id)
+    simsInfo = sims.objects.filter(id=1)
+    data = {'careerInfo':careerInfo[0], 'simsInfo':simsInfo[0]}
+    return render(request, 'website/careers_info.html', data)
