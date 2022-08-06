@@ -190,3 +190,19 @@ class notice(models.Model):
     
     def __str__(self):
         return self.title
+
+CAREER_STATUS_CHOICES = (
+    ('Active','Active'),
+    ('Inactive', 'Inactive'),
+)
+class careers(models.Model):
+    title = models.CharField(max_length=500)
+    description = models.TextField()
+    experience = models.CharField(max_length=500)
+    qualification = models.CharField(max_length=500)
+    status = models.CharField(max_length=500, choices=CAREER_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title

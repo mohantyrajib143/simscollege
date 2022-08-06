@@ -1,0 +1,60 @@
+{% extends 'website/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="page-content bg-gray">
+    <div class="dlab-bnr-inr overlay-black-middle bg-pt" style="background-image:url({% static 'website/images/banner/breadcrumb.jpg' %})">
+        <div class="container">
+            <div class="dlab-bnr-inr-entry">
+                <h1 class="text-white">SHANTI INSTITUTE OF MANAGEMENT AND STUDIES</h1>
+                <div class="breadcrumb-row">
+                    <ul class="list-inline">
+                        <li><a href="/">SIMS</a></li>
+                        <li>OUR CAREERS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-area bg-gray">
+        <div class="container">
+            <div class="row">
+                {% for careers in careers %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 m-b30">
+                        <div class="blog-post blog-md clearfix shadow bg-white">
+                            <div class="dlab-post-info">
+                                <div class="dlab-post-meta">
+                                    <ul>
+                                        <li class="post-author"> <i class="fa fa-map-marker"></i> Cuttack, Odisha </li>
+                                        <li class="post-tag"> <a href="javascript:void(0);">{{careers.experience}}</a> </li>
+                                    </ul>
+                                </div>
+                                <div class="dlab-post-title ">
+                                    <h4 class="post-title"><a href="">{{careers.title}}</a></h4>
+                                </div>
+                                <div class="dlab-post-text">
+                                    <p>{{careers.description}}</p>
+                                </div>
+                                <div class="post-footer">
+                                    <div class="dlab-post-meta">
+                                        <ul>
+                                            <li class="post-date"> <i class="la la-calendar"></i> <strong>{{careers.created_at | date:"M d, Y" }}</strong></li>
+                                        </ul>
+                                    </div>
+                                    <ul class="dlab-social-icon dez-border">
+                                        <a target="_blank" href="/career_info/{{careers.id}}"><button class="btn btn-primary">APPLY NOW</button></a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <center><p style="color:red;font-size:20px;"><b>- NO JOBS ARE AVAILABLE -</b></p></center>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %} {% endblock %}
