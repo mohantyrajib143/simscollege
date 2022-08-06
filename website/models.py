@@ -219,3 +219,19 @@ class JobApply(models.Model):
 
     def __str__(self):
         return 'New job applied by named ' + self.name
+
+ALUMNI_TESTMONIAL_STATUS_CHOICES = (
+       ('Active','Active'),
+       ('Inactive', 'Inactive'),
+    )
+class alumni_testmonials(models.Model):
+    name = models.CharField(max_length=500)
+    position = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="home/alumni_testmonials")
+    message = models.TextField()
+    status = models.CharField(max_length=500, choices=ALUMNI_TESTMONIAL_STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return ' New Testimonial Added By Alumni ' + self.name

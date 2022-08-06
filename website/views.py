@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice, careers as AllCareers, JobApply
+from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice, careers as AllCareers, JobApply, alumni_testmonials
 
 # Create your views here.
 def index(request):
@@ -168,5 +168,6 @@ def careers_info(request, id):
 
 def testimonial(request):
     stdTestmonial = student_testmonials.objects.all().order_by('-id')
-    data = {'stdTestmonial':stdTestmonial}
+    alumniTestmonial = alumni_testmonials.objects.all().order_by('-id')
+    data = {'stdTestmonial':stdTestmonial, 'alumniTestmonial':alumniTestmonial}
     return render(request, 'website/testimonial.html', data)
