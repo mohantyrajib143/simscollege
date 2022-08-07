@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from website.models import slider, sims, summer_course_enquiry, student_testmonials, about as AboutUs, leader, awards as Awards, faculties as AllFaculty, infrastructure, results, news as AllNews, notice, careers as AllCareers, JobApply, alumni_testmonials, contact as ContactSave
+from college.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
 
 # Create your views here.
 def index(request):
@@ -14,6 +20,18 @@ def index(request):
 
         data = summer_course_enquiry(name=name, email=email, mobile=mobile, stream=stream, message=message)
         data.save()
+
+        html_content = render_to_string("website/admission_email.html",{'title':'Successfully applied','name':name})
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+            "Successfully Applied At SIMS",
+            text_content,
+            settings.EMAIL_HOST_USER,
+            [email]
+        )
+        email.attach_alternative(html_content,"text/html")
+        email.send()
 
         if data.id != 0:
             msg = { "status": 1 } 
