@@ -13,19 +13,21 @@ def index(request):
     msg={}
     if request.method=='POST':
         name = request.POST['name']
-        email = request.POST['email']
+        emailid = request.POST['email']
         mobile = request.POST['mobile']
         stream = request.POST['stream']
         message = request.POST['message']
 
-        data = summer_course_enquiry(name=name, email=email, mobile=mobile, stream=stream, message=message)
+        data = summer_course_enquiry(name=name, email=emailid, mobile=mobile, stream=stream, message=message)
         data.save()
 
-        html_content = render_to_string("website/admission_email.html",{'title':'Successfully applied','name':name})
+        email = 'mohantyrajib1998@gmail.com'
+
+        html_content = render_to_string("website/admission_email.html",{'title':'New summer course applied','name':name, 'email':emailid, 'mobile':mobile, 'stream':stream, 'message':message})
         text_content = strip_tags(html_content)
 
         email = EmailMultiAlternatives(
-            "Successfully Applied At SIMS",
+            "New Summer Course Applied At SIMS",
             text_content,
             settings.EMAIL_HOST_USER,
             [email]
