@@ -210,13 +210,27 @@ def contact(request):
     msg={}
     if request.method=='POST':
         name = request.POST['name']
-        email = request.POST['email']
+        emailid = request.POST['email']
         contact = request.POST['contact']
         subject = request.POST['subject']
         message = request.POST['message']
 
-        data = ContactSave(name=name, email=email, contact=contact, subject=subject, message=message)
+        data = ContactSave(name=name, email=emailid, contact=contact, subject=subject, message=message)
         data.save()
+
+        email = 'mohantyrajib1998@gmail.com'
+
+        html_content = render_to_string("website/contact_email.html",{'title':'New contact information added','name':name, 'email':emailid, 'contact':contact, 'subject':subject, 'message':message})
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+            "New contact information added",
+            text_content,
+            settings.EMAIL_HOST_USER,
+            [email]
+        )
+        email.attach_alternative(html_content,"text/html")
+        email.send()
 
         if data.id != 0:
             msg = { "status": 1 } 
