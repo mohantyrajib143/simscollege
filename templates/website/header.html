@@ -80,7 +80,7 @@
                             </div>
                             <ul class="nav navbar-nav">
                                 <li class="active has-mega-menu homedemo">
-                                    <a href="javascript:;">Home</a>
+                                    <a href="/">Home</a>
                                 </li>
                                 <li>
                                     <a href="javascript:;">About<i class="fas fa-chevron-down"></i></a>
@@ -129,14 +129,16 @@
                             </ul>
                             <div class="dlab-social-icon">
                                 <ul>
-                                    <li><a class="site-button circle fab fa-facebook-f" href="javascript:void(0);"></a>
-                                    </li>
-                                    <li><a class="site-button  circle fab fa-twitter" href="javascript:void(0);"></a>
-                                    </li>
-                                    <li><a class="site-button circle fab fa-linkedin-in" href="javascript:void(0);"></a>
-                                    </li>
-                                    <li><a class="site-button circle fab fa-instagram" href="javascript:void(0);"></a>
-                                    </li>
+                                    {% for about in about %}
+                                        <li><a class="site-button circle fab fa-facebook-f" target="_blank" href="{{about.facebook}}"></a>
+                                        </li>
+                                        <li><a class="site-button  circle fab fa-twitter" target="_blank" href="{{about.twitter}}"></a>
+                                        </li>
+                                        <li><a class="site-button circle fab fa-linkedin-in" target="_blank" href="{{about.linkedin}}"></a>
+                                        </li>
+                                        <li><a class="site-button circle fab fa-instagram" target="_blank" href="{{about.instagram}}"></a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -169,12 +171,12 @@
                             <div class="widget widget_services border-0">
                                 <h5 class="footer-title">Infrastructure</h5>
                                 <ul class="mm-t10">
-                                    <li><a href="javascript:void(0);">College Facilities</a></li>
-                                    <li><a href="javascript:void(0);">Hostel Facilities</a></li>
-                                    <li><a href="javascript:void(0);">Our Gallery</a></li>
-                                    <li><a href="javascript:void(0);">Multifarious Labs</a></li>
-                                    <li><a href="javascript:void(0);">Sports Activity </a></li>
-                                    <li><a href="javascript:void(0);">Yoga & Meditation </a></li>
+                                    <li><a href="/college">College Facilities</a></li>
+                                    <li><a href="/hostel">Hostel Facilities</a></li>
+                                    <li><a href="/gallery">Our Gallery</a></li>
+                                    <li><a href="/lab">Multifarious Labs</a></li>
+                                    <li><a href="/sports">Sports Activity </a></li>
+                                    <li><a href="/yoga">Yoga & Meditation </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -182,12 +184,12 @@
                             <div class="widget widget_services border-0">
                                 <h5 class="footer-title">Usefull Link</h5>
                                 <ul class="mm-t10">
-                                    <li><a href="javascript:void(0);">About Us</a></li>
-                                    <li><a href="javascript:void(0);">Contact Us</a></li>
-                                    <li><a href="javascript:void(0);">Our Careers</a></li>
-                                    <li><a href="javascript:void(0);">Our Testimonials</a></li>
-                                    <li><a href="javascript:void(0);">Our Lattest News </a></li>
-                                    <li><a href="javascript:void(0);">Our Lattest Notices </a></li>
+                                    <li><a href="/about">About Us</a></li>
+                                    <li><a href="/contact">Contact Us</a></li>
+                                    <li><a href="/careers">Our Careers</a></li>
+                                    <li><a href="/testimonial">Our Testimonials</a></li>
+                                    <li><a href="/news">Our Lattest News </a></li>
+                                    <li><a href="/notices">Our Lattest Notices </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -211,14 +213,18 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 text-left "> <span>&copy; 2008 - 2022 <a href="https://dexignzone.com/" target="_blank">Shanti Institute of Management and Studies (SIMS) | All Rights Reserved!</a></span></div>
+                        <div class="col-md-6 col-sm-6 text-left "> <span>&copy; 2008 - 2022 <a href="" target="_blank">Shanti Institute of Management and Studies (SIMS) | All Rights Reserved!</a></span></div>
                         <div class="col-md-6 col-sm-6 text-right ">
                             <div class="widget-link ">
                                 <ul>
-                                    <li><a href="javascript:void(0);"> About Us</a></li>
-                                    <li><a href="javascript:void(0);"> Contact Us</a></li>
-                                    <li><a href="javascript:void(0);"> News</a></li>
-                                    <li><a href="javascript:void(0);"> Notices</a></li>
+                                    {% for about in about %}
+                                        <a href="{{about.facebook}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-facebook-f"></i></button></a>
+                                        <a href="{{about.instagram}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-instagram"></i></button></a>
+                                        <a href="{{about.linkedin}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-linkedin-in"></i></button></a>
+                                        <a href="{{about.whatsapp}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-whatsapp"></i></button></a>
+                                        <a href="{{about.twitter}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-twitter"></i></button></a>
+                                        <a href="{{about.telegram}}" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-telegram"></i></button></a>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
