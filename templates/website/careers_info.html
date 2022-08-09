@@ -3,9 +3,9 @@
 {% block title %} HOME | UNQCOLLECTION {% endblock title %}
 {% block body %}
 <style>
-    input[type=file] {
+    /* input[type=file] {
       color: transparent !important;
-  }
+  } */
 input[type=file]::before {
     content: " Attach Your CV. ";
     color: black;
@@ -65,10 +65,10 @@ input[type=file]::before {
                     </ul>
                 </div>
                 <div class="col-lg-8 col-md-7 col-sm-12 m-b30">
-                    <form class="contact-box dzForm" autocomplete="off" action="/careers_info/{{careerInfo.id}}" method="post" id='CareerForm' enctype="multipart/form-data">{% csrf_token %}
+                    <form class="contact-box" autocomplete="on" action="{% url 'careers_info' careerInfo.id %}" method="post" id='CareerForm' enctype="multipart/form-data">{% csrf_token %}
                         <h3 class="title-box">Write us a few words about you & your rxperience and we’ll prepare a proposal for you within <strong>24</strong> hours</h3>
-                        <div id="success" style="color: green;"></div><br>
                         <div class="row">
+                            <span id="success" style='font-size:16px;color:green;margin-bottom: 10px;'></span><br>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <div class="input-group">
@@ -100,14 +100,14 @@ input[type=file]::before {
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input id="resume" name="resume" type="file" accept="application/msword, application/pdf" required="" class="form-control">
+                                        <input name="resume" type="file" accept=".doc, .docx, .pdf" required="" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <textarea id="message" name="message" rows="4" class="form-control" required="" placeholder="Tell us about your yours"></textarea>
+                                        <textarea id="message" name="message" rows="4" class="form-control" required="" placeholder="Tell us about you!!"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,20 +131,6 @@ input[type=file]::before {
             return false;
             return true;
         }
-    </script>
-    <script>
-        window.pressed = function(){
-        var a = document.getElementById('aa');
-        if(a.value == "")
-        {
-            fileLabel.innerHTML = "Chooseddddddddddddddd file";
-        }
-        else
-        {
-            var theSplit = a.value.split('\\');
-            fileLabel.innerHTML = theSplit[theSplit.length-1];
-        }
-    };
     </script>
     <script type="text/javascript">
         $(document).on('submit','#CareerForm',function(e){

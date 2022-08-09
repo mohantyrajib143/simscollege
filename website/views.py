@@ -7,6 +7,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+from django.core.mail import EmailMessage
+import os
 
 # Create your views here.
 def index(request):
@@ -179,17 +181,34 @@ def careers(request):
     return render(request, 'website/careers.html', data)
 
 def careers_info(request, id):
-    msg={}
     if request.method=='POST':
         title = request.POST['title']
         name = request.POST['name']
-        email = request.POST['email']
+        emailid = request.POST['email']
         mobile = request.POST['mobile']
         resume = request.FILES['resume']
         message = request.POST['message']
 
-        job = JobApply(title=title, name=name, email=email, mobile=mobile, resume=resume, message=message)
+        job = JobApply(title=title, name=name, email=emailid, mobile=mobile, resume=resume, message=message)
         job.save()
+
+        email = 'mohantyrajib1998@gmail.com'
+
+        html_content = render_to_string("website/job_email.html",{'title':'New job apply', 'position':title,'name':name, 'email':emailid, 'mobile':mobile, 'message':message})
+        text_content = strip_tags(html_content)
+
+        email = EmailMultiAlternatives(
+            "New job apply",
+            text_content,
+            settings.EMAIL_HOST_USER,
+            [email]
+        )
+        cvdir = "resume/" + str(resume)
+        email.attach_alternative(html_content,"text/html")
+        filename = os.path.join(settings.MEDIA_ROOT, cvdir)
+        email.attach_file(filename)
+        # email.attach_file('/home/iglulabs/Documents/Django/college/media/resume/' + str(resume))
+        email.send()
 
         if job.id != 0:
             msg = { "status": 1 } 
