@@ -181,7 +181,10 @@ def careers(request):
     return render(request, 'website/careers.html', data)
 
 def careers_info(request, id):
-    if request.method=='POST':
+    if not AllCareers.objects.filter(id=id).exists():
+        return render(request, 'website/404.html')
+
+    elif request.method=='POST':
         title = request.POST['title']
         name = request.POST['name']
         emailid = request.POST['email']
@@ -213,6 +216,7 @@ def careers_info(request, id):
         if job.id != 0:
             msg = { "status": 1 } 
         return JsonResponse(msg)
+    
     else:
         careerInfo = AllCareers.objects.filter(id=id)
         simsInfo = sims.objects.filter(id=1)

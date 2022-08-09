@@ -65,7 +65,7 @@ input[type=file]::before {
                     </ul>
                 </div>
                 <div class="col-lg-8 col-md-7 col-sm-12 m-b30">
-                    <form class="contact-box" autocomplete="on" action="{% url 'careers_info' careerInfo.id %}" method="post" id='CareerForm' enctype="multipart/form-data">{% csrf_token %}
+                    <form class="contact-box" autocomplete="off" action="{% url 'careers_info' careerInfo.id %}" method="post" id='CareerForm' enctype="multipart/form-data">{% csrf_token %}
                         <h3 class="title-box">Write us a few words about you & your rxperience and we’ll prepare a proposal for you within <strong>24</strong> hours</h3>
                         <div class="row">
                             <span id="success" style='font-size:16px;color:green;margin-bottom: 10px;'></span><br>
