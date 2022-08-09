@@ -7,3 +7,6 @@ def login(request):
 
 def forgot_pass(request):
     return render(request, 'dashboard/forgot_pass.html')
+
+def dashboard(request):
+    return render(request, 'dashboard/dashboard.html')
