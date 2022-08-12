@@ -1,0 +1,108 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Manage SIMS About Us Information</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Website</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">About Us</a></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'update_aboutus' %}" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %} 
+                                        <h4 style="color: green; font-weight:bold;text-align: center;" class="card-title">{{ message }}</h4>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS ABOUT</b></label>
+                                        <textarea id="about" name="about" class="form-control" rows="7" required>{{query.about}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS MISSION</b></label>
+                                        <textarea id="mission" name="mission" class="form-control" rows="3" required>{{query.mission}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS VISION</b></label>
+                                        <textarea id="vision" name="vision" class="form-control" rows="3" required>{{query.vision}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS FEATURES</b></label>
+                                        <textarea id="features" name="features" class="form-control" rows="5" required>{{query.features}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS FACEBOOK LINK</b></label>
+                                        <input id="facebook" name="facebook" type="url" class="form-control" value="{{query.facebook}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS INSTAGRAM LINK</b></label>
+                                        <input id="instagram" name="instagram" type="url" class="form-control" value="{{query.instagram}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS LINKEDIN LINK</b></label>
+                                        <input id="linkedin" name="linkedin" type="url" class="form-control" value="{{query.linkedin}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS WHATSAPP LINK</b></label>
+                                        <input id="whatsapp" name="whatsapp" type="url" class="form-control" value="{{query.whatsapp}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS TWITTER LINK</b></label>
+                                        <input id="twitter" name="twitter" type="url" class="form-control" value="{{query.twitter}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS TELEGRAM LINK</b></label>
+                                        <input id="telegram" name="telegram" type="url" class="form-control" value="{{query.telegram}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a onClick="return confirm('Are you sure? to cancel!')" href="/dashboard/index"><button type="submit" class="btn btn-light">Cancel</button></div></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block js %}{% endblock %}
