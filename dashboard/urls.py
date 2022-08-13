@@ -26,9 +26,15 @@ urlpatterns = [
     path('update_awards/<int:id>', views.update_awards, name='update_awards'),
     path('delete_awards/<int:id>', views.delete_awards, name='delete_awards'),
 
-    # Manage Testimonial
+    # Manage Student Testimonial
     path('manage_stdtestimonial/', views.manage_stdtestimonial, name='manage_stdtestimonial'),
     path('update_stdtestimonial/<int:id>', views.update_stdtestimonial, name='update_stdtestimonial'),
     path('update_stdtestimonial_status/<int:id>', views.update_stdtestimonial_status, name='update_stdtestimonial_status'),
     path('delete_stdtestimonial/<int:id>', views.delete_stdtestimonial, name='delete_stdtestimonial'),
+
+    # Manage Alumni Testimonial
+    path('manage_alumni_testimonial/', views.manage_alumni_testimonial, name='manage_alumni_testimonial'),
+    path('update_alumni_testimonial/<int:id>', views.update_alumni_testimonial, name='update_alumni_testimonial'),
+    path('update_alumni_testimonial_status/<int:id>', views.update_alumni_testimonial_status, name='update_alumni_testimonial_status'),
+    path('delete_alumni_testimonial/<int:id>', views.delete_alumni_testimonial, name='delete_alumni_testimonial'),
 ]
