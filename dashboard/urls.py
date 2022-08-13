@@ -43,4 +43,10 @@ urlpatterns = [
     path('update_chse_faculty/<int:id>', views.update_chse_faculty, name='update_chse_faculty'),
     path('update_chse_faculty_status/<int:id>', views.update_chse_faculty_status, name='update_chse_faculty_status'),
     path('delete_chse_faculty/<int:id>', views.delete_chse_faculty, name='delete_chse_faculty'),
+
+    # Manage entrance faculty
+    path('manage_entrance_faculty/', views.manage_entrance_faculty, name='manage_entrance_faculty'),
+    path('update_entrance_faculty/<int:id>', views.update_entrance_faculty, name='update_entrance_faculty'),
+    path('update_entrance_faculty_status/<int:id>', views.update_entrance_faculty_status, name='update_entrance_faculty_status'),
+    path('delete_entrance_faculty/<int:id>', views.delete_entrance_faculty, name='delete_entrance_faculty'),
 ]

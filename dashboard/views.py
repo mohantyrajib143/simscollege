@@ -260,3 +260,54 @@ def delete_chse_faculty(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_chse_faculty')
+
+def manage_entrance_faculty(request):
+    if request.method=='POST':
+        type = 'ENTRANCE'
+        name = request.POST['name']
+        position = request.POST['position']
+        experience = request.POST['experience']
+        facebook = request.POST['facebook']
+        instagram = request.POST['instagram']
+        linkedin = request.POST['linkedin']
+        whatsapp = request.POST['whatsapp']
+        gmail = request.POST['gmail']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = faculties(type=type ,name=name, position=position, experience=experience, facebook=facebook, instagram=instagram, linkedin=linkedin, whatsapp=whatsapp, gmail=gmail, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_entrance_faculty')
+    else:
+        EntranceFaculty = faculties.objects.filter(type='ENTRANCE').order_by('-id')
+        data = {'EntranceFaculty':EntranceFaculty}
+        return render(request, 'dashboard/manage_entrance_faculty.html', data)
+
+def update_entrance_faculty(request, id):
+    update = faculties.objects.get(id=id)
+    if request.FILES:
+        faculties.objects.get(id=id).image.delete(save=True)
+    query = ChseFacultyForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_entrance_faculty')
+
+def update_entrance_faculty_status(request, id):
+    query = faculties.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_entrance_faculty')
+
+def delete_entrance_faculty(request, id):
+    db = faculties.objects.get(id=id)
+    file = faculties.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_entrance_faculty')

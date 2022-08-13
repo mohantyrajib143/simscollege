@@ -6,7 +6,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <ol class="breadcrumb">
-                    <li><button type="button" class="btn btn-info"><a style="color:black;" href="/dashboard/index"><i class="la la-home"></i> Dashboard </a>/ <i class="la la-globe"></i> Website / <i class="la la-user"></i> Manage CHSE Faculties</button></li>
+                    <li><button type="button" class="btn btn-info"><a style="color:black;" href="/dashboard/index"><i class="la la-home"></i> Dashboard </a>/ <i class="la la-globe"></i> Website / <i class="la la-user"></i> Manage Entrance Faculties</button></li>
                 </ol>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -32,7 +32,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Add New CHSE Faculties</h5>
+                                            <h5 class="modal-title">Add New Entrance Faculties</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal">
                                             </button>
                                         </div>
@@ -100,7 +100,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Update CHSE Faculty Information</h5>
+                                            <h5 class="modal-title">Update Entrance Faculty Information</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal">
                                             </button>
                                         </div>
@@ -182,23 +182,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for chseFaculty in chseFaculty %}
+                                            {% for EntranceFaculty in EntranceFaculty %}
                                                 <tr>
                                                     <td><strong>{{forloop.counter}}</strong></td>
-                                                    <td><a target="_blank" href="/media/{{chseFaculty.image}}"><img class="rounded-circle" width="55" src="/media/{{chseFaculty.image}}" alt=""></a></td>
-                                                    <td>{{chseFaculty.name|title}}</td>
-                                                    <td>{{chseFaculty.position}}</td>
-                                                    <td>{{chseFaculty.experience}}</td>
+                                                    <td><a target="_blank" href="/media/{{EntranceFaculty.image}}"><img class="rounded-circle" width="55" src="/media/{{EntranceFaculty.image}}" alt=""></a></td>
+                                                    <td>{{EntranceFaculty.name|title}}</td>
+                                                    <td>{{EntranceFaculty.position}}</td>
+                                                    <td>{{EntranceFaculty.experience}}</td>
                                                     <td>
-                                                        {% if chseFaculty.status == 'Active' %}
-                                                            <a href="{% url 'update_chse_faculty_status' chseFaculty.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-success">ACTIVE</span></a>
+                                                        {% if EntranceFaculty.status == 'Active' %}
+                                                            <a href="{% url 'update_entrance_faculty_status' EntranceFaculty.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-success">ACTIVE</span></a>
                                                         {% else %}
-                                                            <a href="{% url 'update_chse_faculty_status' chseFaculty.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-danger">INACTIVE</span></a>
+                                                            <a href="{% url 'update_entrance_faculty_status' EntranceFaculty.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-danger">INACTIVE</span></a>
                                                         {% endif %}
                                                     </td>
                                                     <td>
-                                                        <a class="update" data-id="{{ chseFaculty.id }}" data-type="{{ chseFaculty.type }}" data-name="{{ chseFaculty.name }}" data-position="{{ chseFaculty.position }}" data-experience="{{ chseFaculty.experience }}" data-image="/media/{{ chseFaculty.image }}" data-facebook="{{ chseFaculty.facebook }}" data-instagram="{{ chseFaculty.instagram }}" data-linkedin="{{ chseFaculty.linkedin }}" data-whatsapp="{{ chseFaculty.whatsapp }}" data-gmail="{{ chseFaculty.gmail }}" data-status="{{ chseFaculty.status }}" data-bs-toggle="modal" data-bs-target="#updateModal"><button><i style="color: green;font-size: 20px;" class="la la-pencil"></i></button></a>
-                                                        <a href="{% url 'delete_chse_faculty' chseFaculty.id %}" onClick="return confirm('Are you sure? to delete!')"><button><i style="color: red;font-size: 20px;" class="la la-trash-o"></i></button></a>
+                                                        <a class="update" data-id="{{ EntranceFaculty.id }}" data-type="{{ EntranceFaculty.type }}" data-name="{{ EntranceFaculty.name }}" data-position="{{ EntranceFaculty.position }}" data-experience="{{ EntranceFaculty.experience }}" data-image="/media/{{ EntranceFaculty.image }}" data-facebook="{{ EntranceFaculty.facebook }}" data-instagram="{{ EntranceFaculty.instagram }}" data-linkedin="{{ EntranceFaculty.linkedin }}" data-whatsapp="{{ EntranceFaculty.whatsapp }}" data-gmail="{{ EntranceFaculty.gmail }}" data-status="{{ EntranceFaculty.status }}" data-bs-toggle="modal" data-bs-target="#updateModal"><button><i style="color: green;font-size: 20px;" class="la la-pencil"></i></button></a>
+                                                        <a href="{% url 'delete_chse_faculty' EntranceFaculty.id %}" onClick="return confirm('Are you sure? to delete!')"><button><i style="color: red;font-size: 20px;" class="la la-trash-o"></i></button></a>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -246,7 +246,7 @@
             $("#updateGmail").val(gmail);
             $("#updateImg").attr("src", $.image);
             $("#updateStatus").val(status);
-            $('#updateForm').attr('action', "/dashboard/update_chse_faculty/"+ $.id);
+            $('#updateForm').attr('action', "/dashboard/update_entrance_faculty/"+ $.id);
         });
     </script>
 {% endblock %}
