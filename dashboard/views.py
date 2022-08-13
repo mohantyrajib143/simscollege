@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm
 
 # Create your views here.
 def login(request):
@@ -209,3 +209,54 @@ def delete_alumni_testimonial(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_alumni_testimonial')
+
+def manage_chse_faculty(request):
+    if request.method=='POST':
+        type = 'CHSE'
+        name = request.POST['name']
+        position = request.POST['position']
+        experience = request.POST['experience']
+        facebook = request.POST['facebook']
+        instagram = request.POST['instagram']
+        linkedin = request.POST['linkedin']
+        whatsapp = request.POST['whatsapp']
+        gmail = request.POST['gmail']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = faculties(type=type ,name=name, position=position, experience=experience, facebook=facebook, instagram=instagram, linkedin=linkedin, whatsapp=whatsapp, gmail=gmail, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_chse_faculty')
+    else:
+        chseFaculty = faculties.objects.filter(type='CHSE').order_by('-id')
+        data = {'chseFaculty':chseFaculty}
+        return render(request, 'dashboard/manage_chse_faculty.html', data)
+
+def update_chse_faculty(request, id):
+    update = faculties.objects.get(id=id)
+    if request.FILES:
+        faculties.objects.get(id=id).image.delete(save=True)
+    query = ChseFacultyForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_chse_faculty')
+
+def update_chse_faculty_status(request, id):
+    query = faculties.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_chse_faculty')
+
+def delete_chse_faculty(request, id):
+    db = faculties.objects.get(id=id)
+    file = faculties.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_chse_faculty')

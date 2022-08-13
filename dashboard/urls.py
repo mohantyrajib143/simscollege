@@ -37,4 +37,10 @@ urlpatterns = [
     path('update_alumni_testimonial/<int:id>', views.update_alumni_testimonial, name='update_alumni_testimonial'),
     path('update_alumni_testimonial_status/<int:id>', views.update_alumni_testimonial_status, name='update_alumni_testimonial_status'),
     path('delete_alumni_testimonial/<int:id>', views.delete_alumni_testimonial, name='delete_alumni_testimonial'),
+
+    # Manage chse faculty
+    path('manage_chse_faculty/', views.manage_chse_faculty, name='manage_chse_faculty'),
+    path('update_chse_faculty/<int:id>', views.update_chse_faculty, name='update_chse_faculty'),
+    path('update_chse_faculty_status/<int:id>', views.update_chse_faculty_status, name='update_chse_faculty_status'),
+    path('delete_chse_faculty/<int:id>', views.delete_chse_faculty, name='delete_chse_faculty'),
 ]

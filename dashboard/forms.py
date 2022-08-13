@@ -1,4 +1,4 @@
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties
 from django import forms
 
 class SliderForm(forms.ModelForm):
@@ -29,4 +29,9 @@ class StdTestimonialForm(forms.ModelForm):
 class AlumniTestimonialForm(forms.ModelForm):
     class Meta:
         model = alumni_testmonials
+        fields = '__all__'
+
+class ChseFacultyForm(forms.ModelForm):
+    class Meta:
+        model = faculties
         fields = '__all__'
