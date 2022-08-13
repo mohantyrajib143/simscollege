@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards
+from website.models import slider, about, leader, awards, student_testmonials
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm
 
 # Create your views here.
 def login(request):
@@ -119,3 +119,48 @@ def delete_awards(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_awards')
+
+def manage_stdtestimonial(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        position = request.POST['position']
+        image = request.FILES['image']
+        message = request.POST['message']
+        status = 'Active'
+
+        data = student_testmonials(name=name, position=position, image=image, message=message, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_stdtestimonial')
+    else:
+        stdTestimonial = student_testmonials.objects.all().order_by('-id')
+        data = {'stdTestimonial':stdTestimonial}
+        return render(request, 'dashboard/manage_stdtestimonial.html', data)
+
+def update_stdtestimonial(request, id):
+    update = student_testmonials.objects.get(id=id)
+    if request.FILES:
+        student_testmonials.objects.get(id=id).image.delete(save=True)
+    query = StdTestimonialForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_stdtestimonial')
+
+def update_stdtestimonial_status(request, id):
+    query = student_testmonials.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_stdtestimonial')
+
+def delete_stdtestimonial(request, id):
+    db = student_testmonials.objects.get(id=id)
+    file = student_testmonials.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_stdtestimonial')

@@ -25,4 +25,10 @@ urlpatterns = [
     path('manage_awards/', views.manage_awards, name='manage_awards'),
     path('update_awards/<int:id>', views.update_awards, name='update_awards'),
     path('delete_awards/<int:id>', views.delete_awards, name='delete_awards'),
+
+    # Manage Testimonial
+    path('manage_stdtestimonial/', views.manage_stdtestimonial, name='manage_stdtestimonial'),
+    path('update_stdtestimonial/<int:id>', views.update_stdtestimonial, name='update_stdtestimonial'),
+    path('update_stdtestimonial_status/<int:id>', views.update_stdtestimonial_status, name='update_stdtestimonial_status'),
+    path('delete_stdtestimonial/<int:id>', views.delete_stdtestimonial, name='delete_stdtestimonial'),
 ]
