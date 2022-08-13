@@ -1,0 +1,158 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block title %} HOME | UNQCOLLECTION {% endblock title %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>All Leader Information</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Website</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Leader</a></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row tab-content">
+                    <div id="grid-view" class="tab-pane fade active show col-lg-12">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if message.tags == 'success' %} 
+                                    <h4 style="color: green; font-weight:bold;text-align: center;" class="card-title">{{ message }}</h4>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="row">
+                            {% for leader in allLeader %}
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <div class="profile-photo">
+                                                    <img src="/media/{{leader.image}}" width="100" class="img-fluid rounded-circle" alt="">
+                                                </div>
+                                                <h3 class="mt-4 mb-1">{{leader.name}}</h3>
+                                                <p class="text-muted">{{leader.position}}</p>
+                                                <ul class="list-group mb-3 list-group-flush">
+                                                    <li class="list-group-item px-0 d-flex justify-content-between">
+                                                    <strong>{{leader.quotes}}</strong></li>
+                                                </ul>
+                                                <a data-id="{{ leader.id }}" data-name="{{ leader.name }}" data-position="{{ leader.position }}" data-quotes="{{ leader.quotes }}" data-about="{{ leader.about }}" data-facebook="{{ leader.facebook }}" data-instagram="{{ leader.instagram }}" data-linkedin="{{ leader.linkedin }}" data-whatsapp="{{ leader.whatsapp }}" data-image="/media/{{ leader.image }}" data-bs-toggle="modal" data-bs-target=".updateModal" class="btn btn-primary update">Update Information</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal fade updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Update Leader Information</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                        </button>
+                                    </div>
+                                    <form id="updateForm" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="modal-body" style="margin-top:-25px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter name.." required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="position" name="position" class="form-control" placeholder="Enter position.." readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <textarea id="quotes" name="quotes" placeholder="Enter Quotes.." class="form-control" rows="1" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <textarea id="about" name="about" placeholder="Enter about.." class="form-control" rows="7" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="facebook" name="facebook" class="form-control" placeholder="Facebook url.." required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="instagram" name="instagram" class="form-control" placeholder="Instagram url.." required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="linkedin" name="linkedin" class="form-control" placeholder="Linkedin url.." required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="form-group">
+                                                            <input type="text" id="whatsapp" name="whatsapp" class="form-control" placeholder="Whatsapp url.." required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <img class="mt-4" id="updateImg" src="" style="width: 50px;height:50px;"/>
+                                                            <input type="file" id="image" name="image" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <script>
+        $( ".update" ).click(function() {
+            $.id = $(this).data('id');
+            var name = $(this).data('name');
+            var position = $(this).data('position');
+            var quotes = $(this).data('quotes');
+            var about = $(this).data('about');
+            var facebook = $(this).data('facebook');
+            var instagram = $(this).data('instagram');
+            var linkedin = $(this).data('linkedin');
+            var whatsapp = $(this).data('whatsapp');
+            $.image = $(this).data('image');
+
+            $("#name").val(name);
+            $("#position").val(position);
+            $("#quotes").val(quotes);
+            $("#about").val(about);
+            $("#facebook").val(facebook);
+            $("#instagram").val(instagram);
+            $("#linkedin").val(linkedin);
+            $("#whatsapp").val(whatsapp);
+            $("#updateImg").attr("src", $.image);
+            $('#updateForm').attr('action', "/dashboard/update_leader/"+ $.id);
+        });
+    </script>
+{% endblock %}

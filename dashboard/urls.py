@@ -16,4 +16,8 @@ urlpatterns = [
     # Manage About Us
     path('manage_aboutus/', views.manage_aboutus, name='manage_aboutus'),
     path('update_aboutus/', views.update_aboutus, name='update_aboutus'),
+
+    # Manage Leader
+    path('manage_leader/', views.manage_leader, name='manage_leader'),
+    path('update_leader/<int:id>', views.update_leader, name='update_leader'),
 ]
