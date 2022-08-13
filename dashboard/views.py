@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader
+from website.models import slider, about, leader, awards
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm
 
 # Create your views here.
 def login(request):
@@ -86,3 +86,36 @@ def update_leader(request, id):
         query.save(commit=True)
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_leader')
+
+def manage_awards(request):
+    if request.method=='POST':
+        title = request.POST['title']
+        award = request.POST['award']
+        image = request.FILES['image']
+
+        data = awards(title=title, award=award, image=image)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_awards')
+    else:
+        allAwards = awards.objects.all().order_by('-id')
+        data = {'allAwards':allAwards}
+        return render(request, 'dashboard/manage_awards.html', data)
+
+def update_awards(request, id):
+    update = awards.objects.get(id=id)
+    if request.FILES:
+        awards.objects.get(id=id).image.delete(save=True)
+    query = AwardForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_awards')
+
+def delete_awards(request, id):
+    db = awards.objects.get(id=id)
+    file = awards.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_awards')

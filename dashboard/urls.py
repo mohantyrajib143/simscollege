@@ -20,4 +20,9 @@ urlpatterns = [
     # Manage Leader
     path('manage_leader/', views.manage_leader, name='manage_leader'),
     path('update_leader/<int:id>', views.update_leader, name='update_leader'),
+
+    # Manage Awards
+    path('manage_awards/', views.manage_awards, name='manage_awards'),
+    path('update_awards/<int:id>', views.update_awards, name='update_awards'),
+    path('delete_awards/<int:id>', views.delete_awards, name='delete_awards'),
 ]
