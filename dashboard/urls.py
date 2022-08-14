@@ -61,4 +61,10 @@ urlpatterns = [
     path('update_hostel/<int:id>', views.update_hostel, name='update_hostel'),
     path('update_hostel_status/<int:id>', views.update_hostel_status, name='update_hostel_status'),
     path('delete_hostel/<int:id>', views.delete_hostel, name='delete_hostel'),
+
+    # Manage gallery infrastructure
+    path('manage_gallery/', views.manage_gallery, name='manage_gallery'),
+    path('update_gallery/<int:id>', views.update_gallery, name='update_gallery'),
+    path('update_gallery_status/<int:id>', views.update_gallery_status, name='update_gallery_status'),
+    path('delete_gallery/<int:id>', views.delete_gallery, name='delete_gallery'),
 ]
