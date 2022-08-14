@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply
 from django.contrib import messages
 from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm
 
@@ -847,3 +847,8 @@ def delete_careers(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_careers')
+
+def manage_jobapplied(request):
+    job = JobApply.objects.all().order_by('-id')
+    data = {'job':job}
+    return render(request, 'dashboard/manage_jobapplied.html', data)

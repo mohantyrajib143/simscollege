@@ -121,4 +121,7 @@ urlpatterns = [
     path('update_careers/<int:id>', views.update_careers, name='update_careers'),
     path('update_careers_status/<int:id>', views.update_careers_status, name='update_careers_status'),
     path('delete_careers/<int:id>', views.delete_careers, name='delete_careers'),
+
+    # Manage job applied
+    path('manage_jobapplied/', views.manage_jobapplied, name='manage_jobapplied'),
 ]
