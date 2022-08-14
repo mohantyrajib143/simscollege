@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm
 
 # Create your views here.
 def login(request):
@@ -803,3 +803,47 @@ def delete_notices(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_notices')
+
+def manage_careers(request):
+    if request.method=='POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        experience = request.POST['experience']
+        qualification = request.POST['qualification']
+        status = 'Active'
+
+        data = careers(title=title, description=description, experience=experience, qualification=qualification, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_careers')
+    else:
+        allCareers = careers.objects.all().order_by('-id')
+        data = {'careers':allCareers}
+        return render(request, 'dashboard/manage_careers.html', data)
+
+def update_careers(request, id):
+    update = careers.objects.get(id=id)
+    if request.FILES:
+        careers.objects.get(id=id).image.delete(save=True)
+    query = CareersForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_careers')
+
+def update_careers_status(request, id):
+    query = careers.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_careers')
+
+def delete_careers(request, id):
+    db = careers.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_careers')

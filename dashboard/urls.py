@@ -115,4 +115,10 @@ urlpatterns = [
     path('update_notices/<int:id>', views.update_notices, name='update_notices'),
     path('update_notices_status/<int:id>', views.update_notices_status, name='update_notices_status'),
     path('delete_notices/<int:id>', views.delete_notices, name='delete_notices'),
+
+    # Manage college careers
+    path('manage_careers/', views.manage_careers, name='manage_careers'),
+    path('update_careers/<int:id>', views.update_careers, name='update_careers'),
+    path('update_careers_status/<int:id>', views.update_careers_status, name='update_careers_status'),
+    path('delete_careers/<int:id>', views.delete_careers, name='delete_careers'),
 ]
