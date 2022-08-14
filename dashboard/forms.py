@@ -1,4 +1,4 @@
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, sims
 from django import forms
 
 class SliderForm(forms.ModelForm):
@@ -9,6 +9,11 @@ class SliderForm(forms.ModelForm):
 class AboutForm(forms.ModelForm):
     class Meta:
         model = about
+        fields = '__all__'
+
+class SimsForm(forms.ModelForm):
+    class Meta:
+        model = sims
         fields = '__all__'
 
 class LeaderForm(forms.ModelForm):

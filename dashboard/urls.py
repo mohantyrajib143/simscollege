@@ -13,6 +13,10 @@ urlpatterns = [
     path('update_slider_status/<int:id>', views.update_slider_status, name='update_slider_status'),
     path('delete_slider/<int:id>', views.delete_slider, name='delete_slider'),
 
+    # Manage SIMS Information
+    path('manage_sims/', views.manage_sims, name='manage_sims'),
+    path('update_sims/', views.update_sims, name='update_sims'),
+
     # Manage About Us
     path('manage_aboutus/', views.manage_aboutus, name='manage_aboutus'),
     path('update_aboutus/', views.update_aboutus, name='update_aboutus'),

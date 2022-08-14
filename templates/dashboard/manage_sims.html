@@ -1,0 +1,126 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Manage SIMS Information</h4>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Website</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">SIMS</a></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'update_sims' %}" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %} 
+                                        <h4 style="color: green; font-weight:bold;text-align: center;" class="card-title">{{ message }}</h4>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS ABOUT</b></label>
+                                        <textarea id="about" name="about" class="form-control" rows="2" required>{{query.about}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS DESCRIPTION</b></label>
+                                        <textarea id="description" name="description" class="form-control" rows="5" required>{{query.description}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS ADDRESS</b></label>
+                                        <textarea id="address" name="address" class="form-control" rows="1" required>{{query.address}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS EMAIL ONE</b></label>
+                                        <input id="email1" name="email1" type="text" class="form-control" value="{{query.email1}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS EMAIL TWO</b></label>
+                                        <input id="email2" name="email2" type="text" class="form-control" value="{{query.email2}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS CONTACT ONE</b></label>
+                                        <input id="contact1" name="contact1" type="text" class="form-control" value="{{query.contact1}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS CONTACT TWO</b></label>
+                                        <input id="contact2" name="contact2" type="text" class="form-control" value="{{query.contact2}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS WHATSAPP ONE</b></label>
+                                        <input id="whatsapp1" name="whatsapp1" type="text" class="form-control" value="{{query.whatsapp1}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS WHATSAPP TWO</b></label>
+                                        <input id="whatsapp2" name="whatsapp2" type="text" class="form-control" value="{{query.whatsapp2}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS SCIENCE STUDENT</b></label>
+                                        <input id="science_std" name="science_std" type="text" class="form-control" value="{{query.science_std}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS COMMERCE STUDENT</b></label>
+                                        <input id="commerce_std" name="commerce_std" type="text" class="form-control" value="{{query.commerce_std}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS TOTAL TEACHER</b></label>
+                                        <input id="total_teacher" name="total_teacher" type="text" class="form-control" value="{{query.total_teacher}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label"><b>SIMS GRADUATE STUDENT</b></label>
+                                        <input id="graduate_std" name="graduate_std" type="text" class="form-control" value="{{query.graduate_std}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a onClick="return confirm('Are you sure? to cancel!')" href="/dashboard/index"><button type="button" class="btn btn-light">Cancel</button></div></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+{% block js %}{% endblock %}
