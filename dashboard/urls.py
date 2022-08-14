@@ -55,4 +55,10 @@ urlpatterns = [
     path('update_college/<int:id>', views.update_college, name='update_college'),
     path('update_college_status/<int:id>', views.update_college_status, name='update_college_status'),
     path('delete_college/<int:id>', views.delete_college, name='delete_college'),
+
+    # Manage hostel infrastructure
+    path('manage_hostel/', views.manage_hostel, name='manage_hostel'),
+    path('update_hostel/<int:id>', views.update_hostel, name='update_hostel'),
+    path('update_hostel_status/<int:id>', views.update_hostel_status, name='update_hostel_status'),
+    path('delete_hostel/<int:id>', views.delete_hostel, name='delete_hostel'),
 ]
