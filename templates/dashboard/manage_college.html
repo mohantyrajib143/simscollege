@@ -1,0 +1,154 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <ol class="breadcrumb">
+                    <li><button type="button" class="btn btn-info"><a style="color:black;" href="/dashboard/index"><i class="la la-home"></i> Dashboard </a>/ <i class="la la-globe"></i> Website / <i class="la la-image"></i> Manage College Infrastructure</button></li>
+                </ol>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row tab-content">
+                    <div id="list-view" class="tab-pane fade active show col-lg-12">
+                        <div class="card">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %} 
+                                        <center class="mt-2" style="margin-bottom: -20px;color: green;"><b>{{ message }}</b></center>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="card-header">
+                                <div class="modal fade" id="addModal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Enter College Infrastructure Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                </button>
+                                            </div>
+                                            <form method="post" action="{% url 'manage_college' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                                <div class="modal-body">
+                                                    <input type="text" id="title" name="title" placeholder="Enter title.." class="form-control" required>
+
+                                                    <textarea id="description" name="description" placeholder="Enter details.." class="form-control mt-4" required></textarea>
+
+                                                    <input type="file" id="image" name="image" placeholder="Enter slider title.." class="form-control mt-4" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="updateModal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Update College Infrastructure Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                </button>
+                                            </div>
+                                            <form id="updateForm" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                                <div class="modal-body">
+                                                    <input type="text" id="updateTitle" name="title" placeholder="Enter title.." class="form-control" required>
+
+                                                    <textarea id="updateDesc" name="description" placeholder="Enter description details.." class="form-control mt-4" required></textarea>
+
+                                                    <img class="mt-4" id="updateImg" src="" style="width: 460px;height:200px;"/>
+                                                    <input type="file" id="image" name="image"  class="form-control mt-2">
+
+                                                    <input type="hidden" id="updateStatus" name="status">
+                                                    <input type="hidden" id="updateType" name="type">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display" style="min-width: 845px">
+                                        <thead>
+                                            <tr>
+                                                <th>SN</th>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Image</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>   
+                                        </thead>
+                                        <tbody>
+                                            {% for college in college %}
+                                                <tr>
+                                                    <td><strong>{{forloop.counter}}</strong></td>
+                                                    <td>{{college.title|title}}</td>
+                                                    <td>{{college.description}}</td>
+                                                    <td><a target="_blank" href="/media/{{college.image}}"><img width="100" src="/media/{{college.image}}" alt=""></td></td>
+                                                    <td>
+                                                        {% if college.status == 'Active' %}
+                                                            <a href="{% url 'update_college_status' college.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-success">ACTIVE</span></a>
+                                                        {% else %}
+                                                            <a href="{% url 'update_college_status' college.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-danger">INACTIVE</span></a>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a class="update" data-id="{{ college.id }}" data-type="{{ college.type }}"  data-title="{{ college.title }}" data-description="{{ college.description }}" data-image="/media/{{ college.image }}" data-status="{{ college.status }}" data-bs-toggle="modal" data-bs-target="#updateModal"><button><i style="color: green;font-size: 20px;" class="la la-pencil"></i></button></a>
+                                                        <a href="{% url 'delete_college' college.id %}" onClick="return confirm('Are you sure? to delete!')"><button><i style="color: red;font-size: 20px;" class="la la-trash-o"></i></button></a>
+                                                    </td>	
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <!-- Datatable -->
+    <link href="{% static 'dashboard/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <script src="{% static 'dashboard/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/datatables.init.js' %}"></script>
+    <script>
+        $( ".update" ).click(function() {
+            $.id = $(this).data('id');
+            var type = $(this).data('type');
+            var title = $(this).data('title');
+            var description = $(this).data('description');
+            $.image = $(this).data('image');
+            var status = $(this).data('status');
+
+            $("#updateType").val(type);
+            $("#updateTitle").val(title);
+            $("#updateDesc").val(description);
+            $("#updateStatus").val(status);
+            $("#updateImg").attr("src", $.image);
+            $('#updateForm').attr('action', "/dashboard/update_college/"+ $.id);
+        });
+    </script>
+{% endblock %}

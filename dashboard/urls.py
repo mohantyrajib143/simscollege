@@ -49,4 +49,10 @@ urlpatterns = [
     path('update_entrance_faculty/<int:id>', views.update_entrance_faculty, name='update_entrance_faculty'),
     path('update_entrance_faculty_status/<int:id>', views.update_entrance_faculty_status, name='update_entrance_faculty_status'),
     path('delete_entrance_faculty/<int:id>', views.delete_entrance_faculty, name='delete_entrance_faculty'),
+
+    # Manage college infrastructure
+    path('manage_college/', views.manage_college, name='manage_college'),
+    path('update_college/<int:id>', views.update_college, name='update_college'),
+    path('update_college_status/<int:id>', views.update_college_status, name='update_college_status'),
+    path('delete_college/<int:id>', views.delete_college, name='delete_college'),
 ]

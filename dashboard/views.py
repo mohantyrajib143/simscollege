@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm
 
 # Create your views here.
 def login(request):
@@ -311,3 +311,48 @@ def delete_entrance_faculty(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_entrance_faculty')
+
+def manage_college(request):
+    if request.method=='POST':
+        type = 'COLLEGE'
+        title = request.POST['title']
+        description = request.POST['description']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = infrastructure(type=type, title=title, description=description, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_college')
+    else:
+        college = infrastructure.objects.filter(type='COLLEGE').order_by('-id')
+        data = {'college':college}
+        return render(request, 'dashboard/manage_college.html', data)
+
+def update_college(request, id):
+    update = infrastructure.objects.get(id=id)
+    if request.FILES:
+        infrastructure.objects.get(id=id).image.delete(save=True)
+    query = InfrastructureForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_college')
+
+def update_college_status(request, id):
+    query = infrastructure.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_college')
+
+def delete_college(request, id):
+    db = infrastructure.objects.get(id=id)
+    file = infrastructure.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_college')
