@@ -43,7 +43,7 @@
 
                                                     <textarea id="description" name="description" placeholder="Enter details.." class="form-control mt-4" required></textarea>
 
-                                                    <input type="file" id="image" name="image" placeholder="Enter slider title.." class="form-control mt-4" required>
+                                                    <input type="file" id="image" name="image" placeholder="" class="form-control mt-4" accept=".png, .jpg, .jpeg" required>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -68,7 +68,7 @@
                                                     <textarea id="updateDesc" name="description" placeholder="Enter description details.." class="form-control mt-4" required></textarea>
 
                                                     <img class="mt-4" id="updateImg" src="" style="width: 460px;height:200px;"/>
-                                                    <input type="file" id="image" name="image"  class="form-control mt-2">
+                                                    <input type="file" id="image" name="image"  class="form-control mt-2" accept=".png, .jpg, .jpeg">
 
                                                     <input type="hidden" id="updateStatus" name="status">
                                                     <input type="hidden" id="updateType" name="type">
@@ -125,7 +125,6 @@
                 </div>
             </div>
         </div>
-       
     </div>
 </div>
 {% endblock body %}
