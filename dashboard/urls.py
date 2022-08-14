@@ -85,4 +85,10 @@ urlpatterns = [
     path('update_yoga/<int:id>', views.update_yoga, name='update_yoga'),
     path('update_yoga_status/<int:id>', views.update_yoga_status, name='update_yoga_status'),
     path('delete_yoga/<int:id>', views.delete_yoga, name='delete_yoga'),
+
+    # Manage neet infrastructure
+    path('manage_neet/', views.manage_neet, name='manage_neet'),
+    path('update_neet/<int:id>', views.update_neet, name='update_neet'),
+    path('update_neet_status/<int:id>', views.update_neet_status, name='update_neet_status'),
+    path('delete_neet/<int:id>', views.delete_neet, name='delete_neet'),
 ]
