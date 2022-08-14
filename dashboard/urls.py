@@ -67,4 +67,10 @@ urlpatterns = [
     path('update_gallery/<int:id>', views.update_gallery, name='update_gallery'),
     path('update_gallery_status/<int:id>', views.update_gallery_status, name='update_gallery_status'),
     path('delete_gallery/<int:id>', views.delete_gallery, name='delete_gallery'),
+
+    # Manage labs infrastructure
+    path('manage_labs/', views.manage_labs, name='manage_labs'),
+    path('update_labs/<int:id>', views.update_labs, name='update_labs'),
+    path('update_labs_status/<int:id>', views.update_labs_status, name='update_labs_status'),
+    path('delete_labs/<int:id>', views.delete_labs, name='delete_labs'),
 ]
