@@ -1,4 +1,4 @@
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice
 from django import forms
 
 class SliderForm(forms.ModelForm):
@@ -49,4 +49,9 @@ class ResultsForm(forms.ModelForm):
 class NewsForm(forms.ModelForm):
     class Meta:
         model = news
+        fields = '__all__'
+
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model = notice
         fields = '__all__'

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm
 
 # Create your views here.
 def login(request):
@@ -761,3 +761,45 @@ def delete_news(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_news')
+
+def manage_notices(request):
+    if request.method=='POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        status = 'Active'
+
+        data = notice(title=title, description=description, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_notices')
+    else:
+        allNotice = notice.objects.all().order_by('-id')
+        data = {'notice':allNotice}
+        return render(request, 'dashboard/manage_notices.html', data)
+
+def update_notices(request, id):
+    update = notice.objects.get(id=id)
+    if request.FILES:
+        notice.objects.get(id=id).image.delete(save=True)
+    query = NoticeForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_notices')
+
+def update_notices_status(request, id):
+    query = notice.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_notices')
+
+def delete_notices(request, id):
+    db = notice.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_notices')
