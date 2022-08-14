@@ -79,4 +79,10 @@ urlpatterns = [
     path('update_sports/<int:id>', views.update_sports, name='update_sports'),
     path('update_sports_status/<int:id>', views.update_sports_status, name='update_sports_status'),
     path('delete_sports/<int:id>', views.delete_sports, name='delete_sports'),
+
+    # Manage yoga infrastructure
+    path('manage_yoga/', views.manage_yoga, name='manage_yoga'),
+    path('update_yoga/<int:id>', views.update_yoga, name='update_yoga'),
+    path('update_yoga_status/<int:id>', views.update_yoga_status, name='update_yoga_status'),
+    path('delete_yoga/<int:id>', views.delete_yoga, name='delete_yoga'),
 ]
