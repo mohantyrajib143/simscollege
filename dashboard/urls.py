@@ -128,4 +128,7 @@ urlpatterns = [
 
     # Manage job applied
     path('manage_jobapplied/', views.manage_jobapplied, name='manage_jobapplied'),
+
+    # Manage contact info
+    path('manage_conatctInfo/', views.manage_conatctInfo, name='manage_conatctInfo'),
 ]

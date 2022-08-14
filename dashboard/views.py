@@ -1,6 +1,7 @@
+from operator import concat
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
 from django.contrib import messages
 from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm
 
@@ -866,3 +867,8 @@ def manage_jobapplied(request):
     job = JobApply.objects.all().order_by('-id')
     data = {'job':job}
     return render(request, 'dashboard/manage_jobapplied.html', data)
+
+def manage_conatctInfo(request):
+    contactInfo = contact.objects.all().order_by('-id')
+    data = {'contactInfo':contactInfo}
+    return render(request, 'dashboard/manage_contactInfo.html', data)
