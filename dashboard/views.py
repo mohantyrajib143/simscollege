@@ -672,3 +672,48 @@ def delete_iit(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_iit')
+
+def manage_chse(request):
+    if request.method=='POST':
+        type = 'CHSE'
+        name = request.POST['name']
+        position = request.POST['position']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = results(type=type, name=name, position=position, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_chse')
+    else:
+        chse = results.objects.filter(type='CHSE').order_by('-id')
+        data = {'chse':chse}
+        return render(request, 'dashboard/manage_chse.html', data)
+
+def update_chse(request, id):
+    update = results.objects.get(id=id)
+    if request.FILES:
+        results.objects.get(id=id).image.delete(save=True)
+    query = ResultsForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_chse')
+
+def update_chse_status(request, id):
+    query = results.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_chse')
+
+def delete_chse(request, id):
+    db = results.objects.get(id=id)
+    file = results.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_chse')

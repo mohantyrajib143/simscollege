@@ -1,0 +1,154 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <ol class="breadcrumb">
+                    <li><button type="button" class="btn btn-info"><a style="color:black;" href="/dashboard/index"><i class="la la-home"></i> Dashboard </a>/ <i class="la la-globe"></i> Website / <i class="la la-desktop"></i> Manage CHSE Results</button></li>
+                </ol>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button></li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row tab-content">
+                    <div id="list-view" class="tab-pane fade active show col-lg-12">
+                        <div class="card">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %} 
+                                        <center class="mt-2" style="margin-bottom: -20px;color: green;"><b>{{ message }}</b></center>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <div class="card-header">
+                                <div class="modal fade" id="addModal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Enter CHSE Results Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                </button>
+                                            </div>
+                                            <form method="post" action="{% url 'manage_chse' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                                <div class="modal-body">
+                                                    <input type="text" id="name" name="name" placeholder="Enter name.." class="form-control" required>
+                                                    
+                                                    <input type="text" id="position" name="position" placeholder="Enter position.." class="form-control mt-4" required>
+
+                                                    <input type="file" id="image" name="image" placeholder="Enter slider title.." class="form-control mt-4" accept=".png, .jpg, .jpeg" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="updateModal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Update CHSE Results</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                                </button>
+                                            </div>
+                                            <form id="updateForm" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                                <div class="modal-body">
+                                                    <input type="text" id="updateName" name="name" placeholder="Enter name.." class="form-control" required>
+
+                                                    <input type="text" id="updatePosition" name="position" placeholder="Enter position.." class="form-control mt-4" required>
+
+                                                    <img class="mt-4" id="updateImg" src="" style="width: 100px;height:100px;"/>
+                                                    <input type="file" id="image" name="image"  class="form-control mt-2" accept=".png, .jpg, .jpeg">
+
+                                                    <input type="hidden" id="updateStatus" name="status">
+                                                    <input type="hidden" id="updateType" name="type">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display" style="min-width: 845px">
+                                        <thead>
+                                            <tr>
+                                                <th>SN</th>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>   
+                                        </thead>
+                                        <tbody>
+                                            {% for chse in chse %}
+                                                <tr>
+                                                    <td><strong>{{forloop.counter}}</strong></td>
+                                                    <td><a target="_blank" href="/media/{{chse.image}}"><img class="rounded-circle" width="55" src="/media/{{chse.image}}" alt=""></a></td>
+                                                    <td>{{chse.name|title}}</td>
+                                                    <td>{{chse.position}}</td>
+                                                    <td>
+                                                        {% if chse.status == 'Active' %}
+                                                            <a href="{% url 'update_chse_status' chse.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-success">ACTIVE</span></a>
+                                                        {% else %}
+                                                            <a href="{% url 'update_chse_status' chse.id %}" onClick="return confirm('Are you sure? to update status!')"><span class="badge badge-danger">INACTIVE</span></a>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a class="update" data-id="{{ chse.id }}" data-type="{{ chse.type }}"  data-name="{{ chse.name }}" data-position="{{ chse.position }}" data-image="/media/{{ chse.image }}" data-status="{{ chse.status }}" data-bs-toggle="modal" data-bs-target="#updateModal"><button><i style="color: green;font-size: 20px;" class="la la-pencil"></i></button></a>
+                                                        <a href="{% url 'delete_chse' chse.id %}" onClick="return confirm('Are you sure? to delete!')"><button><i style="color: red;font-size: 20px;" class="la la-trash-o"></i></button></a>
+                                                    </td>	
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <!-- Datatable -->
+    <link href="{% static 'dashboard/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <script src="{% static 'dashboard/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/datatables.init.js' %}"></script>
+    <script>
+        $( ".update" ).click(function() {
+            $.id = $(this).data('id');
+            var type = $(this).data('type');
+            var name = $(this).data('name');
+            var position = $(this).data('position');
+            $.image = $(this).data('image');
+            var status = $(this).data('status');
+
+            $("#updateType").val(type);
+            $("#updateName").val(name);
+            $("#updatePosition").val(position);
+            $("#updateStatus").val(status);
+            $("#updateImg").attr("src", $.image);
+            $('#updateForm').attr('action', "/dashboard/update_chse/"+ $.id);
+        });
+    </script>
+{% endblock %}

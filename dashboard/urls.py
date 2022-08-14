@@ -97,4 +97,10 @@ urlpatterns = [
     path('update_iit/<int:id>', views.update_iit, name='update_iit'),
     path('update_iit_status/<int:id>', views.update_iit_status, name='update_iit_status'),
     path('delete_iit/<int:id>', views.delete_iit, name='delete_iit'),
+
+    # Manage neet infrastructure
+    path('manage_chse/', views.manage_chse, name='manage_chse'),
+    path('update_chse/<int:id>', views.update_chse, name='update_chse'),
+    path('update_chse_status/<int:id>', views.update_chse_status, name='update_chse_status'),
+    path('delete_chse/<int:id>', views.delete_chse, name='delete_chse'),
 ]
