@@ -103,4 +103,10 @@ urlpatterns = [
     path('update_chse/<int:id>', views.update_chse, name='update_chse'),
     path('update_chse_status/<int:id>', views.update_chse_status, name='update_chse_status'),
     path('delete_chse/<int:id>', views.delete_chse, name='delete_chse'),
+
+    # Manage school news
+    path('manage_news/', views.manage_news, name='manage_news'),
+    path('update_news/<int:id>', views.update_news, name='update_news'),
+    path('update_news_status/<int:id>', views.update_news_status, name='update_news_status'),
+    path('delete_news/<int:id>', views.delete_news, name='delete_news'),
 ]

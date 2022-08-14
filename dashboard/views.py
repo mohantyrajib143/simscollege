@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm
 
 # Create your views here.
 def login(request):
@@ -717,3 +717,47 @@ def delete_chse(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_chse')
+
+def manage_news(request):
+    if request.method=='POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = news(title=title, description=description, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_news')
+    else:
+        allNews = news.objects.all().order_by('-id')
+        data = {'news':allNews}
+        return render(request, 'dashboard/manage_news.html', data)
+
+def update_news(request, id):
+    update = news.objects.get(id=id)
+    if request.FILES:
+        news.objects.get(id=id).image.delete(save=True)
+    query = NewsForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_news')
+
+def update_news_status(request, id):
+    query = news.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_news')
+
+def delete_news(request, id):
+    db = news.objects.get(id=id)
+    file = news.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_news')
