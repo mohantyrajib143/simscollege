@@ -492,3 +492,48 @@ def delete_labs(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_labs')
+
+def manage_sports(request):
+    if request.method=='POST':
+        type = 'SPORTS'
+        title = request.POST['title']
+        description = request.POST['description']
+        image = request.FILES['image']
+        status = 'Active'
+
+        data = infrastructure(type=type, title=title, description=description, image=image, status=status)
+        data.save()
+        messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_sports')
+    else:
+        sports = infrastructure.objects.filter(type='SPORTS').order_by('-id')
+        data = {'sports':sports}
+        return render(request, 'dashboard/manage_sports.html', data)
+
+def update_sports(request, id):
+    update = infrastructure.objects.get(id=id)
+    if request.FILES:
+        infrastructure.objects.get(id=id).image.delete(save=True)
+    query = InfrastructureForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_sports')
+
+def update_sports_status(request, id):
+    query = infrastructure.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_sports')
+
+def delete_sports(request, id):
+    db = infrastructure.objects.get(id=id)
+    file = infrastructure.objects.get(id=id).image.delete(save=True)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_sports')

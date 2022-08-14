@@ -73,4 +73,10 @@ urlpatterns = [
     path('update_labs/<int:id>', views.update_labs, name='update_labs'),
     path('update_labs_status/<int:id>', views.update_labs_status, name='update_labs_status'),
     path('delete_labs/<int:id>', views.delete_labs, name='delete_labs'),
+
+    # Manage sports infrastructure
+    path('manage_sports/', views.manage_sports, name='manage_sports'),
+    path('update_sports/<int:id>', views.update_sports, name='update_sports'),
+    path('update_sports_status/<int:id>', views.update_sports_status, name='update_sports_status'),
+    path('delete_sports/<int:id>', views.delete_sports, name='delete_sports'),
 ]
