@@ -5,9 +5,25 @@ from website.models import slider, about, leader, awards, student_testmonials, a
 from django.contrib import messages
 from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm
 
+from django.contrib.auth import authenticate, login, logout
+
 # Create your views here.
-def login(request):
-    return render(request, 'dashboard/login.html')
+def mylogin(request):
+	if request.user.is_authenticated:
+		return redirect('dashboard')
+	else:
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			password =request.POST.get('password')
+
+			user = authenticate(request, username=username, password=password)
+
+			if user is not None:
+				login(request, user)
+				return redirect('dashboard')
+			else:
+				messages.error(request, 'Username and password is not correct, Please try again!')
+		return render(request, 'dashboard/login.html')
 
 def forgot_pass(request):
     return render(request, 'dashboard/forgot_pass.html')
