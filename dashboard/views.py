@@ -26,6 +26,10 @@ def mylogin(request):
 				messages.error(request, 'Username and password is not correct, Please try again!')
 		return render(request, 'dashboard/login.html')
 
+def mylogout(request):
+	logout(request)
+	return redirect('mylogin')
+    
 def forgot_pass(request):
     return render(request, 'dashboard/forgot_pass.html')
 

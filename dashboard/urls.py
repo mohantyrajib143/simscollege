@@ -4,6 +4,7 @@ from dashboard import views
 
 urlpatterns = [
     path('', views.mylogin, name='mylogin'),
+    path('logout/', views.mylogout, name="mylogout"),
     path('forgot_pass/', views.forgot_pass, name='forgot_pass'),
     path('index/', views.dashboard, name='dashboard'),
 
