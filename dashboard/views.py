@@ -7,6 +7,15 @@ from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonial
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from urllib import request
+from django.contrib.auth.models import User
+from dashboard.models import password_token
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+from college.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def mylogin(request):
@@ -21,7 +30,7 @@ def mylogin(request):
 
 			if user is not None:
 				login(request, user)
-				return redirect('dashboard')
+				messages.success(request, 'Successfully Login!')
 			else:
 				messages.error(request, 'Username and password is not correct, Please try again!')
 		return render(request, 'dashboard/login.html')
@@ -29,9 +38,68 @@ def mylogin(request):
 def mylogout(request):
 	logout(request)
 	return redirect('mylogin')
-    
+
+import uuid
 def forgot_pass(request):
-    return render(request, 'dashboard/forgot_pass.html')
+    try:
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            
+            if not User.objects.filter(email=email).first():
+                messages.error(request, 'No user found with this email, plz try another email')
+                return redirect('forgot_pass')
+            else :
+                myemail = request.POST.get('email')
+                user_obj = User.objects.get(email = myemail)
+                fname = user_obj.first_name
+                token = str(uuid.uuid4())
+                password_obj= password_token.objects.get(user = user_obj)
+                password_obj.forget_password_token = token
+                password_obj.save()
+
+                # sending email starts
+                html_content = render_to_string("dashboard/forgot_pass_email.html",{'title':'Forgot Password','token':token, 'fname':fname})
+                text_content = strip_tags(html_content)
+
+                email = EmailMultiAlternatives(
+                    "Forgot password request at SIMS",
+                    text_content,
+                    settings.EMAIL_HOST_USER,
+                    [myemail]
+                )
+                email.attach_alternative(html_content,"text/html")
+                email.send()
+
+                messages.success(request, 'An email with reset password link is sent.')
+                return redirect('forgot_pass')   
+    except Exception as e:
+        print(e)
+    return render(request,'dashboard/forgot_pass.html')
+
+def reset_password(request, token):
+    data = {}
+    try:
+        password_obj = password_token.objects.filter(forget_password_token = token).first()
+        data = {'user_id' : password_obj.user.id}
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('new_pass')
+            confirm_password = request.POST.get('cnf_pass')
+            user_id = request.POST.get('user_id')
+            
+            if new_password != confirm_password:
+                messages.error(request, 'Password and Confirm password both should  be equal.')
+                return redirect(f'/dashboard/reset_password/{token}/')
+
+            else:
+                user_obj = User.objects.get(id = user_id)
+                user_obj.set_password(new_password)
+                user_obj.save()
+                messages.success(request, 'Your password changed sucessfully, try to login to admin dashboard!')
+                return redirect(f'/dashboard/reset_password/{token}/')
+    except Exception as e:
+        print(e)
+    return render(request,'dashboard/reset_pass.html', data)
 
 @login_required(login_url='mylogin')
 def dashboard(request):

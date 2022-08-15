@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.mylogin, name='mylogin'),
     path('logout/', views.mylogout, name="mylogout"),
     path('forgot_pass/', views.forgot_pass, name='forgot_pass'),
+    path('reset_password/<token>/', views.reset_password, name='reset_password'),
     path('index/', views.dashboard, name='dashboard'),
 
     # Manage Slider

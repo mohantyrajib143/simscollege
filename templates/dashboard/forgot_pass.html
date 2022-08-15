@@ -23,11 +23,27 @@
             <div class="row justify-content-center h-100 align-items-center">
                 <div class="col-md-6">
                     <div class="authincation-content">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if message.tags == 'error' %} 
+                                    <div class="alert alert-danger solid alert-dismissible fade show">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <strong>Error!</strong> {{message}}
+                                    </div>
+                                {% endif %}
+                                {% if message.tags == 'success' %} 
+                                    <div class="alert alert-success solid alert-dismissible fade show">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <strong>Success!</strong> {{message}}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4"><b>FORGOT PASSWORD!!</b></h4>
-                                    <form action="">
+                                    <form autocomplete="off" method="post" action="{% url 'forgot_pass' %}" enctype='multipart/form-data'>{% csrf_token %}
                                         <div class="form-group">
                                             <label><strong>Email</strong></label>
                                             <input type="email" name="email" id="email" placeholder="Enter your email.." class="form-control" required>

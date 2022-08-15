@@ -13,7 +13,6 @@
 	<meta property="og:description" content="BEST COLLEGE - SHANTI INSTITUTE OF MANAGEMENT AND STUDIES" />
 	<meta name="format-detection" content="telephone=no">
     <title>SIMS COLLEGE</title>
-    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'dashboard/images/favicon.png' %}">
     <link href="{% static 'dashboard/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'dashboard/css/popup.css' %}" rel="stylesheet">
@@ -21,7 +20,6 @@
 <body class="h-100">
     <div class="authincation h-100">
         <div class="container h-100">
-            
             <div class="row justify-content-center h-100 align-items-center">
                 <div class="col-md-6">
                     {% if messages %}
@@ -38,27 +36,30 @@
                     <div class="authincation-content">
                         <div class="row no-gutters">
                             <div class="col-xl-12">
-                                <div class="auth-form">
-                                    <h4 class="text-center mb-4"><b>ADMIN DASHBOARD</b></h4>
-                                    <form autocomplete="off" method="post" action="{% url 'mylogin' %}" enctype='multipart/form-data'>{% csrf_token %}
-                                        <div class="form-group">
-                                            <label><strong>Username</strong></label>
-                                            <input type="text" name="username" id="username" placeholder="e.g. admin" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label><strong>Password</strong></label>
-                                            <input type="password" name="password" id="password" class="form-control" placeholder="**********" required>
-                                        </div>
-                                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
+                                {% if user_id|default_if_none:"" %}
+                                    <div class="auth-form">
+                                        <h4 class="text-center mb-4"><b>RESET PASSWORD!</b></h4>
+                                        <form autocomplete="off" method="post" enctype='multipart/form-data'>{% csrf_token %}
                                             <div class="form-group">
-                                                <a href="/dashboard/forgot_pass">Forgot Password?</a>
+                                                <label><strong>New Password</strong></label>
+                                                <input type="password" name="new_pass" id="new_pass" placeholder="********" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">LOGIN NOW</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                            <div class="form-group">
+                                                <label><strong>Confirm new password</strong></label>
+                                                <input type="password" name="cnf_pass" id="cnf_pass" class="form-control" placeholder="********" required>
+                                            </div>
+                                            <input type="hidden" name="user_id" value="{{user_id}}">
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary btn-block">RESET PASSWORD</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <div class="auth-form">
+                                        <h4 class="text-center mb-4"><b>Token Mismatching Happens!</b></h4>
+                                    </div>
+                                {% endif %}
+                                
                             </div>
                         </div>
                     </div>
@@ -66,13 +67,13 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="loginSuccess" role="dialog">
+    <div class="modal fade" id="resetPassError" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="thank-you-pop">
                         <img src="{% static 'dashboard/images/msg/success.png' %}" alt="">
-                        <p id="successMsg"></p>
+                        <p id="resetPassMsg"></p>
                     </div>
                 </div>
             </div>
@@ -82,15 +83,14 @@
 	<script src="{% static 'dashboard/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'dashboard/js/deznav-init.js' %}"></script>
     <script src="{% static 'dashboard/js/custom.min.js' %}"></script>
-
     {% if messages %}
         {% for message in messages %}
             {% if message.tags == 'success' %} 
                 <script>
                     var msg= "{{message}}";
                     $(document).ready(function(){
-                        $("#loginSuccess").modal('show');
-                        $('#successMsg').html(msg);
+                        $("#resetPassError").modal('show');
+                        $('#resetPassMsg').html(msg);
 
                         window.setTimeout( function(){
                             window.location = "/dashboard/index";
