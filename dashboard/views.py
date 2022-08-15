@@ -6,6 +6,7 @@ from django.contrib import messages
 from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def mylogin(request):
@@ -28,9 +29,11 @@ def mylogin(request):
 def forgot_pass(request):
     return render(request, 'dashboard/forgot_pass.html')
 
+@login_required(login_url='mylogin')
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
+@login_required(login_url='mylogin')
 def manage_slider(request):
     if request.method=='POST':
         title = request.POST['title']
@@ -46,6 +49,7 @@ def manage_slider(request):
         data = {'allSlider':allSlider}
         return render(request, 'dashboard/manage_slider.html', data)
 
+@login_required(login_url='mylogin')
 def update_slider(request, id):
     update = slider.objects.get(id=id)
     if request.FILES:
@@ -57,6 +61,7 @@ def update_slider(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_slider')
 
+@login_required(login_url='mylogin')
 def update_slider_status(request, id):
     query = slider.objects.get(id=id)
     if(query.status == 'Active'):
@@ -67,6 +72,7 @@ def update_slider_status(request, id):
     messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_slider')
 
+@login_required(login_url='mylogin')
 def delete_slider(request, id):
     db = slider.objects.get(id=id)
     file = slider.objects.get(id=id).image.delete(save=True)
@@ -74,11 +80,13 @@ def delete_slider(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_slider')
 
+@login_required(login_url='mylogin')
 def manage_sims(request):
     query = sims.objects.filter(id=1)
     data = {'query':query[0]}
     return render(request, 'dashboard/manage_sims.html', data)
 
+@login_required(login_url='mylogin')
 def update_sims(request):
     update = sims.objects.get(id=1)
     query = SimsForm(request.POST, instance=update)
@@ -88,11 +96,13 @@ def update_sims(request):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_sims')
 
+@login_required(login_url='mylogin')
 def manage_aboutus(request):
     query = about.objects.filter(id=1)
     data = {'query':query[0]}
     return render(request, 'dashboard/manage_aboutus.html', data)
 
+@login_required(login_url='mylogin')
 def update_aboutus(request):
     update = about.objects.get(id=1)
     query = AboutForm(request.POST, instance=update)
@@ -102,11 +112,13 @@ def update_aboutus(request):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_aboutus')
 
+@login_required(login_url='mylogin')
 def manage_leader(request):
     allLeader = leader.objects.all()
     data = {'allLeader':allLeader}
     return render(request, 'dashboard/manage_leader.html', data)
 
+@login_required(login_url='mylogin')
 def update_leader(request, id):
     update = leader.objects.get(id=id)
     if request.FILES:
@@ -118,6 +130,7 @@ def update_leader(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_leader')
 
+@login_required(login_url='mylogin')
 def manage_awards(request):
     if request.method=='POST':
         title = request.POST['title']
@@ -133,6 +146,7 @@ def manage_awards(request):
         data = {'allAwards':allAwards}
         return render(request, 'dashboard/manage_awards.html', data)
 
+@login_required(login_url='mylogin')
 def update_awards(request, id):
     update = awards.objects.get(id=id)
     if request.FILES:
@@ -144,6 +158,7 @@ def update_awards(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_awards')
 
+@login_required(login_url='mylogin')
 def delete_awards(request, id):
     db = awards.objects.get(id=id)
     file = awards.objects.get(id=id).image.delete(save=True)
@@ -151,6 +166,7 @@ def delete_awards(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_awards')
 
+@login_required(login_url='mylogin')
 def manage_stdtestimonial(request):
     if request.method=='POST':
         name = request.POST['name']
@@ -168,6 +184,7 @@ def manage_stdtestimonial(request):
         data = {'stdTestimonial':stdTestimonial}
         return render(request, 'dashboard/manage_stdtestimonial.html', data)
 
+@login_required(login_url='mylogin')
 def update_stdtestimonial(request, id):
     update = student_testmonials.objects.get(id=id)
     if request.FILES:
@@ -179,6 +196,7 @@ def update_stdtestimonial(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_stdtestimonial')
 
+@login_required(login_url='mylogin')
 def update_stdtestimonial_status(request, id):
     query = student_testmonials.objects.get(id=id)
     if(query.status == 'Active'):
@@ -189,6 +207,7 @@ def update_stdtestimonial_status(request, id):
     messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_stdtestimonial')
 
+@login_required(login_url='mylogin')
 def delete_stdtestimonial(request, id):
     db = student_testmonials.objects.get(id=id)
     file = student_testmonials.objects.get(id=id).image.delete(save=True)
@@ -196,6 +215,7 @@ def delete_stdtestimonial(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_stdtestimonial')
 
+@login_required(login_url='mylogin')
 def manage_alumni_testimonial(request):
     if request.method=='POST':
         name = request.POST['name']
@@ -213,6 +233,7 @@ def manage_alumni_testimonial(request):
         data = {'alumniTestimonial':alumniTestimonial}
         return render(request, 'dashboard/manage_alumni_testimonial.html', data)
 
+@login_required(login_url='mylogin')
 def update_alumni_testimonial(request, id):
     update = alumni_testmonials.objects.get(id=id)
     if request.FILES:
@@ -224,6 +245,7 @@ def update_alumni_testimonial(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_alumni_testimonial')
 
+@login_required(login_url='mylogin')
 def update_alumni_testimonial_status(request, id):
     query = alumni_testmonials.objects.get(id=id)
     if(query.status == 'Active'):
@@ -234,6 +256,7 @@ def update_alumni_testimonial_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_alumni_testimonial')
 
+@login_required(login_url='mylogin')
 def delete_alumni_testimonial(request, id):
     db = alumni_testmonials.objects.get(id=id)
     file = alumni_testmonials.objects.get(id=id).image.delete(save=True)
@@ -241,6 +264,7 @@ def delete_alumni_testimonial(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_alumni_testimonial')
 
+@login_required(login_url='mylogin')
 def manage_chse_faculty(request):
     if request.method=='POST':
         type = 'CHSE'
@@ -264,6 +288,7 @@ def manage_chse_faculty(request):
         data = {'chseFaculty':chseFaculty}
         return render(request, 'dashboard/manage_chse_faculty.html', data)
 
+@login_required(login_url='mylogin')
 def update_chse_faculty(request, id):
     update = faculties.objects.get(id=id)
     if request.FILES:
@@ -275,6 +300,7 @@ def update_chse_faculty(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_chse_faculty')
 
+@login_required(login_url='mylogin')
 def update_chse_faculty_status(request, id):
     query = faculties.objects.get(id=id)
     if(query.status == 'Active'):
@@ -285,6 +311,7 @@ def update_chse_faculty_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_chse_faculty')
 
+@login_required(login_url='mylogin')
 def delete_chse_faculty(request, id):
     db = faculties.objects.get(id=id)
     file = faculties.objects.get(id=id).image.delete(save=True)
@@ -292,6 +319,7 @@ def delete_chse_faculty(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_chse_faculty')
 
+@login_required(login_url='mylogin')
 def manage_entrance_faculty(request):
     if request.method=='POST':
         type = 'ENTRANCE'
@@ -315,6 +343,7 @@ def manage_entrance_faculty(request):
         data = {'EntranceFaculty':EntranceFaculty}
         return render(request, 'dashboard/manage_entrance_faculty.html', data)
 
+@login_required(login_url='mylogin')
 def update_entrance_faculty(request, id):
     update = faculties.objects.get(id=id)
     if request.FILES:
@@ -326,6 +355,7 @@ def update_entrance_faculty(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_entrance_faculty')
 
+@login_required(login_url='mylogin')
 def update_entrance_faculty_status(request, id):
     query = faculties.objects.get(id=id)
     if(query.status == 'Active'):
@@ -336,6 +366,7 @@ def update_entrance_faculty_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_entrance_faculty')
 
+@login_required(login_url='mylogin')
 def delete_entrance_faculty(request, id):
     db = faculties.objects.get(id=id)
     file = faculties.objects.get(id=id).image.delete(save=True)
@@ -343,6 +374,7 @@ def delete_entrance_faculty(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_entrance_faculty')
 
+@login_required(login_url='mylogin')
 def manage_college(request):
     if request.method=='POST':
         type = 'COLLEGE'
@@ -360,6 +392,7 @@ def manage_college(request):
         data = {'college':college}
         return render(request, 'dashboard/manage_college.html', data)
 
+@login_required(login_url='mylogin')
 def update_college(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -371,6 +404,7 @@ def update_college(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_college')
 
+@login_required(login_url='mylogin')
 def update_college_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -381,6 +415,7 @@ def update_college_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_college')
 
+@login_required(login_url='mylogin')
 def delete_college(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -388,6 +423,7 @@ def delete_college(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_college')
 
+@login_required(login_url='mylogin')
 def manage_hostel(request):
     if request.method=='POST':
         type = 'HOSTEL'
@@ -405,6 +441,7 @@ def manage_hostel(request):
         data = {'hostel':hostel}
         return render(request, 'dashboard/manage_hostel.html', data)
 
+@login_required(login_url='mylogin')
 def update_hostel(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -416,6 +453,7 @@ def update_hostel(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_hostel')
 
+@login_required(login_url='mylogin')
 def update_hostel_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -426,6 +464,7 @@ def update_hostel_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_hostel')
 
+@login_required(login_url='mylogin')
 def delete_hostel(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -433,6 +472,7 @@ def delete_hostel(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_hostel')
 
+@login_required(login_url='mylogin')
 def manage_gallery(request):
     if request.method=='POST':
         type = 'GALLERY'
@@ -450,6 +490,7 @@ def manage_gallery(request):
         data = {'gallery':gallery}
         return render(request, 'dashboard/manage_gallery.html', data)
 
+@login_required(login_url='mylogin')
 def update_gallery(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -461,6 +502,7 @@ def update_gallery(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_gallery')
 
+@login_required(login_url='mylogin')
 def update_gallery_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -471,6 +513,7 @@ def update_gallery_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_gallery')
 
+@login_required(login_url='mylogin')
 def delete_gallery(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -478,7 +521,7 @@ def delete_gallery(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_gallery')
 
-
+@login_required(login_url='mylogin')
 def manage_labs(request):
     if request.method=='POST':
         type = 'LAB'
@@ -496,6 +539,7 @@ def manage_labs(request):
         data = {'labs':labs}
         return render(request, 'dashboard/manage_labs.html', data)
 
+@login_required(login_url='mylogin')
 def update_labs(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -507,6 +551,7 @@ def update_labs(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_labs')
 
+@login_required(login_url='mylogin')
 def update_labs_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -517,6 +562,7 @@ def update_labs_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_labs')
 
+@login_required(login_url='mylogin')
 def delete_labs(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -524,6 +570,7 @@ def delete_labs(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_labs')
 
+@login_required(login_url='mylogin')
 def manage_sports(request):
     if request.method=='POST':
         type = 'SPORTS'
@@ -541,6 +588,7 @@ def manage_sports(request):
         data = {'sports':sports}
         return render(request, 'dashboard/manage_sports.html', data)
 
+@login_required(login_url='mylogin')
 def update_sports(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -552,6 +600,7 @@ def update_sports(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_sports')
 
+@login_required(login_url='mylogin')
 def update_sports_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -562,6 +611,7 @@ def update_sports_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_sports')
 
+@login_required(login_url='mylogin')
 def delete_sports(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -569,6 +619,7 @@ def delete_sports(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_sports')
 
+@login_required(login_url='mylogin')
 def manage_yoga(request):
     if request.method=='POST':
         type = 'YOGA'
@@ -586,6 +637,7 @@ def manage_yoga(request):
         data = {'yoga':yoga}
         return render(request, 'dashboard/manage_yoga.html', data)
 
+@login_required(login_url='mylogin')
 def update_yoga(request, id):
     update = infrastructure.objects.get(id=id)
     if request.FILES:
@@ -597,6 +649,7 @@ def update_yoga(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_yoga')
 
+@login_required(login_url='mylogin')
 def update_yoga_status(request, id):
     query = infrastructure.objects.get(id=id)
     if(query.status == 'Active'):
@@ -607,6 +660,7 @@ def update_yoga_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_yoga')
 
+@login_required(login_url='mylogin')
 def delete_yoga(request, id):
     db = infrastructure.objects.get(id=id)
     file = infrastructure.objects.get(id=id).image.delete(save=True)
@@ -614,6 +668,7 @@ def delete_yoga(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_yoga')
 
+@login_required(login_url='mylogin')
 def manage_neet(request):
     if request.method=='POST':
         type = 'NEET'
@@ -631,6 +686,7 @@ def manage_neet(request):
         data = {'neet':neet}
         return render(request, 'dashboard/manage_neet.html', data)
 
+@login_required(login_url='mylogin')
 def update_neet(request, id):
     update = results.objects.get(id=id)
     if request.FILES:
@@ -642,6 +698,7 @@ def update_neet(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_neet')
 
+@login_required(login_url='mylogin')
 def update_neet_status(request, id):
     query = results.objects.get(id=id)
     if(query.status == 'Active'):
@@ -652,6 +709,7 @@ def update_neet_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_neet')
 
+@login_required(login_url='mylogin')
 def delete_neet(request, id):
     db = results.objects.get(id=id)
     file = results.objects.get(id=id).image.delete(save=True)
@@ -659,6 +717,7 @@ def delete_neet(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_neet')
 
+@login_required(login_url='mylogin')
 def manage_iit(request):
     if request.method=='POST':
         type = 'IIT'
@@ -676,6 +735,7 @@ def manage_iit(request):
         data = {'iit':iit}
         return render(request, 'dashboard/manage_iit.html', data)
 
+@login_required(login_url='mylogin')
 def update_iit(request, id):
     update = results.objects.get(id=id)
     if request.FILES:
@@ -687,6 +747,7 @@ def update_iit(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_iit')
 
+@login_required(login_url='mylogin')
 def update_iit_status(request, id):
     query = results.objects.get(id=id)
     if(query.status == 'Active'):
@@ -697,6 +758,7 @@ def update_iit_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_iit')
 
+@login_required(login_url='mylogin')
 def delete_iit(request, id):
     db = results.objects.get(id=id)
     file = results.objects.get(id=id).image.delete(save=True)
@@ -704,6 +766,7 @@ def delete_iit(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_iit')
 
+@login_required(login_url='mylogin')
 def manage_chse(request):
     if request.method=='POST':
         type = 'CHSE'
@@ -721,6 +784,7 @@ def manage_chse(request):
         data = {'chse':chse}
         return render(request, 'dashboard/manage_chse.html', data)
 
+@login_required(login_url='mylogin')
 def update_chse(request, id):
     update = results.objects.get(id=id)
     if request.FILES:
@@ -732,6 +796,7 @@ def update_chse(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_chse')
 
+@login_required(login_url='mylogin')
 def update_chse_status(request, id):
     query = results.objects.get(id=id)
     if(query.status == 'Active'):
@@ -742,6 +807,7 @@ def update_chse_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_chse')
 
+@login_required(login_url='mylogin')
 def delete_chse(request, id):
     db = results.objects.get(id=id)
     file = results.objects.get(id=id).image.delete(save=True)
@@ -749,6 +815,7 @@ def delete_chse(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_chse')
 
+@login_required(login_url='mylogin')
 def manage_news(request):
     if request.method=='POST':
         title = request.POST['title']
@@ -765,6 +832,7 @@ def manage_news(request):
         data = {'news':allNews}
         return render(request, 'dashboard/manage_news.html', data)
 
+@login_required(login_url='mylogin')
 def update_news(request, id):
     update = news.objects.get(id=id)
     if request.FILES:
@@ -776,6 +844,7 @@ def update_news(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_news')
 
+@login_required(login_url='mylogin')
 def update_news_status(request, id):
     query = news.objects.get(id=id)
     if(query.status == 'Active'):
@@ -786,6 +855,7 @@ def update_news_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_news')
 
+@login_required(login_url='mylogin')
 def delete_news(request, id):
     db = news.objects.get(id=id)
     file = news.objects.get(id=id).image.delete(save=True)
@@ -793,6 +863,7 @@ def delete_news(request, id):
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_news')
 
+@login_required(login_url='mylogin')
 def manage_notices(request):
     if request.method=='POST':
         title = request.POST['title']
@@ -808,6 +879,7 @@ def manage_notices(request):
         data = {'notice':allNotice}
         return render(request, 'dashboard/manage_notices.html', data)
 
+@login_required(login_url='mylogin')
 def update_notices(request, id):
     update = notice.objects.get(id=id)
     if request.FILES:
@@ -819,6 +891,7 @@ def update_notices(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_notices')
 
+@login_required(login_url='mylogin')
 def update_notices_status(request, id):
     query = notice.objects.get(id=id)
     if(query.status == 'Active'):
@@ -829,12 +902,14 @@ def update_notices_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_notices')
 
+@login_required(login_url='mylogin')
 def delete_notices(request, id):
     db = notice.objects.get(id=id)
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_notices')
 
+@login_required(login_url='mylogin')
 def manage_careers(request):
     if request.method=='POST':
         title = request.POST['title']
@@ -852,6 +927,7 @@ def manage_careers(request):
         data = {'careers':allCareers}
         return render(request, 'dashboard/manage_careers.html', data)
 
+@login_required(login_url='mylogin')
 def update_careers(request, id):
     update = careers.objects.get(id=id)
     if request.FILES:
@@ -863,6 +939,7 @@ def update_careers(request, id):
         messages.success(request, 'Data Successfully Updated!')
     return redirect('manage_careers')
 
+@login_required(login_url='mylogin')
 def update_careers_status(request, id):
     query = careers.objects.get(id=id)
     if(query.status == 'Active'):
@@ -873,17 +950,20 @@ def update_careers_status(request, id):
     messages.success(request, 'Status Successfully Updated!')
     return redirect('manage_careers')
 
+@login_required(login_url='mylogin')
 def delete_careers(request, id):
     db = careers.objects.get(id=id)
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_careers')
 
+@login_required(login_url='mylogin')
 def manage_jobapplied(request):
     job = JobApply.objects.all().order_by('-id')
     data = {'job':job}
     return render(request, 'dashboard/manage_jobapplied.html', data)
 
+@login_required(login_url='mylogin')
 def manage_conatctInfo(request):
     contactInfo = contact.objects.all().order_by('-id')
     data = {'contactInfo':contactInfo}
