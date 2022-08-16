@@ -1,4 +1,6 @@
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, sims
+
+from dashboard.models import tbl_rc_stream
 from django import forms
 
 class SliderForm(forms.ModelForm):
@@ -64,4 +66,9 @@ class NoticeForm(forms.ModelForm):
 class CareersForm(forms.ModelForm):
     class Meta:
         model = careers
+        fields = '__all__'
+
+class RcStreamForm(forms.ModelForm):
+    class Meta:
+        model = tbl_rc_stream
         fields = '__all__'

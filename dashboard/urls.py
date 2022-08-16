@@ -133,4 +133,10 @@ urlpatterns = [
 
     # Manage contact info
     path('manage_conatctInfo/', views.manage_conatctInfo, name='manage_conatctInfo'),
+
+    # Manage regular course stream 
+    path('manage_rc_stream/', views.manage_rc_stream, name='manage_rc_stream'),
+    path('update_rc_stream/<int:id>', views.update_rc_stream, name='update_rc_stream'),
+    path('update_rc_stream_status/<int:id>', views.update_rc_stream_status, name='update_rc_stream_status'),
+    path('delete_rc_stream/<int:id>', views.delete_rc_stream, name='delete_rc_stream'),
 ]

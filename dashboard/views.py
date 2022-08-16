@@ -1,21 +1,23 @@
+from asyncio import streams
 from operator import concat
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from urllib import request
 from django.contrib.auth.models import User
-from dashboard.models import password_token
+from dashboard.models import password_token, tbl_rc_stream
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 from college.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.conf import settings
+from datetime import date
 
 # Create your views here.
 def mylogin(request):
@@ -1040,3 +1042,54 @@ def manage_conatctInfo(request):
     contactInfo = contact.objects.all().order_by('-id')
     data = {'contactInfo':contactInfo}
     return render(request, 'dashboard/manage_contactInfo.html', data)
+
+@login_required(login_url='mylogin')
+def manage_rc_stream(request):
+    if request.method=='POST':
+        stream = request.POST['stream']
+        session = request.POST['session']
+        duration = request.POST['duration']
+        fees = request.POST['fees']
+        status = 'Active'
+
+        if tbl_rc_stream.objects.filter(stream=stream, session=session).exists():
+            messages.error(request, 'Stream and session data can not be duplicate')
+        else:
+            data = tbl_rc_stream(stream=stream, session=session, duration=duration, fees=fees, status=status)
+            data.save()
+            messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_rc_stream')
+    else:
+        cyear = date.today().year
+        nyear = date.today().year + 2
+        rc_stream = tbl_rc_stream.objects.all().order_by('-id')
+        data = {'rc_stream':rc_stream, 'cyear':cyear, 'nyear':nyear}
+        return render(request, 'dashboard/manage_rc_stream.html', data)
+
+@login_required(login_url='mylogin')
+def update_rc_stream(request, id):
+    update = tbl_rc_stream.objects.get(id=id)
+    query = RcStreamForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_rc_stream')
+
+@login_required(login_url='mylogin')
+def update_rc_stream_status(request, id):
+    query = tbl_rc_stream.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    messages.success(request, 'Status Successfully Updated!')
+    return redirect('manage_rc_stream')
+
+@login_required(login_url='mylogin')
+def delete_rc_stream(request, id):
+    db = tbl_rc_stream.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_rc_stream')

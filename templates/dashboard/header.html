@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'dashboard/images/favicon.png' %}">
 	<link rel="stylesheet" href="{% static 'dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link href="{% static 'dashboard/css/popup.css' %}" rel="stylesheet">
 </head>
 <body>
     <div id="preloader">
@@ -151,7 +152,7 @@
                     <li class="nav-label">Manage Website</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-users"></i>
-                        <span class="nav-text">Manage Website</span>
+                        <span class="nav-text">WEBSITE SECTION</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="/dashboard/manage_slider">Manage Slider</a></li>
@@ -201,6 +202,14 @@
                                     <li><a href="/dashboard/manage_jobapplied">Job Applied</a></li>
                                 </ul>
                             </li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-users"></i>
+                        <span class="nav-text">ADMIN SECTION</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/dashboard/manage_rc_stream">COLLEGE STREAM</a></li>
                         </ul>
                     </li>
 				</ul>
