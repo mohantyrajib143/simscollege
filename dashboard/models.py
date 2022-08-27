@@ -66,3 +66,12 @@ class tbl_rc_std_payments(models.Model):
     status = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class tbl_sc_stream(models.Model):
+    stream = models.CharField(max_length=500)
+    session = models.CharField(max_length=500)
+    duration = models.CharField(max_length=500)
+    fees = models.CharField(max_length=500)
+    status = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
