@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="{% static 'dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
     <link href="{% static 'dashboard/css/popup.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div id="preloader">
@@ -210,6 +211,14 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="/dashboard/manage_rc_stream">COLLEGE STREAM</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-users"></i>
+                        <span class="nav-text">STUDENT SECTION</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/dashboard/manage_rc_student">STUDENT INFO</a></li>
                         </ul>
                     </li>
 				</ul>

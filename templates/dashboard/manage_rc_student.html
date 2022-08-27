@@ -1,0 +1,99 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row tab-content">
+                    <div id="list-view" class="tab-pane fade active show col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">REGULAR COURSE STUDENT : {{ttlStd}}</h4>
+                                <a href="{% url 'add_rc_student' %}" class="btn btn-primary">+ Add new</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display" style="min-width: 845px">
+                                        <thead>
+                                            <tr>
+                                                <th>PHOTO</th>
+                                                <th>ROLL NO</th>
+                                                <th>REGD NO</th>
+                                                <th>NAME</th>
+                                                <th>SESSION</th>
+                                                <th>STREAM</th>
+                                                <th>DOJ</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for allStd in allStd %}
+                                                <tr>
+                                                    <td><img class="rounded-circle" width="35" src="/media/{{allStd.std_photo}}" alt=""></td>
+                                                    <td><strong>{{allStd.roll_no}}</strong></td>
+                                                    <td><strong>{{allStd.regd_no}}</strong></td>
+                                                    <td><strong>{{allStd.name}}</strong></td>
+                                                    <td>{{allStd.session}}</td>
+                                                    <td>{{allStd.stream}}</td>
+                                                    <td>{{allStd.doj|date:"d M, Y"}}</td>
+                                                    <td>
+                                                        {% if allStd.status == 'Active' %}
+                                                            <a href="{% url 'update_rc_student_status' allStd.id %}" onClick="return confirm('Are you sure? to update status!')" title="active" class="btn btn-sm btn-success"><i class="fa fa-toggle-on"></i></a>
+                                                        {% else %}
+                                                            <a href="{% url 'update_rc_student_status' allStd.id %}" onClick="return confirm('Are you sure? to update status!')" title="inactive" class="btn btn-sm btn-success"><i class="fa fa-toggle-off"></i></a>
+                                                        {% endif %}
+
+                                                        <a href="{% url 'edit_rc_student' allStd.id %}" onClick="return confirm('Are you sure? to edit this!')" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+
+                                                        <a href="{% url 'student_icard' allStd.id %}" onClick="return confirm('Are you sure? to view!')" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-id-card-o"></i></a>
+                                                    </td>												
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="successModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="thank-you-pop">
+                    <img src="{% static 'dashboard/images/msg/success.png' %}" alt="">
+                    <p id="successMsg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <!-- Datatable -->
+    <link href="{% static 'dashboard/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <script src="{% static 'dashboard/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/datatables.init.js' %}"></script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    $(document).ready(function(){
+                        $("#successModal").modal('show');
+                        $('#successMsg').html(msg);
+
+                        window.setTimeout( function(){
+                            $("#successModal").modal('hide');
+                        }, 2000 );
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

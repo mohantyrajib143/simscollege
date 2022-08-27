@@ -1,0 +1,208 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" autocomplete="off" action="{% url 'update_rc_student' query.id %}" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="row">
+                                <h5 class="card-title mb-3">BASIC INFORMATION</h5>
+                                <input type="hidden" name="regd_no" value="{{query.regd_no}}">
+                                <input type="hidden" name="roll_no" value="{{query.roll_no}}">
+                                <input type="hidden" name="status" value="{{query.status}}">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="name" name="name" value="{{query.name}}" onKeyPress="return ValidateName(event);" onKeyUP="this.value = this.value.toUpperCase();" placeholder="Enter name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="email" id="email" name="email" value="{{query.email}}" placeholder="Enter email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="mobile" name="mobile" value="{{query.mobile}}" placeholder="Enter mobile" minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="gender" name="gender" class="form-control" required>
+                                            <option value="MALE" {% if query.gender == 'MALE' %} selected="selected" {% endif %}>MALE</option>
+                                            <option value="FEMALE" {% if query.gender == 'FEMALE' %} selected="selected" {% endif %}>FEMALE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="date" max="{% now 'Y-m-d' %}" value="{{query.dob}}" id="dob" name="dob" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="aadhaar" name="aadhaar" value="{{query.aadhaar}}" minlength="12" maxlength="12" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Aadhaar no" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="session" name="session" class="form-control" required>
+                                            <option value="{{ query.session }}">Session : {{ query.session }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="stream" name="stream" class="form-control" required>
+                                            <option value="{{ query.stream }}">{{ query.stream }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="date" id="doj" name="doj" value="{% now 'Y-m-d' %}"" class="form-control" readonly>
+                                    </div>
+                                </div>
+
+                                <h5 class="card-title mb-3">PARENTS INFORMATION</h5>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="father_name" name="father_name" value="{{query.father_name}}" onKeyPress="return ValidateName(event);" onKeyUP="this.value = this.value.toUpperCase();" placeholder="Father name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="father_occupation" name="father_occupation" value="{{query.father_occupation}}" placeholder="Father occupation" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="father_mobile" name="father_mobile" value="{{query.father_mobile}}" minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Father mobile" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="mother_name" name="mother_name" value="{{query.mother_name}}" onKeyPress="return ValidateName(event);" onKeyUP="this.value = this.value.toUpperCase();" placeholder="Mother name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="mother_occupation" name="mother_occupation" value="{{query.mother_occupation}}" placeholder="Mother occupation" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="mother_mobile" name="mother_mobile" value="{{query.mother_mobile}}" minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Mother mobile" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="guardian_name" name="guardian_name" value="{{query.guardian_name}}" onKeyPress="return ValidateName(event);" onKeyUP="this.value = this.value.toUpperCase();" placeholder="Guardian name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="guardian_relation" name="guardian_relation" class="form-control" required>
+                                            <option value="Uncle" {% if query.guardian_relation == 'Uncle' %} selected="selected" {% endif %}>Uncle</option>
+                                            <option value="Anty" {% if query.guardian_relation == 'Anty' %} selected="selected" {% endif %}>Anty</option>
+                                            <option value="Brother" {% if query.guardian_relation == 'Brother' %} selected="selected" {% endif %}>Brother</option>
+                                            <option value="Sister" {% if query.guardian_relation == 'Sister' %} selected="selected" {% endif %}>Sister</option>
+                                            <option value="Grand Father" {% if query.guardian_relation == 'Grand Father' %} selected="selected" {% endif %}>Grand Father</option>
+                                            <option value="Grand Mother" {% if query.guardian_relation == 'Grand Mother' %} selected="selected" {% endif %}>Grand Mother</option>
+                                            <option value="Others" {% if query.guardian_relation == 'Others' %} selected="selected" {% endif %}>Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="guardian_mobile" name="guardian_mobile" value="{{query.guardian_mobile}}" minlength="10" maxlength="10" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Guardian mobile" class="form-control">
+                                    </div>
+                                </div>
+
+                                <h5 class="card-title mb-3">MORE INFORMATION</h5>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <select id="board" name="board" class="form-control" required>
+                                            <option value="STATE BOARD" {% if query.board == 'STATE BOARD' %} selected="selected" {% endif %}>STATE BOARD</option>
+                                            <option value="CBSE BOARD" {% if query.board == 'CBSE BOARD' %} selected="selected" {% endif %}>CBSE BOARD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="school_name" name="school_name" value="{{query.school_name}}" placeholder="School Name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <input type="text" id="school_marks" name="school_marks" value="{{query.school_marks}}" placeholder="School Makrs" class="form-control" minlength="3" maxlength="3" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <textarea id="school_info" name="school_info" class="form-control" placeholder="Schooling Information" rows="3">{{query.school_info}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <textarea id="present_address" name="present_address"  class="form-control" placeholder="Present Address" rows="3">{{query.present_address}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <textarea id="permanent_address" name="permanent_address" class="form-control" placeholder="Permanent Address" rows="3">{{query.permanent_address}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label class="form-label">Select Aaadhar Card</label>
+                                    <div class="form-group fallback w-100">
+                                        <input type="file" id="aadhaar_card" name="aadhaar_card" class="form-control" accept=".png, .jpg, .jpeg, .pdf">
+                                    </div>
+                                    <label class="form-label"><a class="btn btn-sm btn-secondary" href="/media/{{query.aadhaar_card}}" target="_blank">view old aadhaar card</a></label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label class="form-label">Select Student Photo</label>
+                                    <div class="form-group fallback w-100">
+                                        <input type="file" id="std_photo" name="std_photo" class="form-control" accept=".png, .jpg, .jpeg, .pdf">
+                                    </div>
+                                    <label class="form-label"><a class="btn btn-sm btn-secondary" href="/media/{{query.std_photo}}" target="_blank">view old stduent photo</a></label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label class="form-label">Select Student Document</label>
+                                    <div class="form-group fallback w-100">
+                                        <input type="file" id="std_document" name="std_document" class="form-control" accept=".png, .jpg, .jpeg, .pdf">
+                                    </div>
+                                    <label class="form-label"><a class="btn btn-sm btn-secondary" href="/media/{{query.std_document}}" target="_blank">view old stduent documents</a></label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-4" style="float: right;">
+                                    <button type="button" class="btn btn-danger">CANCEL</button>
+                                    <button type="submit" class="btn btn-primary pull-right">SAVE STUDENT INFORMATION</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <link rel="stylesheet" href="{% static 'dashboard/vendor/pickadate/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/vendor/pickadate/themes/default.date.css' %}">
+    <script src="{% static 'dashboard/vendor/pickadate/picker.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/pickadate/picker.time.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/pickadate/picker.date.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/pickadate-init.js' %}"></script>
+    <script>
+        function ValidateName(evt){
+            var keyCode = (evt.which) ? evt.which : evt.keyCode
+            if ((keyCode < 65 || keyCode > 90) && (keyCode < 97 || keyCode > 123) && keyCode != 32)
+            
+            return false;
+                return true;
+        }
+    </script>
+{% endblock %}

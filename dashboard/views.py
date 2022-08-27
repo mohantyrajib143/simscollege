@@ -4,13 +4,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm, RcStudentForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from urllib import request
 from django.contrib.auth.models import User
-from dashboard.models import password_token, tbl_rc_stream
+from dashboard.models import password_token, tbl_rc_std_payments, tbl_rc_stream, tbl_rc_students
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
@@ -18,6 +18,9 @@ from college.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import date
+from django.db.models import Count
+from num2words import num2words
+import random
 
 # Create your views here.
 def mylogin(request):
@@ -1093,3 +1096,163 @@ def delete_rc_stream(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_rc_stream')
+
+@login_required(login_url='mylogin')
+def manage_rc_student(request):
+    allStd = tbl_rc_students.objects.all().order_by('-id')
+    print()
+    data = {'allStd':allStd, 'ttlStd':allStd.count()}
+    return render(request, 'dashboard/manage_rc_student.html', data)
+
+@login_required(login_url='mylogin')
+def update_rc_student_status(request, id):
+    query = tbl_rc_students.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    return redirect('manage_rc_student')
+
+@login_required(login_url='mylogin')
+def edit_rc_student(request, id):
+    if tbl_rc_students.objects.filter(id=id).exists():
+        query = tbl_rc_students.objects.get(id=id)
+        data = {'query':query}
+        return render(request, 'dashboard/edit_rc_student.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
+
+@login_required(login_url='mylogin')
+def update_rc_student(request, id):
+    update = tbl_rc_students.objects.get(id=id)
+    stdData = RcStudentForm(request.POST or None, request.FILES, instance=update)
+    stdData.save()
+    if stdData.is_valid():
+        stdData.save(commit=True)
+        messages.success(request, 'Successfully Updated!')
+    return redirect('manage_rc_student')
+
+@login_required(login_url='mylogin')
+def add_rc_student(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        mobile = request.POST['mobile']
+        gender = request.POST['gender']
+        dob = request.POST['dob']
+        aadhaar = request.POST['aadhaar']
+        session = request.POST['session']
+        stream = request.POST['stream']
+        doj = request.POST['doj']
+        father_name = request.POST['father_name']
+        father_occupation = request.POST['father_occupation']
+        father_mobile = request.POST['father_mobile']
+        mother_name = request.POST['mother_name']
+        mother_occupation = request.POST['mother_occupation']
+        mother_mobile = request.POST['mother_mobile']
+        guardian_name = request.POST['guardian_name']
+        guardian_relation = request.POST['guardian_relation']
+        guardian_mobile = request.POST['guardian_mobile']
+        board = request.POST['board']
+        school_name = request.POST['school_name']
+        school_marks = request.POST['school_marks']
+        school_info = request.POST['school_info']
+        present_address = request.POST['present_address']
+        permanent_address = request.POST['permanent_address']
+        aadhaar_card = request.FILES['aadhaar_card']
+        std_photo = request.FILES['std_photo']
+        std_document = request.FILES['std_document']
+        status = 'Active'
+
+        if tbl_rc_students.objects.filter(aadhaar=aadhaar).exists():
+            messages.error(request, 'Aadhaar No is exist!!')
+        else:
+            data = tbl_rc_students(name=name, email=email, mobile=mobile,gender=gender, dob=dob, aadhaar=aadhaar, session=session, stream=stream, doj=doj, father_name=father_name, father_occupation=father_occupation, father_mobile=father_mobile, mother_name=mother_name, mother_occupation=mother_occupation, mother_mobile=mother_mobile, guardian_name=guardian_name, guardian_relation=guardian_relation, guardian_mobile=guardian_mobile, board=board, school_name=school_name, school_marks=school_marks, school_info=school_info, present_address=present_address, permanent_address=permanent_address, aadhaar_card=aadhaar_card, std_photo=std_photo, std_document=std_document, status=status)
+            data.save()
+
+            laststdID = tbl_rc_students.objects.latest('id')
+            request.session['stdID'] = laststdID.id
+        return redirect('rc_student_admission_payment')
+    else:
+        cyear = date.today().year
+        nyear = date.today().year + 2
+        session = str(cyear) + "-" + str(nyear)
+
+        data = {'session':session}
+        return render(request, 'dashboard/add_rc_student.html', data)
+
+@login_required(login_url='mylogin')
+def rc_student_admission_payment(request):
+    if 'stdID' in request.session:
+        if request.method=='POST':
+            std_id = request.POST['std_id']
+            rollno = request.POST['rollno']
+            regdno = request.POST['regdno']
+            invoice = str(random.randint(1000000000, 9999999999))
+            txn = str(random.randint(1000000000, 9999999999))
+            txn_id = 'txn' + txn
+            amount = request.POST['amount']
+            type = request.POST['type']
+            if type == 'OFFLINE':
+                mode = request.POST['offline_mode']
+            else:
+                mode = request.POST['online_mode']
+            remarks = request.POST['remarks']
+            pdate = request.POST['date']
+            status = 'active'
+
+            data = tbl_rc_std_payments(std_id=std_id, txn_id=txn_id, invoice=invoice, amount=amount, type=type, mode=mode, remarks=remarks, date=pdate, status=status)
+            data.save()
+
+            query = tbl_rc_students.objects.get(id=std_id)
+            if(query.regd_no == ''):
+                query.regd_no = regdno
+            if(query.roll_no == ''):
+                query.roll_no = rollno
+            query.save()
+            del request.session['stdID']
+
+            messages.success(request, 'Admission Successfully Done!')
+            return redirect('manage_rc_student')
+        else:
+            stdID = request.session['stdID']
+            stdInfo = tbl_rc_students.objects.get(id=stdID)
+            streamInfo = tbl_rc_stream.objects.get(stream=stdInfo.stream, session=stdInfo.session, status='Active')
+            stdCntData = tbl_rc_students.objects.filter(session=stdInfo.session, stream=stdInfo.stream).count()
+            year = date.today().year
+            nyear = str(year)[-2:]
+            stream = stdInfo.stream
+            nstream = stream[:3]
+
+            if stdCntData < 10:
+                rollno = stdCntData
+                rollno = str(0) + str(0) + str(rollno)
+            elif stdCntData < 100:
+                rollno = stdCntData
+                rollno = str(0) + str(rollno)
+
+            rollnew = str(nyear) + str(nstream) + str(rollno)
+            regdno = str(year) + str(19091319) + str(rollno)
+
+            data = {'stdInfo':stdInfo, 'streamInfo':streamInfo, 'rollnew':rollnew, 'regdno':regdno, 'stdID':stdInfo.id}
+            return render(request, 'dashboard/rc_student_admission_payment.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
+
+def std_payment_receipt(request):
+    stdID = request.session['stdID']
+    pinfo = tbl_rc_std_payments.objects.get(std_id=stdID)
+    amount = pinfo.amount
+    wamount = num2words(amount)
+    stdInfo = tbl_rc_students.objects.get(id=stdID)
+    data = {'pinfo':pinfo, 'stdInfo':stdInfo, 'wamount':wamount}
+    return render(request, 'dashboard/receipt.html', data)
+
+def student_icard(request, id):
+    if tbl_rc_students.objects.filter(id=id).exists():
+        stdInfo = tbl_rc_students.get_object_or_404(id=id)
+        data = {'stdInfo':stdInfo}
+        return render(request, 'dashboard/student_idcard.html', data)
+    else:
+        return render(request, 'dashboard/404.html')

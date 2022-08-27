@@ -139,4 +139,14 @@ urlpatterns = [
     path('update_rc_stream/<int:id>', views.update_rc_stream, name='update_rc_stream'),
     path('update_rc_stream_status/<int:id>', views.update_rc_stream_status, name='update_rc_stream_status'),
     path('delete_rc_stream/<int:id>', views.delete_rc_stream, name='delete_rc_stream'),
+
+    # Manage regular course student info 
+    path('manage_rc_student/', views.manage_rc_student, name='manage_rc_student'),
+    path('update_rc_student_status/<int:id>', views.update_rc_student_status, name='update_rc_student_status'),
+    path('edit_rc_student/<int:id>', views.edit_rc_student, name='edit_rc_student'),
+    path('update_rc_student/<int:id>', views.update_rc_student, name='update_rc_student'),
+    path('add_rc_student/', views.add_rc_student, name='add_rc_student'),
+    path('rc_student_admission_payment/', views.rc_student_admission_payment, name='rc_student_admission_payment'),
+    path('std_payment_receipt', views.std_payment_receipt, name='std_payment_receipt'),
+    path('student_icard/<int:id>', views.student_icard, name='student_icard'),
 ]
