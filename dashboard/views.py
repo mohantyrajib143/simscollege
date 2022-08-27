@@ -4,13 +4,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm, RcStudentForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm, RcStudentForm, ScStreamForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from urllib import request
 from django.contrib.auth.models import User
-from dashboard.models import password_token, tbl_rc_std_payments, tbl_rc_stream, tbl_rc_students
+from dashboard.models import password_token, tbl_rc_std_payments, tbl_rc_stream, tbl_rc_students, tbl_sc_stream
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
@@ -1256,3 +1256,53 @@ def student_icard(request, id):
         return render(request, 'dashboard/student_idcard.html', data)
     else:
         return render(request, 'dashboard/404.html')
+
+# Summer Course Stream Management 
+@login_required(login_url='mylogin')
+def manage_sc_stream(request):
+    if request.method=='POST':
+        stream = request.POST['stream']
+        session = request.POST['session']
+        duration = request.POST['duration']
+        fees = request.POST['fees']
+        status = 'Active'
+
+        if tbl_sc_stream.objects.filter(stream=stream, session=session).exists():
+            messages.error(request, 'Stream and session data can not be duplicate')
+        else:
+            data = tbl_sc_stream(stream=stream, session=session, duration=duration, fees=fees, status=status)
+            data.save()
+            messages.success(request, 'Data Successfully Saved!!')
+        return redirect('manage_sc_stream')
+    else:
+        cyear = date.today().year
+        nyear = date.today().year + 2
+        sc_stream = tbl_sc_stream.objects.all().order_by('-id')
+        data = {'sc_stream':sc_stream, 'cyear':cyear, 'nyear':nyear}
+        return render(request, 'dashboard/manage_sc_stream.html', data)
+
+@login_required(login_url='mylogin')
+def update_sc_stream(request, id):
+    update = tbl_sc_stream.objects.get(id=id)
+    query = ScStreamForm(request.POST,request.FILES , instance=update)
+    query.save()
+    if query.is_valid():
+        query.save(commit=True)
+        messages.success(request, 'Data Successfully Updated!')
+    return redirect('manage_sc_stream')
+
+@login_required(login_url='mylogin')
+def update_sc_stream_status(request, id):
+    query = tbl_sc_stream.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    return redirect('manage_sc_stream')
+
+@login_required(login_url='mylogin')
+def delete_sc_stream(request, id):
+    db = tbl_sc_stream.objects.get(id=id)
+    db.delete()
+    return redirect('manage_sc_stream')

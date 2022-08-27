@@ -1,6 +1,6 @@
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, sims
 
-from dashboard.models import tbl_rc_stream, tbl_rc_students
+from dashboard.models import tbl_rc_stream, tbl_rc_students, tbl_sc_stream
 from django import forms
 
 class SliderForm(forms.ModelForm):
@@ -83,3 +83,8 @@ class RcStudentForm(forms.ModelForm):
         self.fields['mobile'].required = False
         self.fields['mother_mobile'].required = False
         self.fields['guardian_mobile'].required = False
+
+class ScStreamForm(forms.ModelForm):
+    class Meta:
+        model = tbl_sc_stream
+        fields = '__all__'

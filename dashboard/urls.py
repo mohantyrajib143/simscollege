@@ -149,4 +149,10 @@ urlpatterns = [
     path('rc_student_admission_payment/', views.rc_student_admission_payment, name='rc_student_admission_payment'),
     path('std_payment_receipt', views.std_payment_receipt, name='std_payment_receipt'),
     path('student_icard/<int:id>', views.student_icard, name='student_icard'),
+
+    # Manage summer course stream 
+    path('manage_sc_stream/', views.manage_sc_stream, name='manage_sc_stream'),
+    path('update_sc_stream/<int:id>', views.update_sc_stream, name='update_sc_stream'),
+    path('update_sc_stream_status/<int:id>', views.update_sc_stream_status, name='update_sc_stream_status'),
+    path('delete_sc_stream/<int:id>', views.delete_sc_stream, name='delete_sc_stream'),
 ]
