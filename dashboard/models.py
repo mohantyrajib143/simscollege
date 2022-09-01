@@ -62,7 +62,7 @@ class tbl_rc_std_payments(models.Model):
     type = models.CharField(max_length=500)
     mode = models.CharField(max_length=500)
     remarks = models.CharField(max_length=500)
-    date = models.CharField(max_length=500)
+    date = models.DateField()
     status = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

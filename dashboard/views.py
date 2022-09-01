@@ -21,6 +21,7 @@ from datetime import date
 from django.db.models import Count
 from num2words import num2words
 import random
+from django.db.models import Sum
 
 # Create your views here.
 def mylogin(request):
@@ -1100,7 +1101,6 @@ def delete_rc_stream(request, id):
 @login_required(login_url='mylogin')
 def manage_rc_student(request):
     allStd = tbl_rc_students.objects.all().order_by('-id')
-    print()
     data = {'allStd':allStd, 'ttlStd':allStd.count()}
     return render(request, 'dashboard/manage_rc_student.html', data)
 
@@ -1240,18 +1240,21 @@ def rc_student_admission_payment(request):
     else:
         return render(request, 'dashboard/404.html')
 
-def std_payment_receipt(request):
-    stdID = request.session['stdID']
-    pinfo = tbl_rc_std_payments.objects.get(std_id=stdID)
-    amount = pinfo.amount
-    wamount = num2words(amount)
-    stdInfo = tbl_rc_students.objects.get(id=stdID)
-    data = {'pinfo':pinfo, 'stdInfo':stdInfo, 'wamount':wamount}
-    return render(request, 'dashboard/receipt.html', data)
+def std_payment_receipt(request, id):
+    if tbl_rc_std_payments.objects.filter(id=id).exists():
+        pinfo = tbl_rc_std_payments.objects.get(id=id)
+        amount = pinfo.amount
+        stdID = pinfo.std_id
+        wamount = num2words(amount)
+        stdInfo = tbl_rc_students.objects.get(id=stdID)
+        data = {'pinfo':pinfo, 'stdInfo':stdInfo, 'wamount':wamount}
+        return render(request, 'dashboard/receipt.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
 
 def student_icard(request, id):
     if tbl_rc_students.objects.filter(id=id).exists():
-        stdInfo = tbl_rc_students.get_object_or_404(id=id)
+        stdInfo = tbl_rc_students.objects.get(id=id)
         data = {'stdInfo':stdInfo}
         return render(request, 'dashboard/student_idcard.html', data)
     else:
@@ -1306,3 +1309,48 @@ def delete_sc_stream(request, id):
     db = tbl_sc_stream.objects.get(id=id)
     db.delete()
     return redirect('manage_sc_stream')
+
+@login_required(login_url='mylogin')
+def std_fees_information(request):
+    if request.method=='POST':
+        rollNo = request.POST['roll_no']
+        if tbl_rc_students.objects.filter(roll_no=rollNo).exists():
+            stdInfo = tbl_rc_students.objects.get(roll_no=rollNo)
+            streamInfo = tbl_rc_stream.objects.get(stream=stdInfo.stream, session=stdInfo.session, status='Active')
+            totalPaid = tbl_rc_std_payments.objects.filter(std_id=stdInfo.id).aggregate(ttlAmount=Sum('amount'))
+            feesAmount = int(streamInfo.fees)
+            paidAmount = int(totalPaid['ttlAmount'])
+            remainingAmount = feesAmount - paidAmount
+            data = {"stdInfo":stdInfo, "streamInfo":streamInfo, "paidAmount":paidAmount, "remainingAmount":remainingAmount, "rollNo":rollNo}
+            messages.success(request, 'Student Roll no exist')
+            return render(request, 'dashboard/rc_std_fees_payment.html', data)
+        else:
+            data = {"rollNo":rollNo}
+            messages.error(request, 'Student Roll no was not exist in our records!!')
+            return render(request, 'dashboard/rc_std_fees_payment.html', data)
+    else:
+        stdFees = tbl_rc_std_payments.objects.raw("select p.id, s.roll_no,p.invoice, p.txn_id from dashboard_tbl_rc_std_payments as p INNER JOIN dashboard_tbl_rc_students as s ON p.std_id=s.id")
+        rollNo = tbl_rc_students.objects.filter(status='Active')
+        data = {'stdFees':stdFees, 'rollNo':rollNo}
+        return render(request, 'dashboard/std_fees_information.html', data)
+
+@login_required(login_url='mylogin')
+def rc_std_fees_payment(request):
+    if request.method=='POST':
+        std_id = request.POST['std_id']
+        invoice = str(random.randint(1000000000, 9999999999))
+        txn = str(random.randint(1000000000, 9999999999))
+        txn_id = 'txn' + txn
+        amount = request.POST['amount']
+        type = request.POST['type']
+        if type == 'OFFLINE':
+            mode = request.POST['offline_mode']
+        else:
+            mode = request.POST['online_mode']
+        remarks = request.POST['remarks']
+        pdate = request.POST['date']
+        status = 'active'
+
+        data = tbl_rc_std_payments(std_id=std_id, txn_id=txn_id, invoice=invoice, amount=amount, type=type, mode=mode, remarks=remarks, date=pdate, status=status)
+        data.save()
+        return redirect('std_fees_information')

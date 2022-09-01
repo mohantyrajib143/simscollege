@@ -1,0 +1,244 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <form method="post" autocomplete="off" action="{% url 'std_fees_information' %}"  enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group">
+                        <div class="input-group mt-4">
+                            <input type="text" id="roll_no" name="roll_no" value="{{rollNo}}" placeholder="Search roll no for college fees and hostel fees paymemt..." style="height: 38px;" class="form-control" required>
+                            <div class="input-group-prepend">
+                                <button type="submit" class="btn btn-primary input-group-text">SEARCH</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div class="col-xl-12 col-xxl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="alert alert-danger left-icon-big alert-dismissible fade show">
+                                                <div class="media">
+                                                    <div class="alert-left-icon-big">
+                                                        <span><i class="mdi mdi-alert"></i></span>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="mt-1 mb-1">Loading failed!, {{message}}</h5>
+                                                        <p>Please try again with new student roll no for make payment!!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-xl-3 col-xxl-4 col-lg-4">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="text-center p-3 overlay-box">
+                                            <div class="profile-photo">
+                                                <img src="/media/{{stdInfo.std_photo}}" width="100" class="img-fluid rounded-circle" alt="">
+                                            </div>
+                                            <h3 class="mt-3 mb-1 text-white">{{stdInfo.name}}</h3>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Roll No</span> <strong class="text-muted">{{stdInfo.roll_no}}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Regd No</span> <strong class="text-muted">{{stdInfo.regd_no}}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Session</span> <strong class="text-muted">{{stdInfo.session}}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Stream</span> <strong class="text-muted">{{stdInfo.stream}}</strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Total Fees</span> <strong class="text-muted"><b style="color: red;">&#8377;{{streamInfo.fees}}.00</b></strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Paid Amount</span> <strong class="text-muted"><b style="color: green;">&#8377;{{paidAmount}}.00</b></strong></li>
+                                            <li class="list-group-item d-flex justify-content-between"><span class="mb-0">To be Paid</span> <strong class="text-muted"><b style="color: blueviolet;">&#8377;{{remainingAmount}}.00</b></strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-xxl-8 col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="profile-tab">
+                                        <div class="custom-tab-1">
+                                            <div class="tab-content">
+                                                <div id="my-posts" class="tab-pane fade active show">
+                                                    <div class="col-xl-12 col-xxl-12 col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title"><b>Make Student Payment</b></h4>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="basic-form">
+                                                                    <form action="{% url 'rc_std_fees_payment' %}" method="post" autocomplete="off">{% csrf_token %}
+                                                                        <input type="hidden" id="std_id" name="std_id" value="{{stdInfo.id}}">
+                                                                        <input type="hidden" id="remainingAmount" value="{{remainingAmount}}">
+                                                                        <input type="hidden" id="date" name="date" value="{% now 'Y-m-d' %}">
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Total Course Fees : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <input style="font-weight: bold;" type="text" value="&#8377;{{streamInfo.fees}}.00" class="form-control">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Total Fees Paid : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <input style="font-weight: bold;" type="text" value="&#8377;{{paidAmount}}.00" class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Total Fees To Be Paid : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <input style="font-weight: bold;" type="text" value="&#8377;{{remainingAmount}}.00" class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Amount to Paid : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <input style="font-weight: bold;" type="text" id="amount" name="amount" onkeypress='return event.charCode >= 48 && event.charCode <= 57' onkeyup="checkAmount()" placeholder="Enter amount.." class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Paid Type : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <select id="type" name="type" class="form-control" onchange="paymentType(this)" required="">
+                                                                                    <option value="">SELECT TYPE</option>
+                                                                                    <option value="OFFLINE">OFFLINE</option>
+                                                                                    <option value="ONLINE">ONLINE</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row" id="offlineDiv">
+                                                                            <label class="col-sm-3 col-form-label">Select Mode : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <select id="offline_mode" name="offline_mode" class="form-control">
+                                                                                    <option value="">SELECT MODE</option>
+                                                                                    <option value="CASH">CASH</option>
+                                                                                    <option value="CHEQUE">CHEQUE</option>
+                                                                                    <option value="BANK TRANSFER">BANK TRANSFER</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row" id="onlineDiv" style="display: none;">
+                                                                            <label class="col-sm-3 col-form-label">Select Mode : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <select id="online_mode" name="online_mode" class="form-control">
+                                                                                    <option value="">SELECT MODE</option>
+                                                                                    <option value="UPI">UPI</option>
+                                                                                    <option value="INTERNET BANKING">INTERNET BANKING</option>
+                                                                                    <option value="MOBILE BANKING">MOBILE BANKING</option>
+                                                                                    <option value="CARD PAYMENT">CARD PAYMENT</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row">
+                                                                            <label class="col-sm-3 col-form-label">Your Remarks : </label>
+                                                                            <div class="col-sm-9">
+                                                                                <input style="font-weight: bold;" type="text" id="remarks" name="remarks" placeholder="Enter remarks.." class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="form-group row">
+                                                                            <div class="col-sm-12">
+                                                                                <button style="float: right;" type="submit" class="btn btn-primary">Paid Now</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <link rel="stylesheet" href="{% static 'dashboard/vendor/pickadate/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/vendor/pickadate/themes/default.date.css' %}">
+    <script src="{% static 'dashboard/vendor/pickadate/picker.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/pickadate/picker.time.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/pickadate/picker.date.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/pickadate-init.js' %}"></script>
+    <script>
+        function paymentType(thisObj) {
+            var type = thisObj.options[thisObj.selectedIndex].text;
+            // alert(type);
+            if (type == 'ONLINE') {
+                document.getElementById('onlineDiv').style.display = 'flex';
+                // document.getElementById("online_mode").required = true;
+                document.getElementById('offlineDiv').style.display = 'none';
+            }
+            else if(type == 'OFFLINE'){
+                document.getElementById('offlineDiv').style.display = 'flex';
+                // document.getElementById("offline_mode").required = true;
+                document.getElementById('onlineDiv').style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+        function checkAmount() {
+            var amount = parseInt(document.getElementById("amount").value);
+            var remainingAmount = parseInt(document.getElementById("remainingAmount").value);
+            if(amount > remainingAmount){
+                alert("Paid Amount should less than Remaining Amount");
+                document.getElementById("amount").value = "";
+            }
+        }
+    </script>
+    <script>
+        function checkRollNo() {
+            var rollNo = document.getElementById("rollNo").value;
+            // $("#pDiv").show();
+            $.ajax({
+                type:'POST',
+                url:'/dashboard/checkRollNo/',
+                data:{
+                    rollNo:$('#rollNo').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){  
+                    if(data.status == 1){
+                        $("#pDiv").show();
+                        $('#name').val(data.name);
+                        $('#stream').val(data.stream);
+                        $('#session').val(data.session);
+                        $('#duration').val(data.duration);
+                        $('#totalFees').val(data.total_fees);
+                        $('#paidAmount').val(data.paidAmount);
+                        var remainingAmount = data.total_fees - data.paidAmount;
+                        $('#remainingAmount').val(remainingAmount);
+                    }
+                    else{
+                        // alert('no exist');
+                        $("#pDiv").hide();
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
