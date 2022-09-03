@@ -1,0 +1,307 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4>About Student</h4>
+                    </div>
+                </div>
+                <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Students</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">About Student</a></li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xl-3 col-xxl-4 col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="text-center p-3 overlay-box" style="background-image: url(images/big/img1.jpg);">
+                                    <div class="profile-photo">
+                                        <img src="/media/{{stdInfo.std_photo}}" width="100" class="img-fluid rounded-circle" alt="">
+                                    </div>
+                                    <h3 class="mt-3 mb-1 text-white">{{stdInfo.name}}</h3>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Regd No</span> <strong class="text-muted">{{stdInfo.regd_no}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Roll No</span> <strong class="text-muted">{{stdInfo.roll_no}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Session</span> <strong class="text-muted">{{stdInfo.session}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Stream</span> <strong class="text-muted">{{stdInfo.stream}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Date Of Joining</span> <strong class="text-muted">{{stdInfo.doj}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">Status</span> <strong class="text-muted">{{stdInfo.status}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">CA</span> <strong class="text-muted">{{stdInfo.created_at}}</strong></li>
+                                    <li class="list-group-item d-flex justify-content-between"><span class="mb-0">UA</span> <strong class="text-muted">{{stdInfo.updated_at}}</strong></li>
+                                </ul>
+                                <div class="card-footer text-center border-0 mt-0">	
+                                    <a target="_blank" href="/media/{{stdInfo.std_document}}" class="btn btn-warning btn-rounded px-4"><i class="fa fa-file"></i></a>
+                                    <a target="_blank" href="/media/{{stdInfo.aadhaar_card}}" class="btn btn-primary btn-rounded px-4"><i class="fa fa-id-card-o"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-xxl-8 col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="profile-tab">
+                                <div class="custom-tab-1">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="#about-me" data-bs-toggle="tab" class="nav-link active show">About Me</a></li>
+                                        <li class="nav-item"><a href="#payment" data-bs-toggle="tab" class="nav-link">Payment</a></li>
+                                        <li class="nav-item"><a href="#schooling" data-bs-toggle="tab" class="nav-link">Schooling</a></li>
+                                        <li class="nav-item"><a href="#parents" data-bs-toggle="tab" class="nav-link">Parents</a></li>
+                                        <li class="nav-item"><a href="#documents" data-bs-toggle="tab" class="nav-link">Documents</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="about-me" class="tab-pane fade active show">
+                                            <div class="profile-personal-info pt-4">
+                                                <h4 class="text-primary mb-4">Personal Information</h4>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Full Name <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Email <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span><b>{{stdInfo.email}}</b></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Mobile <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.mobile}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Gender <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.gender}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Date of Birth <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.dob}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Aadhaar No <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.aadhaar}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Present Address <span class="pull-right">:</span></h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.present_address}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Permanent Address <span class="pull-right">:</span></h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.permanent_address}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="payment" class="tab-pane fade">
+                                            <div class="profile-personal-info pt-4">
+                                                <div class="col-lg-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <a href="javascript:void()" class="btn btn-outline-dark btn-rounded ps-4 my-3 my-sm-0 pe-4 me-3 m-b-10">Total Fees : <b style="color: red;">&#8377;{{feesAmount}}.00</b></a>
+
+                                                            <a href="javascript:void()" class="btn btn-outline-dark btn-rounded ps-4 my-3 my-sm-0 pe-4 me-3 m-b-10">Fees Paid: <b style="color: green;">&#8377;{{paidAmount}}.00</b></a>
+
+                                                            <a href="javascript:void()" class="btn btn-outline-dark btn-rounded ps-4 my-3 my-sm-0 pe-4 me-3 m-b-10">Fees Remaining: <b style="color: blueviolet;">&#8377;{{remainingAmount}}.00</b></a>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+                                                                <table class="table header-border table-responsive-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>SN</th>
+                                                                            <th>INVOICE</th>
+                                                                            <th>TXN_ID</th>
+                                                                            <th>AMOUNT</th>
+                                                                            <th>TYPE</th>
+                                                                            <th>MODE</th>
+                                                                            <th>DATE</th>
+                                                                            <th>VIEW</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for stdFees in stdFees %}
+                                                                            <tr>
+                                                                                <td>{{forloop.counter}}</td>
+                                                                                <td>{{stdFees.invoice}}</td>
+                                                                                <td>{{stdFees.txn_id}}</td>
+                                                                                <td><strong>{{stdFees.amount}}</strong></td>
+                                                                                <td>{{stdFees.type}}</td>
+                                                                                <td>{{stdFees.mode}}</td>
+                                                                                <td><span class="text-muted">{{stdFees.date|date:"d M, Y"}}</span>
+                                                                                </td>
+                                                                                <td><a href="{% url 'std_payment_receipt' stdFees.id %}" onClick="return confirm('Are you sure? to print!')" target="_blank" class="btn btn-sm btn-info"><i class="fa fa-print"></i></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="schooling" class="tab-pane fade">
+                                            <div class="profile-personal-info pt-4">
+                                                <h4 class="text-primary mb-4">School Information</h4>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">School Board<span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.board}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">School Name<span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span><b>{{stdInfo.school_name}}</b></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Secured Marks <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.school_marks}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">School Information <span class="pull-right">:</span></h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.school_info}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="parents" class="tab-pane fade">
+                                            <div class="profile-personal-info pt-4">
+                                                <h4 class="text-primary mb-4">Parents Information</h4>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Father Name <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.father_name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Father Contact <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span><b>{{stdInfo.father_mobile}}</b></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Occupation <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.father_occupation}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Mother Name <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.mother_name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Mother Contact <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span><b>{{stdInfo.mother_mobile}}</b></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Occupation <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.mother_occupation}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Guardian Name <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span>{{stdInfo.guardian_name}} (<b>{{stdInfo.guardian_relation}}</b>)</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                                                        <h5 class="f-w-500">Guardian Contact <span class="pull-right">:</span>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-8 col-sm-6 col-6"><span><b>{{stdInfo.guardian_mobile}}</b></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="documents" class="tab-pane fade">
+                                            <div class="profile-personal-info pt-4">
+                                                <h4 class="text-primary mb-4">Views Documents</h4>
+                                                <div class="row mb-4">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                                                        <a target="_blank" href="/media/{{stdInfo.aadhaar_card}}" class="btn btn-outline-dark btn-rounded ps-4 my-3 my-sm-0 pe-4 me-3 m-b-10"><i class="fa fa-file"></i> View Aadhaar Card</a>
+                                                    </div>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-5">
+                                                        <a target="_blank" href="/media/{{stdInfo.std_document}}" class="btn btn-outline-dark btn-rounded ps-4 my-3 my-sm-0 pe-4 me-3 m-b-10"><i class="fa fa-file"></i> View Student Documents</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+{% endblock body %}
+{% block js %}{% endblock %}

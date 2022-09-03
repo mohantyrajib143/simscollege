@@ -30,7 +30,7 @@
                                         <tbody>
                                             {% for allStd in allStd %}
                                                 <tr>
-                                                    <td><img class="rounded-circle" width="35" src="/media/{{allStd.std_photo}}" alt=""></td>
+                                                    <td><a href="{% url 'view_rc_student_info' allStd.id %}" onClick="return confirm('Are you sure? to view!')"><img class="rounded-circle" width="35" src="/media/{{allStd.std_photo}}" alt=""></a></td>
                                                     <td><strong>{{allStd.roll_no}}</strong></td>
                                                     <td><strong>{{allStd.regd_no}}</strong></td>
                                                     <td><strong>{{allStd.name}}</strong></td>

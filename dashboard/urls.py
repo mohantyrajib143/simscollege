@@ -142,6 +142,7 @@ urlpatterns = [
 
     # Manage regular course student info 
     path('manage_rc_student/', views.manage_rc_student, name='manage_rc_student'),
+    path('view_rc_student_info/<int:id>', views.view_rc_student_info, name='view_rc_student_info'),
     path('update_rc_student_status/<int:id>', views.update_rc_student_status, name='update_rc_student_status'),
     path('edit_rc_student/<int:id>', views.edit_rc_student, name='edit_rc_student'),
     path('update_rc_student/<int:id>', views.update_rc_student, name='update_rc_student'),

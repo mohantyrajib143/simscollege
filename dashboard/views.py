@@ -1105,6 +1105,21 @@ def manage_rc_student(request):
     return render(request, 'dashboard/manage_rc_student.html', data)
 
 @login_required(login_url='mylogin')
+def view_rc_student_info(request, id):
+    if tbl_rc_students.objects.filter(id=id).exists():
+        stdInfo = tbl_rc_students.objects.get(id=id)
+        stdFees = tbl_rc_std_payments.objects.filter(std_id=id).order_by('-id')
+        streamInfo = tbl_rc_stream.objects.get(stream=stdInfo.stream, session=stdInfo.session, status='Active')
+        totalPaid = tbl_rc_std_payments.objects.filter(std_id=stdInfo.id).aggregate(ttlAmount=Sum('amount'))
+        feesAmount = int(streamInfo.fees)
+        paidAmount = int(totalPaid['ttlAmount'])
+        remainingAmount = feesAmount - paidAmount
+        data = {'stdInfo':stdInfo, 'stdFees':stdFees, 'feesAmount':feesAmount, 'paidAmount':paidAmount, 'remainingAmount':remainingAmount}
+        return render(request, 'dashboard/view_rc_student_info.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
+
+@login_required(login_url='mylogin')
 def update_rc_student_status(request, id):
     query = tbl_rc_students.objects.get(id=id)
     if(query.status == 'Active'):
