@@ -7,12 +7,10 @@
             <div class="col-xl-12 col-xxl-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post" action="{% url 'rc_student_admission_payment' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                        <form method="post" action="{% url 'sc_student_payment' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
                             <div class="row">
                                 <h5 class="card-title mb-3">PAYMENT INFORMATION</h5>
                                 <input type="hidden" id="std_id" name="std_id" value="{{stdID}}">
-                                <input type="hidden" id="rollno" name="rollno" value="{{rollnew}}">
-                                <input type="hidden" id="regdno" name="regdno" value="{{regdno}}">
                                 <input type="hidden" id="date" name="date" value="{% now 'Y-m-d' %}">
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="form-group">

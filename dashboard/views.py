@@ -4,13 +4,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
 from django.contrib import messages
-from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm, RcStudentForm, ScStreamForm
+from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm, RcStreamForm, RcStudentForm, ScStreamForm, ScStudentForm
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from urllib import request
 from django.contrib.auth.models import User
-from dashboard.models import password_token, tbl_rc_std_payments, tbl_rc_stream, tbl_rc_students, tbl_sc_stream
+from dashboard.models import password_token, tbl_rc_std_payments, tbl_rc_stream, tbl_rc_students, tbl_sc_stream, tbl_sc_students, tbl_sc_std_payments
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
@@ -1294,7 +1294,7 @@ def manage_sc_stream(request):
         return redirect('manage_sc_stream')
     else:
         cyear = date.today().year
-        nyear = date.today().year + 2
+        nyear = date.today().year + 1
         sc_stream = tbl_sc_stream.objects.all().order_by('-id')
         data = {'sc_stream':sc_stream, 'cyear':cyear, 'nyear':nyear}
         return render(request, 'dashboard/manage_sc_stream.html', data)
@@ -1369,3 +1369,145 @@ def rc_std_fees_payment(request):
         data = tbl_rc_std_payments(std_id=std_id, txn_id=txn_id, invoice=invoice, amount=amount, type=type, mode=mode, remarks=remarks, date=pdate, status=status)
         data.save()
         return redirect('std_fees_information')
+
+@login_required(login_url='mylogin')
+def manage_sc_student(request):
+    allStd = tbl_sc_students.objects.all().order_by('-id')
+    data = {'allStd':allStd, 'ttlStd':allStd.count()}
+    return render(request, 'dashboard/manage_sc_student.html', data)
+
+@login_required(login_url='mylogin')
+def add_sc_student(request):
+    if request.method=='POST':
+        roll_no = request.POST['roll_no']
+        name = request.POST['name']
+        email = request.POST['email']
+        mobile = request.POST['mobile']
+        gender = request.POST['gender']
+        dob = request.POST['dob']
+        aadhaar = request.POST['aadhaar']
+        session = request.POST['session']
+        stream = request.POST['stream']
+        doj = request.POST['doj']
+        std_photo = request.FILES['std_photo']
+        guardian_name = request.POST['guardian_name']
+        guardian_email = request.POST['guardian_email']
+        guardian_mobile = request.POST['guardian_mobile']
+        address = request.POST['address']
+        matriculation_board = request.POST['matriculation_board']
+        exceptation_marks = request.POST['exceptation_marks']
+        status = 'Active'
+
+        if tbl_sc_students.objects.filter(roll_no=roll_no, aadhaar=aadhaar).exists():
+            messages.error(request, 'Roll No or Aadhaar No is exist!!')
+        else:
+            data = tbl_sc_students(roll_no=roll_no, name=name, email=email, mobile=mobile, gender=gender, dob=dob, aadhaar=aadhaar, session=session, stream=stream, doj=doj, guardian_name=guardian_name, guardian_email=guardian_email, guardian_mobile=guardian_mobile, address=address, matriculation_board=matriculation_board, exceptation_marks=exceptation_marks, std_photo=std_photo, status=status)
+            data.save()
+
+            laststdID = tbl_sc_students.objects.latest('id')
+            request.session['summerStdID'] = laststdID.id
+        return redirect('sc_student_payment')
+    else:
+        cyear = date.today().year
+        nyear = date.today().year + 1
+        session = str(cyear) + "-" + str(nyear)
+
+        data = {'session':session}
+        return render(request, 'dashboard/add_sc_student.html', data)
+
+@login_required(login_url='mylogin')
+def update_sc_student_status(request, id):
+    query = tbl_sc_students.objects.get(id=id)
+    if(query.status == 'Active'):
+        query.status = 'Inactive'
+    else:
+        query.status = 'Active'
+    query.save()
+    return redirect('manage_sc_student')
+
+@login_required(login_url='mylogin')
+def edit_sc_student(request, id):
+    if tbl_sc_students.objects.filter(id=id).exists():
+        query = tbl_sc_students.objects.get(id=id)
+        data = {'query':query}
+        return render(request, 'dashboard/edit_sc_student.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
+
+@login_required(login_url='mylogin')
+def update_sc_student(request, id):
+    update = tbl_sc_students.objects.get(id=id)
+    stdData = ScStudentForm(request.POST or None, request.FILES, instance=update)
+    stdData.save()
+    if stdData.is_valid():
+        stdData.save(commit=True)
+        messages.success(request, 'Successfully Updated!')
+    return redirect('manage_sc_student')
+
+@login_required(login_url='mylogin')
+def sc_student_payment(request):
+    if 'summerStdID' in request.session:
+        if request.method=='POST':
+            std_id = request.POST['std_id']
+            invoice = str(random.randint(1000000000, 9999999999))
+            txn = str(random.randint(1000000000, 9999999999))
+            txn_id = 'txn' + txn
+            amount = request.POST['amount']
+            type = request.POST['type']
+            if type == 'OFFLINE':
+                mode = request.POST['offline_mode']
+            else:
+                mode = request.POST['online_mode']
+            remarks = request.POST['remarks']
+            pdate = request.POST['date']
+            status = 'active'
+
+            data = tbl_sc_std_payments(std_id=std_id, txn_id=txn_id, invoice=invoice, amount=amount, type=type, mode=mode, remarks=remarks, date=pdate, status=status)
+            data.save()
+            del request.session['summerStdID']
+            messages.success(request, 'Admission & Payment Successfully Done!')
+            return redirect('manage_sc_student')
+        else:
+            summerStdID = request.session['summerStdID']
+            stdInfo = tbl_sc_students.objects.get(id=summerStdID)
+            streamInfo = tbl_sc_stream.objects.get(stream=stdInfo.stream, session=stdInfo.session, status='Active')
+
+            data = {'stdInfo':stdInfo, 'streamInfo':streamInfo, 'stdID':stdInfo.id}
+            return render(request, 'dashboard/sc_student_payment.html', data)
+    else:
+        return render(request, 'dashboard/404.html')
+
+@login_required(login_url='mylogin')
+def scstd_fees_information(request):
+    if request.method=='POST':
+        rollNo = request.POST['roll_no']
+        if tbl_rc_students.objects.filter(roll_no=rollNo).exists():
+            stdInfo = tbl_rc_students.objects.get(roll_no=rollNo)
+            streamInfo = tbl_rc_stream.objects.get(stream=stdInfo.stream, session=stdInfo.session, status='Active')
+            totalPaid = tbl_rc_std_payments.objects.filter(std_id=stdInfo.id).aggregate(ttlAmount=Sum('amount'))
+            feesAmount = int(streamInfo.fees)
+            paidAmount = int(totalPaid['ttlAmount'])
+            remainingAmount = feesAmount - paidAmount
+            data = {"stdInfo":stdInfo, "streamInfo":streamInfo, "paidAmount":paidAmount, "remainingAmount":remainingAmount, "rollNo":rollNo}
+            messages.success(request, 'Student Roll no exist')
+            return render(request, 'dashboard/rc_std_fees_payment.html', data)
+        else:
+            data = {"rollNo":rollNo}
+            messages.error(request, 'Student Roll no was not exist in our records!!')
+            return render(request, 'dashboard/rc_std_fees_payment.html', data)
+    else:
+        stdFees = tbl_sc_std_payments.objects.raw("select p.id, s.roll_no,p.invoice, p.txn_id from dashboard_tbl_sc_std_payments as p INNER JOIN dashboard_tbl_sc_students as s ON p.std_id=s.id")
+        data = {'stdFees':stdFees}
+        return render(request, 'dashboard/scstd_fees_information.html', data)
+
+def scstd_payment_receipt(request, id):
+    if tbl_sc_std_payments.objects.filter(id=id).exists():
+        pinfo = tbl_sc_std_payments.objects.get(id=id)
+        amount = pinfo.amount
+        stdID = pinfo.std_id
+        wamount = num2words(amount)
+        stdInfo = tbl_sc_students.objects.get(id=stdID)
+        data = {'pinfo':pinfo, 'stdInfo':stdInfo, 'wamount':wamount}
+        return render(request, 'dashboard/scstd_receipt.html', data)
+    else:
+        return render(request, 'dashboard/404.html')

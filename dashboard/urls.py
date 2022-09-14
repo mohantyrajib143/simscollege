@@ -151,13 +151,23 @@ urlpatterns = [
     path('std_payment_receipt/<int:id>', views.std_payment_receipt, name='std_payment_receipt'),
     path('student_icard/<int:id>', views.student_icard, name='student_icard'),
 
+    # Manage student's fees information 
+    path('std_fees_information/', views.std_fees_information, name='std_fees_information'),
+    path('rc_std_fees_payment/', views.rc_std_fees_payment, name='rc_std_fees_payment'),
+
     # Manage summer course stream 
     path('manage_sc_stream/', views.manage_sc_stream, name='manage_sc_stream'),
     path('update_sc_stream/<int:id>', views.update_sc_stream, name='update_sc_stream'),
     path('update_sc_stream_status/<int:id>', views.update_sc_stream_status, name='update_sc_stream_status'),
     path('delete_sc_stream/<int:id>', views.delete_sc_stream, name='delete_sc_stream'),
 
-    # Manage student's fees information 
-    path('std_fees_information/', views.std_fees_information, name='std_fees_information'),
-    path('rc_std_fees_payment/', views.rc_std_fees_payment, name='rc_std_fees_payment'),
+    # Manage summer course student
+    path('manage_sc_student/', views.manage_sc_student, name='manage_sc_student'),
+    path('add_sc_student/', views.add_sc_student, name='add_sc_student'),
+    path('update_sc_student_status/<int:id>', views.update_sc_student_status, name='update_sc_student_status'),
+    path('edit_sc_student/<int:id>', views.edit_sc_student, name='edit_sc_student'),
+    path('update_sc_student/<int:id>', views.update_sc_student, name='update_sc_student'),
+    path('sc_student_payment/', views.sc_student_payment, name='sc_student_payment'),
+    path('scstd_fees_information/', views.scstd_fees_information, name='scstd_fees_information'),
+    path('scstd_payment_receipt/<int:id>', views.scstd_payment_receipt, name='scstd_payment_receipt'),
 ]
