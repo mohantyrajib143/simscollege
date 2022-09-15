@@ -32,9 +32,7 @@
     <div id="main-wrapper">
         <div class="nav-header">
             <a href="" class="brand-logo">
-                <img class="logo-abbr" src="{% static 'dashboard/images/logo-white.png' %}" alt="">
-                <img class="logo-compact" src="{% static 'dashboard/images/logo-text-white.png' %}" alt="">
-                <img class="brand-title" src="{% static 'dashboard/images/logo-text-white.png' %}" alt="">
+                <b style="font-size: 30px;">SIMS COLLEGE</b>
             </a>
             <div class="nav-control">
                 <div class="hamburger">
@@ -48,14 +46,7 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="search_bar dropdown">
-                                <span class="search_icon p-3 c-pointer" data-bs-toggle="dropdown">
-                                    <i class="mdi mdi-magnify"></i>
-                                </span>
-                                <div class="dropdown-menu p-0 m-0">
-                                    <form>
-                                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                                    </form>
-                                </div>
+                                <b style="font-size: 23px;">SHANTI INSTITUTE AND MANAGEMENT STUDIES : A +2 SCIENCE RESIDENTIAL COLLEGE</b>
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
@@ -69,62 +60,25 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <ul class="list-unstyled">
-                                        <li class="media dropdown-item">
-                                            <span class="success"><i class="ti-user"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="danger"><i class="ti-bookmark"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="primary"><i class="ti-heart"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="success"><i class="ti-image"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
+                                        {% for contact in contact %}
+                                            <li class="media dropdown-item">
+                                                <span class="success"><i class="ti-user"></i></span>
+                                                <div class="media-body">
+                                                    <a href="#">
+                                                        <p><strong>{{contact.name}}</strong> has added a <strong>customer</strong> Successfully
+                                                        </p>
+                                                    </a>
+                                                </div>
+                                                <span class="notify-time">3:20 am</span>
+                                            </li>
+                                        {% endfor %}
                                     </ul>
-                                    <a class="all-notification" href="#">See all notifications <i
-                                            class="ti-arrow-right"></i></a>
+                                    <a class="all-notification" href="/dashboard/manage_conatctInfo/">See all notifications <i class="ti-arrow-right"></i></a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-                                    <img src="{% static 'dashboard/images/profile/pic1.jpg' %}" width="20" alt=""/>
+                                    <img src="{% static 'dashboard/images/user.png' %}" width="20" alt=""/>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a href="" class="dropdown-item ai-icon">
@@ -150,88 +104,94 @@
         <div class="deznav">
             <div class="deznav-scroll">
                 <ul class="metismenu" id="menu">
-                    <li class="nav-label">Manage Website</li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <li class="nav-label" style="margin-top: -20px;">Manage Website</li>
+                    <li><a href="/dashboard/manage_slider/" aria-expanded="false">
+                        <i class="la la-image"></i>
+                        <span class="nav-text active"> MANAGE SLIDER</span>
+                        </a>
+                    </li>
+                    <li><a href="/dashboard/manage_sims/" aria-expanded="false">
+                        <i class="la la-table"></i>
+                        <span class="nav-text"> MANAGE SIMS</span>
+                        </a>
+                    </li>
+                    <li><a href="/dashboard/manage_aboutus/" aria-expanded="false">
+                        <i class="la la-th-list"></i>
+                        <span class="nav-text"> MANAGE ABOUT US</span>
+                        </a>
+                    </li>
+                    <li><a href="/dashboard/manage_leader/" aria-expanded="false">
                         <i class="la la-users"></i>
-                        <span class="nav-text">WEBSITE SECTION</span>
+                        <span class="nav-text"> MANAGE LEADER</span>
+                        </a>
+                    </li>
+                    <li><a href="/dashboard/manage_awards/" aria-expanded="false">
+                        <i class="la la-users"></i>
+                        <span class="nav-text"> MANAGE AWARDS</span>
+                        </a>
+                    </li>
+                    <!-- <li><a href="/dashboard/manage_conatctInfo/" aria-expanded="false">
+                        <i class="la la-users"></i>
+                        <span class="nav-text"> MANAGE CONTACT</span>
+                        </a>
+                    </li> -->
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-comments-o"></i>
+                        <span class="nav-text">MANAGE TESTIMONIAL</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/dashboard/manage_slider">Manage Slider</a></li>
-                            <li><a href="/dashboard/manage_sims">Manage SIMS</a></li>
-                            <li><a href="/dashboard/manage_aboutus">Manage About Us</a></li>
-                            <li><a href="/dashboard/manage_leader">Manage Leader</a></li>
-                            <li><a href="/dashboard/manage_awards">Manage Awards</a></li>
-                            <li><a href="/dashboard/manage_conatctInfo">Manage Contact Info</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Manage Testimonial</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_stdtestimonial">Student</a></li>
-                                    <li><a href="/dashboard/manage_alumni_testimonial">Alumni</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Manage Faculties</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_chse_faculty">CHSE</a></li>
-                                    <li><a href="/dashboard/manage_entrance_faculty">Entrance</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Manage Infrastructure</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_college">COLLEGE</a></li>
-                                    <li><a href="/dashboard/manage_hostel">HOSTEL</a></li>
-                                    <li><a href="/dashboard/manage_gallery">GALLERY</a></li>
-                                    <li><a href="/dashboard/manage_labs">LABS</a></li>
-                                    <li><a href="/dashboard/manage_sports">SPORTS</a></li>
-                                    <li><a href="/dashboard/manage_yoga">YOGA</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Manage Results</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_neet">NEET Results</a></li>
-                                    <li><a href="/dashboard/manage_iit">IIT - JEE Results</a></li>
-                                    <li><a href="/dashboard/manage_chse">CHSE Results</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">News & Events</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_news">Manage News</a></li>
-                                    <li><a href="/dashboard/manage_notices">Manage Notices</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Manage Careers</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="/dashboard/manage_careers">Job Openings</a></li>
-                                    <li><a href="/dashboard/manage_jobapplied">Job Applied</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="/dashboard/manage_stdtestimonial/"> Student Testimonials</a></li>
+                            <li><a href="/dashboard/manage_alumni_testimonial/"> Alumni Testimonials</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="la la-users"></i>
-                        <span class="nav-text">ADMIN SECTION</span>
+                        <span class="nav-text">MANAGE FACULTIES</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/dashboard/manage_rc_stream"> Regular Course Stream</a></li>
-                        </ul>
-                        <ul aria-expanded="false">
-                            <li><a href="/dashboard/manage_sc_stream"> Summer Course Stream</a></li>
+                            <li><a href="/dashboard/manage_chse_faculty/"> CHSE Faculties</a></li>
+                            <li><a href="/dashboard/manage_entrance_faculty/"> Entrance Faculties</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="la la-users"></i>
-                        <span class="nav-text">RC STUDENT SECTION</span>
+                        <i class="la la-building"></i>
+                        <span class="nav-text"> INFRASTRUCTURE</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/dashboard/manage_rc_student">Student InformatioN</a></li>
-                            <li><a href="/dashboard/std_fees_information">StD Fees InformatioN</a></li>
+                            <li><a href="/dashboard/manage_college/"> College Infrastructure</a></li>
+                            <li><a href="/dashboard/manage_hostel/"> Hostel Infrastructure</a></li>
+                            <li><a href="/dashboard/manage_gallery/"> Gallery Infrastructure</a></li>
+                            <li><a href="/dashboard/manage_labs/"> Labs Infrastructure</a></li>
+                            <li><a href="/dashboard/manage_sports/"> Sports Infrastructure</a></li>
+                            <li><a href="/dashboard/manage_yoga/"> Yoga Infrastructure</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="la la-users"></i>
-                        <span class="nav-text">SC STUDENT SECTION</span>
+                        <i class="la la-graduation-cap"></i>
+                        <span class="nav-text">MANAGE RESULTS</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/dashboard/manage_sc_student">Student InformatioN</a></li>
-                            <li><a href="/dashboard/scstd_fees_information">StD Fees InformatioN</a></li>
+                            <li><a href="/dashboard/manage_neet/"> NEET Results</a></li>
+                            <li><a href="/dashboard/manage_iit/"> IIT JEE Results</a></li>
+                            <li><a href="/dashboard/manage_chse/"> CHSE Results</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-calendar"></i>
+                        <span class="nav-text"> NEWS & EVENTS</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/dashboard/manage_news/"> Manage News</a></li>
+                            <li><a href="/dashboard/manage_notices/"> Manage Notices</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="la la-briefcase"></i>
+                        <span class="nav-text"> MANAGE CAREERS</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/dashboard/manage_careers/"> Job Openings</a></li>
+                            <li><a href="/dashboard/manage_jobapplied/"> Job Applied</a></li>
                         </ul>
                     </li>
 				</ul>
@@ -242,7 +202,7 @@
 
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed & Developed by <a href="#" target="_blank">DexignZone</a> 2022</p>
+                <p>© 2022 Copyright Designed & Developed by <a href="#" target="_blank">Rajib Mohanty</a></p>
             </div>
         </div>
     </div>
