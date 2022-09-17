@@ -1,4 +1,24 @@
 {% load static %}
+{% url 'index' as simsindex %}
+{% url 'about' as simsabout %}
+{% url 'whyus' as simswhyus %}
+{% url 'awards' as simsawards %}
+{% url 'science' as simsscience %}
+{% url 'commerce' as simscommerce %}
+{% url 'faculties' as simsfaculties %}
+{% url 'entrance' as simsentrance %}
+{% url 'chse' as simschse %}
+{% url 'college' as simscollege %}
+{% url 'hostel' as simshostel %}
+{% url 'gallery' as simsgallery %}
+{% url 'lab' as simslab %}
+{% url 'sports' as simssports %}
+{% url 'yoga' as simsyoga %}
+{% url 'neet' as simsneet %}
+{% url 'iit' as simsiit %}
+{% url 'chse_result' as simschse_result %}
+{% url 'news' as simsnews %}
+{% url 'notices' as simsnotices %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +45,17 @@
     </style>
     <link rel="stylesheet" type="text/css" href="{% static 'website/plugins/revolution/revolution/css/revolution.min.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .at-expanding-share-button-toggle-bg{
+            display: none;
+        }
+        .DZ-theme-btn.DZ-bt-support-now{
+            display: none;
+        }
+        .DZ-theme-btn.DZ-bt-buy-now{
+            display: none;
+        }
+    </style>
 </head>
 <body id="bg">
     <div class="page-wraper">
@@ -44,9 +75,9 @@
                         <div class="dlab-topbar-right">
                             <ul>
                                 <li>
-                                    <a href="/careers"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>OUR CAREER</b></button></a>
-                                    <a href="/testimonial"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>TESTIMONIALS</b></button></a>
-                                    <a href="/contact"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>CONTACT US</b></button></a>
+                                    <a href="/careers/"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>OUR CAREER</b></button></a>
+                                    <a href="/testimonial/"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>TESTIMONIALS</b></button></a>
+                                    <a href="/contact/"><button type="button" class="btn btn-info btn-sm" style="color: black;"><b>CONTACT US</b></button></a>
                                 </li>
                             </ul>
                         </div>
@@ -57,7 +88,7 @@
                 <div class="main-bar clearfix ">
                     <div class="container clearfix">
                         <div class="logo-header mostion logo-dark">
-                            <a href="/"><b style="font-size: 26px;color:#353866; font-weight:bold;">SIMS COLLEGE</b></a>
+                            <a href="/"><img src="{% static 'website/images/logo/logo.png' %}" alt=""></a>
                         </div>
                         
                         <button class="navbar-toggler collapsed navicon justify-content-end" type="button"
@@ -70,60 +101,60 @@
                         
                         <div class="extra-nav">
                             <div class="extra-cell">
-                                <a target="_blank" href="/admission" class="site-button btnhover13">GET ADDMISSION</a>
+                                <a target="_blank" href="/admission/" class="site-button btnhover13">GET ADDMISSION</a>
                             </div>
                         </div>
                         
                         <div class="header-nav navbar-collapse collapse justify-content-end" id="navbarNavDropdown">
                             <div class="logo-header d-md-block d-lg-none">
-                                <a href=""><img src="images/logo.png" alt=""></a>
+                                <a href="/"><img src="{% static 'website/images/logo/logo.png' %}" alt=""></a>
                             </div>
                             <ul class="nav navbar-nav">
-                                <li class="active has-mega-menu homedemo">
+                                <li {% if request.path == simsindex %} class="active" {% endif %}>
                                     <a href="/">Home</a>
                                 </li>
-                                <li>
+                                <li {% if request.path == simsabout %} class="active" {% elif request.path == simswhyus %} class="active" {% elif request.path == simsawards %} class="active" {% endif %}>
                                     <a href="javascript:;">About<i class="fas fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="/about"><b>➦ ABOUT US</b></a></li>
-                                        <li><a href="/whyus"><b>➦ WHY SIMS?</b></a></li>
-                                        <li><a href="/awards"><b>➦ AWARDS & RANKING</b></a></li>
+                                        <li><a href="/about/"><b>➦ ABOUT US</b></a></li>
+                                        <li><a href="/whyus/"><b>➦ WHY SIMS?</b></a></li>
+                                        <li><a href="/awards/"><b>➦ AWARDS & RANKING</b></a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li {% if request.path == simsscience %} class="active" {% elif request.path == simscommerce %} class="active" {% elif request.path == simsfaculties %} class="active" {% elif request.path == simsentrance %} class="active" {% elif request.path == simschse %} class="active" {% endif %}>
                                     <a href="javascript:;">Academics<i class="fas fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="/science"><b>➦ SCIENCE STREAM</b></a></li>
-                                        <li><a href="/commerce"><b>➦ COMMERCE STREAM</b></a></li>
-                                        <li><a href="/faculties"><b>➦ OUR FACULTIES</b></a></li>
-                                        <li><a href="/entrance"><b>➦ ENTRANCE FACULTY</b></a></li>
-                                        <li><a href="/chse"><b>➦ CHSE AFFILIATIONS</b></a></li>
+                                        <li><a href="/science/"><b>➦ SCIENCE STREAM</b></a></li>
+                                        <li><a href="/commerce/"><b>➦ COMMERCE STREAM</b></a></li>
+                                        <li><a href="/faculties/"><b>➦ CHSE FACULTIES</b></a></li>
+                                        <li><a href="/entrance/"><b>➦ ENTRANCE FACULTY</b></a></li>
+                                        <li><a href="/chse/"><b>➦ CHSE AFFILIATIONS</b></a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li {% if request.path == simscollege %} class="active" {% elif request.path == simshostel %} class="active" {% elif request.path == simsgallery %} class="active" {% elif request.path == simslab %} class="active" {% elif request.path == simssports %} class="active" {% elif request.path == simsyoga %} class="active" {% endif %}>
                                     <a href="javascript:;">Infrastructure<i class="fas fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="/college"><b>➦ COLLEGE FACILITIES</b></a></li>
-                                        <li><a href="/hostel"><b>➦ HOSTEL FACILITIES</b></a></li>
-                                        <li><a href="/gallery"><b>➦ OUR GALLERY</b></a></li>
-                                        <li><a href="/lab"><b>➦ MULTIFARIOUS LABS</b></a></li>
-                                        <li><a href="/sports"><b>➦ SPORTS ACTIVITY</b></a></li>
-                                        <li><a href="/yoga"><b>➦ YOGA & MEDITATION</b></a></li>
+                                        <li><a href="/college/"><b>➦ COLLEGE FACILITIES</b></a></li>
+                                        <li><a href="/hostel/"><b>➦ HOSTEL FACILITIES</b></a></li>
+                                        <li><a href="/gallery/"><b>➦ OUR GALLERY</b></a></li>
+                                        <li><a href="/lab/"><b>➦ MULTIFARIOUS LABS</b></a></li>
+                                        <li><a href="/sports/"><b>➦ SPORTS ACTIVITY</b></a></li>
+                                        <li><a href="/yoga/"><b>➦ YOGA & MEDITATION</b></a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li {% if request.path == simsneet %} class="active" {% elif request.path == simsiit %} class="active" {% elif request.path == simschse_result %} class="active" {% endif %}>
                                     <a href="javascript:;">Results<i class="fas fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="/neet"><b>➦ NEET ACHIVERS</b></a></li>
-                                        <li><a href="/iit"><b>➦ IIT-JEE ACHIVERS</b></a></li>
-                                        <li><a href="/chse_result"><b>➦ CHSE RESULTS</b></a></li>
+                                        <li><a href="/neet/"><b>➦ NEET ACHIVERS</b></a></li>
+                                        <li><a href="/iit/"><b>➦ IIT-JEE ACHIVERS</b></a></li>
+                                        <li><a href="/chse_result/"><b>➦ CHSE RESULTS</b></a></li>
                                     </ul>
                                 </li>
-                                <li>
+                                <li {% if request.path == simsnews %} class="active" {% elif request.path == simsnotices %} class="active" {% endif %}>
                                     <a href="javascript:;">News & Events<i class="fas fa-chevron-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="/news"><b>➦ NEWS</b></a></li>
-                                        <li><a href="/notices"><b>➦ NOTICES</b></a></li>
+                                        <li><a href="/news/"><b>➦ OUR NEWS</b></a></li>
+                                        <li><a href="/notices/"><b>➦ OUR NOTICES</b></a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -171,12 +202,12 @@
                             <div class="widget widget_services border-0">
                                 <h5 class="footer-title">Infrastructure</h5>
                                 <ul class="mm-t10">
-                                    <li><a href="/college">College Facilities</a></li>
-                                    <li><a href="/hostel">Hostel Facilities</a></li>
-                                    <li><a href="/gallery">Our Gallery</a></li>
-                                    <li><a href="/lab">Multifarious Labs</a></li>
-                                    <li><a href="/sports">Sports Activity </a></li>
-                                    <li><a href="/yoga">Yoga & Meditation </a></li>
+                                    <li><a href="/college/">College Facilities</a></li>
+                                    <li><a href="/hostel/">Hostel Facilities</a></li>
+                                    <li><a href="/gallery/">Our Gallery</a></li>
+                                    <li><a href="/lab/">Multifarious Labs</a></li>
+                                    <li><a href="/sports/">Sports Activity </a></li>
+                                    <li><a href="/yoga/">Yoga & Meditation </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -184,12 +215,12 @@
                             <div class="widget widget_services border-0">
                                 <h5 class="footer-title">Usefull Link</h5>
                                 <ul class="mm-t10">
-                                    <li><a href="/about">About Us</a></li>
-                                    <li><a href="/contact">Contact Us</a></li>
-                                    <li><a href="/careers">Our Careers</a></li>
-                                    <li><a href="/testimonial">Our Testimonials</a></li>
-                                    <li><a href="/news">Our Lattest News </a></li>
-                                    <li><a href="/notices">Our Lattest Notices </a></li>
+                                    <li><a href="/about/">About Us</a></li>
+                                    <li><a href="/contact/">Contact Us</a></li>
+                                    <li><a href="/careers/">Our Careers</a></li>
+                                    <li><a href="/testimonial/">Our Testimonials</a></li>
+                                    <li><a href="/news/">Our Lattest News </a></li>
+                                    <li><a href="/notices/">Our Lattest Notices </a></li>
                                 </ul>
                             </div>
                         </div>
@@ -213,7 +244,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 text-left "> <span>&copy; 2008 - 2022 <a href="" target="_blank">Shanti Institute of Management and Studies (SIMS) | All Rights Reserved!</a></span></div>
+                        <div class="col-md-6 col-sm-6 text-left "> <span>&copy; {% now 'Y' %} <a href="" target="_blank"> SHANTI INSTITUTE OF MANAGEMENT AND STUDIES | ALL RIGHTS RESERVED!!</a></span></div>
                         <div class="col-md-6 col-sm-6 text-right ">
                             <div class="widget-link ">
                                 <ul>
