@@ -2,7 +2,7 @@ from asyncio import streams
 from operator import concat
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact
+from website.models import slider, about, leader, awards, student_testmonials, alumni_testmonials, faculties, infrastructure, results, news, notice, careers, JobApply, sims, contact, summer_course_enquiry
 from django.contrib import messages
 from . forms import SliderForm, AboutForm, LeaderForm, AwardForm, StdTestimonialForm, AlumniTestimonialForm, ChseFacultyForm, InfrastructureForm, ResultsForm, NewsForm, NoticeForm, CareersForm, SimsForm
 
@@ -103,8 +103,53 @@ def reset_password(request, token):
     return render(request,'dashboard/reset_pass.html', data)
 
 @login_required(login_url='mylogin')
+def profile(request):
+    return render(request, 'dashboard/profile.html')
+
+@login_required(login_url='mylogin')
+def profile_update(request, id):
+    if request.method=='POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        new_password = request.POST['new_password']
+        cnf_password = request.POST['cnf_password']
+
+        user = User.objects.get(pk=id)
+        username = user.username
+        
+        if new_password != cnf_password:
+            messages.error(request, 'New password and confirm password was not match!!')
+            return redirect('profile')
+        else:
+            user.set_password(new_password)
+            user.first_name=first_name 
+            user.last_name=last_name
+            user.save()
+            user = User.objects.get(username=username)
+            login(request, user)
+            messages.success(request, 'Account Information - Successfully Updated!!')
+            return redirect('profile')
+
+    return render(request,'dashboard/profile.html')
+
+@login_required(login_url='mylogin')
 def dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    AllContact = contact.objects.all().count()
+    AllEnquiry = summer_course_enquiry.objects.all().count()
+    AllJobApplied = JobApply.objects.all().count()
+    AllChseFac = faculties.objects.filter(type='CHSE').count()
+    AllEntranceFac = faculties.objects.filter(type='ENTRANCE').count()
+    AllAwards = awards.objects.all().count()
+    AllInfrastructure = infrastructure.objects.all().count()
+    AllNEETRes = results.objects.filter(type='NEET').count()
+    AllIITRes = results.objects.filter(type='IIT').count()
+    AllCHSERes = results.objects.filter(type='CHSE').count()
+    AllNews = news.objects.all().count()
+    AllNotice = notice.objects.all().count()
+    AllCareer = careers.objects.all().count()
+
+    data = {'AllContact':AllContact, 'AllAwards':AllAwards, 'AllEnquiry':AllEnquiry, 'AllJobApplied':AllJobApplied, 'AllChseFac':AllChseFac, 'AllEntranceFac':AllEntranceFac, 'AllInfrastructure':AllInfrastructure, 'AllNEETRes':AllNEETRes, 'AllIITRes':AllIITRes, 'AllCHSERes':AllCHSERes, 'AllNews':AllNews, 'AllNotice':AllNotice, 'AllCareer':AllCareer}
+    return render(request, 'dashboard/dashboard.html', data)
 
 @login_required(login_url='mylogin')
 def manage_slider(request):
@@ -1037,7 +1082,21 @@ def manage_jobapplied(request):
     return render(request, 'dashboard/manage_jobapplied.html', data)
 
 @login_required(login_url='mylogin')
+def delete_jobapplied(request, id):
+    db = JobApply.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_jobapplied')
+
+@login_required(login_url='mylogin')
 def manage_conatctInfo(request):
     contactInfo = contact.objects.all().order_by('-id')
     data = {'contactInfo':contactInfo}
     return render(request, 'dashboard/manage_contactInfo.html', data)
+
+@login_required(login_url='mylogin')
+def delete_contactInfo(request, id):
+    db = contact.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_conatctInfo')

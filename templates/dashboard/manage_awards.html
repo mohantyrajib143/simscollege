@@ -3,93 +3,25 @@
 {% block body %}
 <div class="content-body">
     <div class="container-fluid">
-        <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <ol class="breadcrumb">
-                    <li><button type="button" class="btn btn-info"><a style="color:black;" href="/dashboard/index"><i class="la la-home"></i> Dashboard </a>/ <i class="la la-globe"></i> Website / <i class="la la-image"></i> Manage Awards</button></li>
-                </ol>
-            </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button></li>
-                </ol>
-            </div>
-        </div>
-        
         <div class="row">
             <div class="col-lg-12">
                 <div class="row tab-content">
                     <div id="list-view" class="tab-pane fade active show col-lg-12">
                         <div class="card">
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {% if message.tags == 'success' %} 
-                                        <center class="mt-2" style="margin-bottom: -20px;color: green;"><b>{{ message }}</b></center>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
                             <div class="card-header">
-                                <div class="modal fade" id="addModal">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Enter Awards Information</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                                                </button>
-                                            </div>
-                                            <form method="post" action="{% url 'manage_awards' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
-                                                <div class="modal-body">
-                                                    <input type="text" id="title" name="title" placeholder="Enter slider title.." class="form-control" required>
-
-                                                    <textarea id="award" name="award" placeholder="Enter awards details.." class="form-control mt-4" required></textarea>
-
-                                                    <input type="file" id="image" name="image" placeholder="Enter slider title.." class="form-control mt-4" accept=".png, .jpg, .jpeg" required>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="updateModal">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Enter Update Slider Information</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                                                </button>
-                                            </div>
-                                            <form id="updateForm" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
-                                                <div class="modal-body">
-                                                    <input type="text" id="updateTitle" name="title" placeholder="Enter slider title.." class="form-control" required>
-
-                                                    <textarea id="updateAward" name="award" placeholder="Enter awards details.." class="form-control mt-4" required></textarea>
-
-                                                    <img class="mt-4" id="updateImg" src="" style="width: 460px;height:200px;"/>
-                                                    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" class="form-control mt-2">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h4 class="card-title"><b>ALL COLLEGE AWARDS</b></h4>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button>
                             </div>
-                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>SN</th>
-                                                <th>Title</th>
-                                                <th>Awards</th>
-                                                <th>Image</th>
-                                                <th>Action</th>
+                                                <th>ID</th>
+                                                <th>TITLE</th>
+                                                <th>AWARDS</th>
+                                                <th>IMAGE</th>
+                                                <th>ACTION</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -109,12 +41,75 @@
                                     </table>
                                 </div>
                             </div>
+                            <div class="modal fade" id="addModal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title w-100 text-center"><b>ENTER COLLEGE AWARDS INFORMATION</b></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                            </button>
+                                        </div>
+                                        <form method="post" action="{% url 'manage_awards' %}" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                            <div class="modal-body">
+                                                <input type="text" id="title" name="title" placeholder="Enter awards title.." class="form-control" required>
+
+                                                <textarea rows="3" id="award" name="award" placeholder="Enter awards details.." class="form-control mt-4" required></textarea>
+
+                                                <input type="file" id="image" name="image" class="form-control mt-4" accept=".png, .jpg, .jpeg" required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="updateModal">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title w-100 text-center"><b>UPDATE COLLEGE SLIDER INFORMATION</b></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                            </button>
+                                        </div>
+                                        <form id="updateForm" method="post" autocomplete="off" enctype="multipart/form-data">{% csrf_token %}
+                                            <div class="modal-body">
+                                                <input type="text" id="updateTitle" name="title" placeholder="Enter slider title.." class="form-control" required>
+
+                                                <textarea rows="3" id="updateAward" name="award" placeholder="Enter awards details.." class="form-control mt-4" required></textarea>
+
+                                                <img class="mt-4" id="updateImg" src="" style="width: 460px;height:200px;"/>
+                                                <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" class="form-control mt-2">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
+    </div>
+</div>
+<div id="myDivAlertSuccess">
+    <div style="background-color: #1c7c50; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <span id="smsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+
+<div id="myDivAlertError">
+    <div style="background-color: #ed1b2e; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span id="emsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
     </div>
 </div>
 {% endblock body %}
@@ -136,4 +131,26 @@
             $('#updateForm').attr('action', "/dashboard/update_awards/"+ $.id);
         });
     </script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertSuccess");
+                    $('#smsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+            {% if message.tags == 'error' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertError");
+                    $('#emsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

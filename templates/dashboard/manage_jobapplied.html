@@ -3,21 +3,6 @@
 {% block body %}
 <div class="content-body">
     <div class="container-fluid">
-        <div class="row page-titles mx-0">
-            <div class="col-sm-6 p-md-0">
-                <div class="welcome-text">
-                    <h4>Manage All Job Applied</h4>
-                </div>
-            </div>
-            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Website</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Job Applied</a></li>
-                </ol>
-            </div>
-        </div>
-        
         <div class="row">
             <div class="col-lg-12">
                 <div class="row tab-content">
@@ -28,13 +13,14 @@
                                     <table id="example3" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>SN</th>
-                                                <th>Title</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Mobile</th>
-                                                <th>Resume</th>
-                                                <th>Message</th>
+                                                <th>ID</th>
+                                                <th>TITLE</th>
+                                                <th>NAME</th>
+                                                <th>EMAIL</th>
+                                                <th>MOBILE</th>
+                                                <th>MESSAGE</th>
+                                                <th>RESUME</th>
+                                                <th>ACTION</th>
                                             </tr>   
                                         </thead>
                                         <tbody>
@@ -45,8 +31,9 @@
                                                     <td>{{job.name}}</td>
                                                     <td>{{job.email}}</td>
                                                     <td>{{job.mobile}}</td>
-                                                    <td><a target="_blank" href="/media/{{job.resume}}"><span class="badge badge-success">VIEW RESUME</span></a></td>
                                                     <td>{{job.message}}</td>
+                                                    <td><a onClick="return confirm('Are you sure? to view resume!')" target="_blank" href="/media/{{job.resume}}"><span class="badge badge-success">VIEW RESUME</span></a></td>
+                                                    <td><a href="{% url 'delete_jobapplied' job.id %}" onClick="return confirm('Are you sure? to delete!')"><button class="btn btn-danger btn-sm">DELETE</i></button></a></td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>
@@ -58,7 +45,21 @@
                 </div>
             </div>
         </div>
-       
+    </div>
+</div>
+<div id="myDivAlertSuccess">
+    <div style="background-color: #1c7c50; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <span id="smsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+
+<div id="myDivAlertError">
+    <div style="background-color: #ed1b2e; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span id="emsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
     </div>
 </div>
 {% endblock body %}
@@ -84,4 +85,26 @@
             $('#updateForm').attr('action', "/dashboard/update_college/"+ $.id);
         });
     </script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertSuccess");
+                    $('#smsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+            {% if message.tags == 'error' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertError");
+                    $('#emsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

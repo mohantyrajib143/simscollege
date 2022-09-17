@@ -8,6 +8,8 @@ urlpatterns = [
     path('forgot_pass/', views.forgot_pass, name='forgot_pass'),
     path('reset_password/<token>/', views.reset_password, name='reset_password'),
     path('index/', views.dashboard, name='dashboard'),
+    path('profile/', views.profile, name='profile'),
+    path('profile_update/<int:id>', views.profile_update, name='profile_update'),
 
     # Manage Slider
     path('manage_slider/', views.manage_slider, name='manage_slider'),
@@ -130,7 +132,9 @@ urlpatterns = [
 
     # Manage job applied
     path('manage_jobapplied/', views.manage_jobapplied, name='manage_jobapplied'),
+    path('delete_jobapplied/<int:id>', views.delete_jobapplied, name='delete_jobapplied'),
 
     # Manage contact info
     path('manage_conatctInfo/', views.manage_conatctInfo, name='manage_conatctInfo'),
+    path('delete_contactInfo/<int:id>', views.delete_contactInfo, name='delete_contactInfo'),
 ]

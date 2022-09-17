@@ -1,70 +1,322 @@
 {% extends 'dashboard/header.html' %}
 {% load static %}
-{% block title %} HOME | UNQCOLLECTION {% endblock title %}
 {% block body %}
 <div class="content-body">
-    <!-- row -->
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-12 col-xxl-12 col-sm-12">
                 <div class="row">
-                    <div class="col-xl-3 col-xxl-6 col-sm-6">
-                        <div class="widget-stat card">
-                            <div class="card-body">
-                                <h4 class="card-title">Total Students</h4>
-                                <h3>3280</h3>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar progress-animated bg-primary" style="width: 80%"></div>
-                                </div>
-                                <small>80% Increase in 20 Days</small>
-                            </div>
-                        </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-secondary">
+							<div class="card-body">
+                                <a href="/dashboard/manage_conatctInfo/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-phone"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total Contact Information</p>
+                                            <h3 class="text-white">
+                                                {% if AllContact < 10 %}
+                                                    00{{AllContact}}
+                                                {% elif AllContact < 100 %}
+                                                    0{{AllContact}}
+                                                {% else %}
+                                                    {{AllContact}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Contact Information In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
-                    <div class="col-xl-3 col-xxl-6 col-sm-6">
-                        <div class="widget-stat card">
-                            <div class="card-body">
-                                <h4 class="card-title">New Students</h4>
-                                <h3>245</h3>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar progress-animated bg-warning" style="width: 50%"></div>
-                                </div>
-                                <small>50% Increase in 25 Days</small>
-                            </div>
-                        </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-primary">
+							<div class="card-body">
+                                <a href="/dashboard/manage_conatctInfo/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-comments-o"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total Summer Course Enquiry</p>
+                                            <h3 class="text-white">
+                                                {% if AllEnquiry < 10 %}
+                                                    00{{AllEnquiry}}
+                                                {% elif AllEnquiry < 100 %}
+                                                    0{{AllEnquiry}}
+                                                {% else %}
+                                                    {{AllEnquiry}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total Summer Course Enquiry In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
-                    <div class="col-xl-3 col-xxl-6 col-sm-6">
-                        <div class="widget-stat card">
-                            <div class="card-body">
-                                <h4 class="card-title">Total Course</h4>
-                                <h3>28</h3>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar progress-animated bg-red" style="width: 76%"></div>
-                                </div>
-                                <small>76% Increase in 20 Days</small>
-                            </div>
-                        </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-danger">
+							<div class="card-body">
+                                <a href="/dashboard/manage_jobapplied/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-comments-o"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total Job Applied</p>
+                                            <h3 class="text-white">
+                                                {% if AllJobApplied < 10 %}
+                                                    00{{AllJobApplied}}
+                                                {% elif AllJobApplied < 100 %}
+                                                    0{{AllJobApplied}}
+                                                {% else %}
+                                                    {{AllJobApplied}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total Job Applied In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
-                    <div class="col-xl-3 col-xxl-6 col-sm-6">
-                        <div class="widget-stat card">
-                            <div class="card-body">
-                                <h4 class="card-title">Fees Collection</h4>
-                                <h3>25160$</h3>
-                                <div class="progress mb-2">
-                                    <div class="progress-bar progress-animated bg-success" style="width: 30%"></div>
-                                </div>
-                                <small>30% Increase in 30 Days</small>
-                            </div>
-                        </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-info">
+							<div class="card-body">
+                                <a href="/dashboard/manage_chse_faculty/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-users"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total CHSE Faculties</p>
+                                            <h3 class="text-white">
+                                                {% if AllChseFac < 10 %}
+                                                    00{{AllChseFac}}
+                                                {% elif AllChseFac < 100 %}
+                                                    0{{AllChseFac}}
+                                                {% else %}
+                                                    {{AllChseFac}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total CHSE Faculties In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
-                </div>
-            </div>					
-            <div class="col-xl-12 col-xxl-12 col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Income/Expense Report</h3>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-success">
+							<div class="card-body">
+                                <a href="/dashboard/manage_entrance_faculty/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-users"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total Entrance Faculties</p>
+                                            <h3 class="text-white">
+                                                {% if AllEntranceFac < 10 %}
+                                                    00{{AllEntranceFac}}
+                                                {% elif AllEntranceFac < 100 %}
+                                                    0{{AllEntranceFac}}
+                                                {% else %}
+                                                    {{AllEntranceFac}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total Entrance Faculties In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
-                    <div class="card-body">
-                         <div id="morris_bar_2" class="morris_chart_height"></div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-dark">
+							<div class="card-body">
+                                <a href="/dashboard/manage_awards/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-trophy"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total Awards Wining</p>
+                                            <h3 class="text-white">
+                                                {% if AllAwards < 10 %}
+                                                    00{{AllAwards}}
+                                                {% elif AllAwards < 100 %}
+                                                    0{{AllAwards}}
+                                                {% else %}
+                                                    {{AllAwards}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Awards Wining By SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-primary">
+							<div class="card-body">
+                                <a href="/dashboard/manage_neet/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-graduation-cap"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total NEET Results</p>
+                                            <h3 class="text-white">
+                                                {% if AllNEETRes < 10 %}
+                                                    00{{AllNEETRes}}
+                                                {% elif AllNEETRes < 100 %}
+                                                    0{{AllNEETRes}}
+                                                {% else %}
+                                                    {{AllNEETRes}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total NEET Results In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-danger">
+							<div class="card-body">
+                                <a href="/dashboard/manage_iit/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-graduation-cap"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total IIT Results</p>
+                                            <h3 class="text-white">
+                                                {% if AllIITRes < 10 %}
+                                                    00{{AllIITRes}}
+                                                {% elif AllIITRes < 100 %}
+                                                    0{{AllIITRes}}
+                                                {% else %}
+                                                    {{AllIITRes}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total IIT Results In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-secondary">
+							<div class="card-body">
+                                <a href="/dashboard/manage_chse/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-graduation-cap"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total CHSE Results</p>
+                                            <h3 class="text-white">
+                                                {% if AllCHSERes < 10 %}
+                                                    00{{AllCHSERes}}
+                                                {% elif AllCHSERes < 100 %}
+                                                    0{{AllCHSERes}}
+                                                {% else %}
+                                                    {{AllCHSERes}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total CHSE Results In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-dark">
+							<div class="card-body">
+                                <a href="/dashboard/manage_news/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total College News</p>
+                                            <h3 class="text-white">
+                                                {% if AllNews < 10 %}
+                                                    00{{AllNews}}
+                                                {% elif AllNews < 100 %}
+                                                    0{{AllNews}}
+                                                {% else %}
+                                                    {{AllNews}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total News Inside SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-info">
+							<div class="card-body">
+                                <a href="/dashboard/manage_notices/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-users"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total College Notices</p>
+                                            <h3 class="text-white">
+                                                {% if AllNotice < 10 %}
+                                                    00{{AllNotice}}
+                                                {% elif AllNotice < 100 %}
+                                                    0{{AllNotice}}
+                                                {% else %}
+                                                    {{AllNotice}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total Notices Inside SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-4 col-xxl-4 col-sm-6">
+						<div class="widget-stat card bg-warning">
+							<div class="card-body">
+                                <a href="/dashboard/manage_careers/">
+                                    <div class="media">
+                                        <span class="me-3">
+                                            <i class="la la-users"></i>
+                                        </span>
+                                        <div class="media-body text-white">
+                                            <p class="mb-1">Total College Jobs Openings</p>
+                                            <h3 class="text-white">
+                                                {% if AllCareer < 10 %}
+                                                    00{{AllCareer}}
+                                                {% elif AllCareer < 100 %}
+                                                    0{{AllCareer}}
+                                                {% else %}
+                                                    {{AllCareer}}
+                                                {% endif %}
+                                            </h3>
+                                            <small>Total Jobs Openings In SIMS</small>
+                                        </div>
+                                    </div>
+                                </a>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 {% extends 'dashboard/header.html' %}
 {% load static %}
-{% block title %} HOME | UNQCOLLECTION {% endblock title %}
 {% block body %}
 <div class="content-body">
     <div class="container-fluid">
@@ -10,7 +9,7 @@
                     <div id="list-view" class="tab-pane fade active show col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"><b>All HOME SLIDER IMAGE</b></h4>
+                                <h4 class="card-title"><b style="color: #0e1c6e;">ALL HOME SLIDER IMAGE</b></h4>
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addModal">+ Add New</button>
                             </div>
                             
@@ -58,7 +57,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Enter Home Slider Information</h5>
+                                            <h5 class="modal-title w-100 text-center"><b>ENTER HOME SLIDER INFORMATION</b></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal">
                                             </button>
                                         </div>
@@ -79,7 +78,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Enter Update Slider Information</h5>
+                                            <h5 class="modal-title w-100 text-center"><b>UPDATE HOME SLIDER INFORMATION</b></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal">
                                             </button>
                                         </div>
@@ -105,7 +104,21 @@
                 </div>
             </div>
         </div>
-       
+    </div>
+</div>
+<div id="myDivAlertSuccess">
+    <div style="background-color: #1c7c50; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <span id="smsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+
+<div id="myDivAlertError">
+    <div style="background-color: #ed1b2e; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span id="emsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
     </div>
 </div>
 {% endblock body %}
@@ -125,4 +138,26 @@
             $('#updateForm').attr('action', "/dashboard/update_slider/"+ $.id);
         });
     </script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertSuccess");
+                    $('#smsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+            {% if message.tags == 'error' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertError");
+                    $('#emsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

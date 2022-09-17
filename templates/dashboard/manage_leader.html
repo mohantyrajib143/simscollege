@@ -1,20 +1,18 @@
 {% extends 'dashboard/header.html' %}
 {% load static %}
-{% block title %} HOME | UNQCOLLECTION {% endblock title %}
 {% block body %}
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>All Leader Information</h4>
+                    <h4><b style="color: #0e1c6e;">ALL LEADER INFORMATION</b></h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/dashboard/index">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">Website</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0);">All Leader</a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard/index">HOME</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0);">MANAGE ALL LEADER</a></li>
                 </ol>
             </div>
         </div>
@@ -23,13 +21,6 @@
             <div class="col-lg-12">
                 <div class="row tab-content">
                     <div id="grid-view" class="tab-pane fade active show col-lg-12">
-                        {% if messages %}
-                            {% for message in messages %}
-                                {% if message.tags == 'success' %} 
-                                    <h4 style="color: green; font-weight:bold;text-align: center;" class="card-title">{{ message }}</h4>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
                         <div class="row">
                             {% for leader in allLeader %}
                                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
@@ -45,7 +36,7 @@
                                                     <li class="list-group-item px-0 d-flex justify-content-between">
                                                     <strong>{{leader.quotes}}</strong></li>
                                                 </ul>
-                                                <a data-id="{{ leader.id }}" data-name="{{ leader.name }}" data-position="{{ leader.position }}" data-quotes="{{ leader.quotes }}" data-about="{{ leader.about }}" data-facebook="{{ leader.facebook }}" data-instagram="{{ leader.instagram }}" data-linkedin="{{ leader.linkedin }}" data-whatsapp="{{ leader.whatsapp }}" data-image="/media/{{ leader.image }}" data-bs-toggle="modal" data-bs-target=".updateModal" class="btn btn-primary update">Update Information</a>
+                                                <a data-id="{{ leader.id }}" data-name="{{ leader.name }}" data-position="{{ leader.position }}" data-quotes="{{ leader.quotes }}" data-about="{{ leader.about }}" data-facebook="{{ leader.facebook }}" data-instagram="{{ leader.instagram }}" data-linkedin="{{ leader.linkedin }}" data-whatsapp="{{ leader.whatsapp }}" data-image="/media/{{ leader.image }}" data-bs-toggle="modal" data-bs-target=".updateModal" class="btn btn-primary update">UPDATE INFORMATION</a>
                                             </div>
                                         </div>
                                     </div>
@@ -56,7 +47,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Update Leader Information</h5>
+                                        <h5 class="modal-title w-100 text-center"><b>UPDATE LEADER INFORMATION</b></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal">
                                         </button>
                                     </div>
@@ -125,7 +116,21 @@
                 </div>
             </div>
         </div>
-       
+    </div>
+</div>
+<div id="myDivAlertSuccess">
+    <div style="background-color: #1c7c50; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <span id="smsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+
+<div id="myDivAlertError">
+    <div style="background-color: #ed1b2e; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span id="emsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
     </div>
 </div>
 {% endblock body %}
@@ -155,4 +160,26 @@
             $('#updateForm').attr('action', "/dashboard/update_leader/"+ $.id);
         });
     </script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertSuccess");
+                    $('#smsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+            {% if message.tags == 'error' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertError");
+                    $('#emsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
