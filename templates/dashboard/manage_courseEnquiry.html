@@ -1,0 +1,96 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+{% block body %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row tab-content">
+                    <div id="list-view" class="tab-pane fade active show col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="example3" class="display" style="min-width: 845px">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>NAME</th>
+                                                <th>EMAIL</th>
+                                                <th>MOBILE</th>
+                                                <th>STREAM</th>
+                                                <th>MESSAGE</th>
+                                                <th>CREATED</th>
+                                                <th>UPDATED</th>
+                                                <th>ACTION</th>
+                                            </tr>   
+                                        </thead>
+                                        <tbody>
+                                            {% for enquiry in enquiry %}
+                                                <tr>
+                                                    <td><strong>{{forloop.counter}}</strong></td>
+                                                    <td>{{enquiry.name|title}}</td>
+                                                    <td>{{enquiry.email}}</td>
+                                                    <td>{{enquiry.mobile}}</td>
+                                                    <td>{{enquiry.stream}}</td>
+                                                    <td>{{enquiry.message}}</td>
+                                                    <td>{{enquiry.created_at}}</td>
+                                                    <td>{{enquiry.updated_at}}</td>
+                                                    <td><a href="{% url 'delete_courseEnquiry' enquiry.id %}" onClick="return confirm('Are you sure? to delete!')"><button class="btn btn-danger">DELETE</i></button></a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myDivAlertSuccess">
+    <div style="background-color: #1c7c50; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <span id="smsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+
+<div id="myDivAlertError">
+    <div style="background-color: #ed1b2e; color:white;" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <span id="emsg"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+    <!-- Datatable -->
+    <link href="{% static 'dashboard/vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+    <script src="{% static 'dashboard/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins-init/datatables.init.js' %}"></script>
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertSuccess");
+                    $('#smsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+            {% if message.tags == 'error' %} 
+                <script>
+                    var msg= "{{message}}";
+                    var x = document.getElementById("myDivAlertError");
+                    $('#emsg').html(msg);
+                    x.className = "show";
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1100,3 +1100,16 @@ def delete_contactInfo(request, id):
     db.delete()
     messages.success(request, 'Data Successfully Deleted!!')
     return redirect('manage_conatctInfo')
+
+@login_required(login_url='mylogin')
+def manage_courseEnquiry(request):
+    enquiry = summer_course_enquiry.objects.all().order_by('-id')
+    data = {'enquiry':enquiry}
+    return render(request, 'dashboard/manage_courseEnquiry.html', data)
+
+@login_required(login_url='mylogin')
+def delete_courseEnquiry(request, id):
+    db = summer_course_enquiry.objects.get(id=id)
+    db.delete()
+    messages.success(request, 'Data Successfully Deleted!!')
+    return redirect('manage_courseEnquiry')

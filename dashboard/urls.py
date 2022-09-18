@@ -137,4 +137,8 @@ urlpatterns = [
     # Manage contact info
     path('manage_conatctInfo/', views.manage_conatctInfo, name='manage_conatctInfo'),
     path('delete_contactInfo/<int:id>', views.delete_contactInfo, name='delete_contactInfo'),
+
+    # Manage course info info
+    path('manage_courseEnquiry/', views.manage_courseEnquiry, name='manage_courseEnquiry'),
+    path('delete_courseEnquiry/<int:id>', views.delete_courseEnquiry, name='delete_courseEnquiry'),
 ]
