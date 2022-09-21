@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
     'dashboard.apps.DashboardConfig',
     'rest_framework',
+    'restapi',
 ]
 
 MIDDLEWARE = [
