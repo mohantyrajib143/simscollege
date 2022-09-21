@@ -4,4 +4,5 @@ from restapi import views
 
 urlpatterns = [
     path('sliderList/', views.sliderList, name='sliderList'),
+    path('userList/', views.userList, name='userList'),
 ]
